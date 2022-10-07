@@ -61,15 +61,15 @@ $this->title = 'Статистика';
     </div>
 </div>
 
-<div class="row">
-<div class="col-md-6" style="height: 400px;">
-
-</div>
-<div class="col-md-6">
-    <div id="chartdiv2" style="height: 400px;"></div>
-    <div id="legenddiv3" class="hidden d-none"></div>
-</div>
-</div>
+<!--<div class="row">-->
+<!--<div class="col-md-6" style="height: 400px;">-->
+<!---->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--    <div id="chartdiv2" style="height: 400px;"></div>-->
+<!--    <div id="legenddiv3" class="hidden d-none"></div>-->
+<!--</div>-->
+<!--</div>-->
 
 
 <?php $this->registerJs(<<<JS
