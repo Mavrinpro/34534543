@@ -42,6 +42,8 @@ $this->title = 'Статистика';
 
 <div class="col-md-12">
     <div class="card card-info">
+        <div id="chartdiv" style="height: 400px;"></div>
+        <div id="legenddiv" class="hidden d-none"></div>
 <!--        <div class="card-header">-->
 <!--            <h3 class="card-title"><i class="fas fa-tachometer-alt"></i></h3>-->
 <!--            <div class="card-tools">-->
@@ -61,8 +63,7 @@ $this->title = 'Статистика';
 
 <div class="row">
 <div class="col-md-6" style="height: 400px;">
-<div id="chartdiv" style="height: 400px;"></div>
-<div id="legenddiv" class="hidden d-none"></div>
+
 </div>
 <div class="col-md-6">
     <div id="chartdiv2" style="height: 400px;"></div>
