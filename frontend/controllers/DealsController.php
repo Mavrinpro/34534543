@@ -44,7 +44,7 @@ class DealsController extends Controller
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
 
         if ($_POST['action'] === 'dragged'){
-            //\Yii::$app->session->setFlash('success', "Статья сохранена");
+            \Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
             $post->status = $_POST['statusID'];
             $post->save();
