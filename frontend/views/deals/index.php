@@ -24,20 +24,20 @@ $model = new Deals();
 
 ?>
     <div class="deals-index">
-<?php if (\Yii::$app->session->getFlash('success')) {
-    Alert::begin([
-        'options' => [
-            'class' => 'alert-success',
-        ],
-    ]);
-    Alert::end();
-     }?>
+        <?php if (\Yii::$app->session->getFlash('success')) {
+            Alert::begin([
+                'options' => [
+                    'class' => 'alert-success',
+                ],
+            ]);
+            Alert::end();
+        }?>
         <p>
             <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
 
         <?php  $p = Deals::getData(); ?>
-        <?php //$dataProvider->pagination->pageSize = 10; ?>
+        <?php $dataProvider->pagination->pageSize = 150; ?>
         <!--    --><?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <?php Pjax::begin(); ?>
