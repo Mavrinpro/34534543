@@ -25,6 +25,7 @@ class m220916_070802_deals extends Migration
             'deal_sum'        => $this->integer(),
 
         ]);
+        $this->addColumn('deals', 'del', 'boolean');
 
     }
 
