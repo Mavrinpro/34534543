@@ -77,7 +77,7 @@ use kartik\select2\Select2;
     </div>
     <div class="row">
         <div class="col-md-6 d-flex">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
         </div>
     </div>
