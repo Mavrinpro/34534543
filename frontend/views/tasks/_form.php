@@ -13,16 +13,16 @@ use yii\helpers\ArrayHelper;
     <?php
 
     $form = ActiveForm::begin(); ?>
-
+    <?php $date = date('Y-m-d H:i:s'); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
 
     <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
         ['prompt'=>'Оператор...']) ?>
 
-    <?= $form->field($model, 'date_create')->textInput() ?>
+    <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
 
-    <?= $form->field($model, 'date_update')->textInput() ?>
+<!--    --><?//= $form->field($model, 'date_update')->textInput() ?>
 
     <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
 
