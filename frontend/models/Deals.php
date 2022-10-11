@@ -43,7 +43,6 @@ class Deals extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 20],
             [['id_comment'], 'string'],
-            [['phone'], 'unique'],
             //[['tag'], 'string', 'max' => 200],
             [['status'], 'integer'],
             [['deal_sum'], 'integer'],
@@ -85,7 +84,6 @@ class Deals extends \yii\db\ActiveRecord
 
     public function getData()
     {
-        $model =  Deals::find()->orderBy(['date_create' => SORT_DESC])->limit(36)->all();
-        return $model;
+        return Deals::find()->orderBy(['date_create' => SORT_DESC])->all();
     }
 }
