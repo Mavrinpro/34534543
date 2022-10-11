@@ -46,6 +46,7 @@ class Deals extends \yii\db\ActiveRecord
             //[['tag'], 'string', 'max' => 200],
             [['status'], 'integer'],
             [['deal_sum'], 'integer'],
+            [['del'], 'boolean'],
         ];
     }
 
@@ -65,6 +66,7 @@ class Deals extends \yii\db\ActiveRecord
             'id_filial' => 'Филиал',
             'id_comment' => 'Сомментарий (id)',
             'deal_sum' => 'Сумма сделки',
+            'del' => 'Видимость',
         ];
     }
 
@@ -84,6 +86,6 @@ class Deals extends \yii\db\ActiveRecord
 
     public function getData()
     {
-        return Deals::find()->orderBy(['date_create' => SORT_DESC])->all();
+        return Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
     }
 }
