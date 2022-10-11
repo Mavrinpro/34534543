@@ -24,14 +24,14 @@ $model = new Deals();
 
 ?>
     <div class="deals-index">
-<?php if (\Yii::$app->session->getFlash('success')) {
-    Alert::begin([
-        'options' => [
-            'class' => 'alert-success',
-        ],
-    ]);
-    Alert::end();
-     }?>
+<?php //if (\Yii::$app->session->getFlash('success')) {
+//    Alert::begin([
+//        'options' => [
+//            'class' => 'alert-success',
+//        ],
+//    ]);
+//    Alert::end();
+//     }?>
         <p>
             <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
         </p>

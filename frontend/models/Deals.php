@@ -82,7 +82,6 @@ class Deals extends \yii\db\ActiveRecord
         return $this->hasOne(Statuses::className(), ['id' => 'status']);
     }
 
-
     public function getData()
     {
         return Deals::find()->orderBy(['date_create' => SORT_DESC])->all();
