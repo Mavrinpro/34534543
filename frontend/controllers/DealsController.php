@@ -102,6 +102,26 @@ class DealsController extends Controller
         ]);
     }
 
+     // Изменяет видимость сделки del = 1
+    public function actionUpdater($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
+                $model->del = 1;
+
+                $model->update();
+
+                return $this->redirect(['deals/index']);
+
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Updates an existing Deals model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -113,31 +133,15 @@ class DealsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+    if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
 
-            return $this->redirect(['deals/index']);
-        }
-
+        return $this->redirect(['deals/index']);
+    }
         return $this->render('update', [
             'model' => $model,
         ]);
     }
-// Изменяет видимость сдетки del = 1
-    public function actionUpdater($id)
-    {
-        $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-
-            $model->del = 1;
-            $model->update();
-            return $this->redirect(['deals/index']);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Deletes an existing Deals model.
