@@ -87,6 +87,7 @@ use yii\widgets\MaskedInput;
         </div>
 
             <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>
+            <?= $form->field($model, 'create_form')->hiddenInput(['value' => 0])->label(false); ?>
 
     </div>
     <div class="form-group">
