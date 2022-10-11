@@ -80,7 +80,11 @@ use kartik\select2\Select2;
         </div>
         <div class="col-md-6">
     <?= $form->field($model, 'deal_sum')->textInput(['type'=>'number']) ?>
-        </div></div>
+        </div>
+
+            <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>
+
+    </div>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
