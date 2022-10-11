@@ -72,12 +72,13 @@ use kartik\select2\Select2;
             <?= $form->field($model, 'deal_sum')->textInput(['type' => 'number']) ?>
         </div>
 
-        <?= $form->field($model, 'del')->hiddenInput(['value' => true])->label(false); ?>
+        <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>
+        <?= Html::hiddenInput('update_form', 0);?>
 
     </div>
     <div class="row">
         <div class="col-md-6 d-flex">
-            <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
         </div>
     </div>
