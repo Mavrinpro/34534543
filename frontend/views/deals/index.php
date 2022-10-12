@@ -52,13 +52,23 @@ $model = new Deals();
 
         $WHERE_IDS = [];
         $TAGS_KEYS = [];
-        // Ссобираем все ID в массив, чтобы дальше сделать по ним одну выборку вместо кучи
-        foreach ($p as $photo) {
-            $WHERE_IDS[] = $photo->tag;
-        }
 
         // Делаем выборку по всем ID
+        $tag_arr = app\models\Tags::find()->asArray()->all();
+
+        /*
+        // Ссобираем все ID в массив, чтобы дальше сделать по ним одну выборку вместо кучи
+        foreach ($p as $photo) {
+            $tag_list = explode(',', $photo->tag);
+            if(isset($tag_list) && sizeof($tag_list) > 0) {
+                foreach($tag_list as $res) {
+                    $WHERE_IDS[] = $res;
+                }
+            }
+        }
         $tag_arr = app\models\Tags::find()->where(['id' => $WHERE_IDS])->asArray()->all();
+        */
+
 
         // Пересобираем массив в данными, чтобы исключить множественную выборку, и вносим данные в ключи
         if (isset($tag_arr) && sizeof($tag_arr) > 0) {
@@ -74,7 +84,25 @@ $model = new Deals();
                 <?php
                 $DATA = [];
 
+
                 foreach ($p as $k => $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
+
                 $size[] = $photo;
                     // $m =  $photo->getStatuses();
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
@@ -94,7 +122,12 @@ $model = new Deals();
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) .
                             '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
+                
+                '.implode(' ', $badge).'
+                
+                
+                
+                
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
                     }else {
@@ -113,6 +146,22 @@ $model = new Deals();
                 <?php
 
                 foreach ($p as $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
                     $status = ['status' => $photo->status];
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                         $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
@@ -129,8 +178,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
+                '.implode(' ', $badge).'  ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
 
                     } else {
@@ -153,6 +201,22 @@ $model = new Deals();
                 <div class="block_status border-bottom mb-2 text-center bg-olive"><?= $blockStatus[3] ?></div>
                 <?php
                 foreach ($p as $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
                     $status = ['status' => $photo->status];
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                         $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
@@ -168,7 +232,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
+                '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
                     } else {
@@ -195,6 +259,22 @@ $model = new Deals();
 
 
                 foreach ($p as $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
                     $status = ['status' => $photo->status];
 
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
@@ -211,7 +291,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
+                '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
                     } else {
@@ -234,6 +314,22 @@ $model = new Deals();
                 <div class="block_status border-bottom mb-2 text-center bg-success"><?= $blockStatus[5] ?></div>
                 <?php
                 foreach ($p as $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
                     $status = ['status' => $photo->status];
 
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
@@ -250,7 +346,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
+                '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
                     } else {
@@ -273,6 +369,22 @@ $model = new Deals();
                 <div class="block_status border-bottom mb-2 text-center bg-gray"><?= $blockStatus[6] ?></div>
                 <?php
                 foreach ($p as $photo) {
+
+                    $badge = [];
+
+                    // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
+                    // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
+                    // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
+                    // строку через implode, так удобнее отрисовать данные
+                    $tag_list = explode(',', $photo->tag);
+                    if(isset($tag_list) && sizeof($tag_list) > 0) {
+                        foreach($tag_list as $res) {
+                            if(strlen(@$TAGS_KEYS[$res]['name']) > 1) {
+                                $badge[] = '<div class="deal_tag badge badge-pill badge-light d-inline-block border">' .(@$TAGS_KEYS[$res]['name'] ? $TAGS_KEYS[$res]['name'] : $photo->tag). '</div>';
+                            }
+                        }
+                    }
+
                     $status = ['status' => $photo->status];
 
                     if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
@@ -289,7 +401,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
-                <div class="deal_tag badge badge-pill badge-light b-block mr-1">' . $TAGS_KEYS[$photo->tag]['name'] . '</div>
+                '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . $photo->deal_sum . ' ₽</div>' : "") . '
                 </div></div>'];
                     } else {
