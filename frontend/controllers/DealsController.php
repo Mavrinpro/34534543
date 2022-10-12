@@ -88,8 +88,10 @@ class DealsController extends Controller
         $model = new Deals();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->tag = implode(",",$model->tag);
 
+                $model->save();
                 return $this->redirect(['deals/index']);
 
             }
@@ -133,10 +135,12 @@ class DealsController extends Controller
     {
         $model = $this->findModel($id);
 
-    if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-
+    if ($this->request->isPost && $model->load($this->request->post())) {
+        $model->tag = implode(",",$model->tag);
+        $model->save();
         return $this->redirect(['deals/index']);
     }
+        $model->tag= explode(',', $model->tag);
         return $this->render('update', [
             'model' => $model,
         ]);
