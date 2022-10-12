@@ -24,7 +24,23 @@ use kartik\select2\Select2;
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'tag')->dropDownList(ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'), ['prompt' => 'Теги...']) ?>
+<!--            --><?//= $form->field($model, 'tag')->dropDownList(ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'), ['prompt' => 'Теги...']) ?>
+            <?php
+            echo '<label class="control-label">Теги</label>'; ?>
+            <?=
+            Select2::widget([
+                'model' => $model,
+                'name' => 'tag',
+                'attribute' => 'tag',
+
+                'data' => ArrayHelper::map(\app\models\Tags::find()->orderBy('id')->all(),'id','name'),
+                //['1'=>'1','2'=>2],
+                'options' => [
+                    'placeholder' => 'Выбрать теги ...',
+                    'multiple' => true
+                ],
+            ]);
+            ?>
             <!--            --><? //= $form->field($model, 'tag')->widget(\kartik\select2\Select2::classname(), [
             //                'data' => ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'),
             //                'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
