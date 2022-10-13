@@ -65,7 +65,7 @@ use kartik\select2\Select2;
 
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(\app\models\Statuses::find()->all(), 'id', 'name'), ['prompt' => 'Статус...']); ?>
-            <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false); ?>
+            <?= $form->field($model, 'date_update')->hiddenInput(['value' => $date])->label(false); ?>
         </div>
     </div>
     <div class="row">
