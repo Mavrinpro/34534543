@@ -39,6 +39,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['name', 'phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create'], 'safe'],
+            [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 20],
