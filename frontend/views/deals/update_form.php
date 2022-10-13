@@ -86,6 +86,10 @@ use kartik\select2\Select2;
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'deal_sum')->textInput(['type' => 'number']) ?>
+            <p><b>Дата создания:</b> <?= date('d.m.y H:i:s', strtotime($model->date_create)) ?> <b>Дата обновления:</b>
+                <?=
+               $model->date_update != null ?  date('d.m.y H:i:s', strtotime($model->date_update)) :
+                    "не производилось" ?></p>
         </div>
 
         <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>
