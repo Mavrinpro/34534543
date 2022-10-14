@@ -42,7 +42,6 @@ class DealsController extends Controller
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
-
         if ($_POST['action'] === 'dragged'){
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
