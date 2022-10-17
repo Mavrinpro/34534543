@@ -19,7 +19,7 @@ use yii\bootstrap4\Modal;
 
 $this->title = 'Сделки';
 $this->params['breadcrumbs'][] = $this->title;
-$model = new Deals();
+//$model = new Deals();
 //Yii::$app->user->setFlash('error');
 
 ?>
@@ -93,7 +93,7 @@ $model = new Deals();
                 $DATA = [];
 
 
-                foreach ($p as $k => $photo) {
+                foreach ($model as $k => $photo) {
                     //$user_id[] = $photo->getUser($photo->id_operator);
                     $badge = [];
                     // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
@@ -150,7 +150,7 @@ $model = new Deals();
                 <div class="block_status border-bottom mb-2 text-center bg-purple"><?= $blockStatus[2] ?></div>
                 <?php
 
-                foreach ($p as $photo) {
+                foreach ($model as $photo) {
 
                     $badge = [];
 
@@ -207,7 +207,7 @@ $model = new Deals();
             <div class="col-md-2 dr">
                 <div class="block_status border-bottom mb-2 text-center bg-olive"><?= $blockStatus[3] ?></div>
                 <?php
-                foreach ($p as $photo) {
+                foreach ($model as $photo) {
 
                     $badge = [];
 
@@ -267,7 +267,7 @@ $model = new Deals();
                 <?php
 
 
-                foreach ($p as $photo) {
+                foreach ($model as $photo) {
 
                     $badge = [];
 
@@ -324,7 +324,7 @@ $model = new Deals();
             <div class="col-md-2 dr">
                 <div class="block_status border-bottom mb-2 text-center bg-success"><?= $blockStatus[5] ?></div>
                 <?php
-                foreach ($p as $photo) {
+                foreach ($model as $photo) {
 
                     $badge = [];
 
@@ -381,7 +381,7 @@ $model = new Deals();
             <div class="col-md-2 dr">
                 <div class="block_status border-bottom mb-2 text-center bg-gray"><?= $blockStatus[6] ?></div>
                 <?php
-                foreach ($p as $photo) {
+                foreach ($model as $photo) {
 
                     $badge = [];
 
