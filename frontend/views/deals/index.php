@@ -36,8 +36,7 @@ $model = new Deals();
             <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
 
-        <?php  $p = Deals::getData(); ?>
-
+        <?php  //$p = Deals::getData(); ?>
         <?php //echo $this->render('', ['model' => $searchModel]); ?>
         <?php //$user = \common\models\User::findOne($id) ?>
 
@@ -127,7 +126,7 @@ $model = new Deals();
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '"><span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
-              
+              <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
                 
                 
@@ -183,7 +182,8 @@ $model = new Deals();
                 <div id="item' . $photo->id . '" class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[1] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
-                <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">' . $photo->phone .'</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'  ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
                 </div></div>'];
@@ -239,6 +239,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
@@ -299,6 +300,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
@@ -355,6 +357,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
@@ -411,6 +414,7 @@ $model = new Deals();
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
