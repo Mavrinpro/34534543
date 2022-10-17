@@ -53,10 +53,19 @@ $model = new Deals();
 
         $WHERE_IDS = [];
         $TAGS_KEYS = [];
+        $USER_KEYS = [];
 
         // Делаем выборку по всем ID
         $tag_arr = app\models\Tags::find()->asArray()->all();
 
+//        foreach ($p as $user){
+//            $user_list = $user->getUser($user->id_operator);
+//
+//                $USER_KEYS[] = $user_list;
+//
+//        }
+        //var_dump($USER_KEYS[$user->id_operator][0]->username);
+//var_dump($USER_KEYS);
         /*
         // Ссобираем все ID в массив, чтобы дальше сделать по ним одну выборку вместо кучи
         foreach ($p as $photo) {
@@ -69,7 +78,6 @@ $model = new Deals();
         }
         $tag_arr = app\models\Tags::find()->where(['id' => $WHERE_IDS])->asArray()->all();
         */
-
 
         // Пересобираем массив в данными, чтобы исключить множественную выборку, и вносим данные в ключи
         if (isset($tag_arr) && sizeof($tag_arr) > 0) {
@@ -87,9 +95,8 @@ $model = new Deals();
 
 
                 foreach ($p as $k => $photo) {
-
+                    //$user_id[] = $photo->getUser($photo->id_operator);
                     $badge = [];
-
                     // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
                     // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
                     // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
@@ -118,10 +125,9 @@ $model = new Deals();
                         $ph[] = $photo->name;
                         $items[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '"><span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) .
-                            '</div>
-                <div class="deal_phone">' . $photo->phone . '</div>
-                
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div class="deal_phone">' . $photo->phone .'</div>
+              
                 '.implode(' ', $badge).'
                 
                 
@@ -232,7 +238,6 @@ $model = new Deals();
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[2] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
-                <div class="deal_phone">' . $photo->getUser($photo->id_operator) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 '.implode(' ', $badge).'
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
