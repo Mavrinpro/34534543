@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use common\models\User;
 use Yii;
 use app\models\Statuses;
 use kartik\select2\Select2;
@@ -30,7 +31,6 @@ class Deals extends \yii\db\ActiveRecord
     {
         return 'deals';
     }
-
     /**
      * {@inheritdoc}
      */
@@ -62,7 +62,7 @@ class Deals extends \yii\db\ActiveRecord
             'tag' => 'Тег',
             'date_create' => 'дата создания',
             'status' => 'Статус',
-            'id_operator' => 'Оператор',
+            'id_operator' => 'Ответственный',
             'id_filial' => 'Филиал',
             'id_comment' => 'Сомментарий (id)',
             'deal_sum' => 'Сумма сделки',
@@ -73,6 +73,11 @@ class Deals extends \yii\db\ActiveRecord
     {
         $query = Tags::find()->where(['id' => $id])->one();
         return($query);
+    }
+
+    public function getUser()
+    {
+        return $this->hasMany(User::class, ['id' => 'id_operator']);
     }
 
     public function getBranch(){
