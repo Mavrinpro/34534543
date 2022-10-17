@@ -39,6 +39,7 @@ class DealsController extends Controller
      */
     public function actionIndex()
     {
+        $p = Deals::find()->with('user')->orderBy('date_create DESC')->all();
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
@@ -57,6 +58,7 @@ class DealsController extends Controller
 
 
         return $this->render('index', [
+            'p' => $p,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             $dataProvider->pagination->pageSize=150
