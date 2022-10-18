@@ -53,7 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
         $WHERE_IDS = [];
         $TAGS_KEYS = [];
         $USER_KEYS = [];
-
         // Делаем выборку по всем ID
         $tag_arr = app\models\Tags::find()->asArray()->all();
 
@@ -121,17 +120,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     if ($status['status'] == $BSTATUS[0]) {
 
-                        $ph[] = $photo->name;
+                        //$ph[] = $photo->name;
                         $items[] = ['content' => '
-                <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '"><span class="deal_date text_ccc">' . $DATA['date'] . '</span>
+                <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
+                <div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '">
+                <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
-              <div class="deal_phone">'. $photo->user[0]['username'].'</div>
+                <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
-                
-                
-                
-                
                 ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
                                     0, ' ', ' ') . ' ₽</div>' : "") . '
                 </div></div>'];
