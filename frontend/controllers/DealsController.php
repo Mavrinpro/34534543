@@ -56,7 +56,6 @@ class DealsController extends Controller
             return json_encode($arr);
         }
 
-
         return $this->render('index', [
             'model' => $model,
             'searchModel' => $searchModel,
@@ -93,10 +92,12 @@ class DealsController extends Controller
                 $model->tag = implode(",",$model->tag);
 
                 $model->save();
+                \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
                 return $this->redirect(['deals/index']);
 
             }
         } else {
+            \Yii::$app->session->setFlash('error', 'Что-то пошло не так!');
             $model->loadDefaultValues();
         }
 
@@ -111,7 +112,7 @@ class DealsController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-
+            \Yii::$app->session->setFlash('error', 'Сделка удалена!');
                 $model->del = 1;
 
                 $model->update();
@@ -139,6 +140,7 @@ class DealsController extends Controller
     if ($this->request->isPost && $model->load($this->request->post())) {
         $model->tag = implode(",",$model->tag);
         $model->save();
+        \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
         return $this->redirect(['deals/index']);
     }
         $model->tag= explode(',', $model->tag);
