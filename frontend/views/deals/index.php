@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //    ]);
 //    Alert::end();
 //     }?>
+        <?= Alert::widget() ?>
         <p>
             <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
