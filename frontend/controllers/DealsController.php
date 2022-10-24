@@ -90,7 +90,7 @@ class DealsController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->tag = implode(",",$model->tag);
-
+                $model->id_comment = strip_tags($model->id_comment);
                 $model->save();
                 \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
                 return $this->redirect(['deals/index']);
@@ -139,6 +139,7 @@ class DealsController extends Controller
 
     if ($this->request->isPost && $model->load($this->request->post())) {
         $model->tag = implode(",",$model->tag);
+        $model->id_comment = strip_tags($model->id_comment);
         $model->save();
         \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
         return $this->redirect(['deals/index']);
