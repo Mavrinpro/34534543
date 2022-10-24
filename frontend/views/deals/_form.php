@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
-use yii\widgets\MaskedInput;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -24,10 +23,7 @@ use yii\widgets\MaskedInput;
 </div>
 
     <div class="col-md-6">
-    <?= $form->field($model, 'phone')->textInput(['maxlength' => true])->widget(MaskedInput::class, ['mask' => '+7 (999)-999-99-99','clientOptions' => [
-        'removeMaskOnSubmit' => true,
-    ]]) ?>
-
+    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
     </div>
     </div>
     <div class="row">
