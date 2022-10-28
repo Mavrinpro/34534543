@@ -46,6 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= isset($model->deal_sum) ? '<hr><b>Сумма сделки: </b>'.$model->deal_sum .' ₽' : '' ?>
             <hr>
             <b>Комментарий:</b> <?= $model->id_comment ?>
+            <hr>
+            <b><div class="mb-3">Запись звонка: <audio controls="">
+                        <source src="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863" type="audio/ogg; codecs=vorbis">
+                        <source src="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863" type="audio/mpeg">
+                        Тег audio не поддерживается вашим браузером.
+                        <a href="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863">Скачайте музыку</a>.
+                    </audio></div></b>
+
         </div>
     </div>
 </div>
