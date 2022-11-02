@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
     <?php
 
     $form = ActiveForm::begin(); ?>
+    
     <?php $date = date('Y-m-d H:i:s'); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
