@@ -17,7 +17,6 @@ use yii\helpers\ArrayHelper;
     <?php $date = date('Y-m-d H:i:s'); ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-
     <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
         ['prompt'=>'Оператор...']) ?>
 
