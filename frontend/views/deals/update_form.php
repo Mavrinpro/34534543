@@ -41,8 +41,6 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
-
-
         </div>
 
         <div class="col-md-6">
