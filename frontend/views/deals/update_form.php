@@ -41,7 +41,7 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
-           
+
 
         </div>
 
