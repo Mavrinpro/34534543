@@ -55,25 +55,6 @@ class DealsController extends Controller
             ];
             return json_encode($arr);
         }
-//        if ($_POST['action'] === 'ajaxModal') {
-//            $id = $_POST['block_id'];
-//            $post = Deals::find()->where(['id' => $id])->one();
-//            $operator = User::find()->where(['id' => $post->id_operator])->one();
-//            $arr = [
-//                'id'      => $post->id,
-//                'name' => $post->name,
-//                'phone' => $post->phone,
-//                'message' => $post->id_comment,
-//                'tag' => $post->tag,
-//                'status' => $post->status,
-//                'id_filial' => $post->id_filial,
-//                'operator' => $post->id_operator,
-//                'sum' => $post->deal_sum,
-//            ];
-//
-//            return json_encode($arr);
-//
-//        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
