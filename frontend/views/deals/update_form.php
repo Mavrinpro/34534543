@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 
@@ -11,7 +11,7 @@ use kartik\select2\Select2;
 ?>
 
 <div class="deals-form">
-    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15'], 'errorCssClass' => 'text-danger', 'successCssClass' => 'text-success',]); ?>
+    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
         <div class="col-md-6">
@@ -24,7 +24,7 @@ use kartik\select2\Select2;
     </div>
     <div class="row">
         <div class="col-md-6">
-<!--            --><?//= $form->field($model, 'tag')->dropDownList(ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'), ['prompt' => 'Теги...']) ?>
+
             <?php
             echo '<label class="control-label">Теги</label>'; ?>
             <?=
