@@ -96,8 +96,9 @@ class DealsController extends Controller
                 return $this->redirect(['deals/index']);
 
             }
-        } else {
             \Yii::$app->session->setFlash('error', 'Что-то пошло не так!');
+        } else {
+
             $model->loadDefaultValues();
         }
 
