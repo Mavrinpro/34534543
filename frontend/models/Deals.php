@@ -73,8 +73,7 @@ class Deals extends \yii\db\ActiveRecord
 
     public function getTags($id)
     {
-        $query = Tags::find()->where(['id' => $id])->one();
-        return($query);
+        return $this->hasMany(Tags::class, ['id' => explode(', ', $id)]);
     }
 
     public function getUser()

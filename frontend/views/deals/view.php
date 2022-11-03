@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="shadow p-3 rounded-lg">
             <?php $adress = \app\models\Branch::findOne(['id' => $model->id_filial])?>
             <?php $status = \app\models\Statuses::findOne(['id' => $model->status])?>
+            <?php $tags = \app\models\Tags::find()->where(['id' => explode(',',$model->tag)])->all()?>
 
             <b>ID:</b> <?= $model->id ?>
             <hr>
@@ -36,7 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <hr>
             <b>Телефон:</b> <?= $model->phone ?>
             <hr>
-            <b>Теги:</b> <?= $model->getTags($model)->name ?>
+            <b>Теги:</b> <?php foreach ($tags as $tag){
+                echo '<div class="deal_tag badge badge-pill badge-light d-inline-block border">'.$tag['name']
+               .'</div>';
+            } ?>
             <hr>
             <b>Филиал:</b> <?= $adress->name ?>
             <hr>
