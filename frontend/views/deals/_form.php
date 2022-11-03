@@ -23,9 +23,7 @@ use kartik\select2\Select2;
     </div>
     <div class="row">
         <div class="col-md-6">
-<!--    --><?//= $form->field($model, 'tag')->dropDownList(ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'),
-//        ['prompt'=>'Теги...']
-//    ) ?>
+
             <?php
             echo '<label class="control-label">Теги</label>'; ?>
             <?=
