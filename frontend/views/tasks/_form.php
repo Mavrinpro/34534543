@@ -24,7 +24,7 @@ use yii\helpers\ArrayHelper;
         ['prompt'=>'Оператор...']) ?>
     </div>
     <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
-        
+
     <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
 
     <div class="form-group">
