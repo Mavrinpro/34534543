@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
     <?php
 
     $form = ActiveForm::begin(); ?>
-    
+
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
     <div class="col-md-6">
@@ -24,9 +24,7 @@ use yii\helpers\ArrayHelper;
         ['prompt'=>'Оператор...']) ?>
     </div>
     <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
-
-<!--    --><?//= $form->field($model, 'date_update')->textInput() ?>
-
+        
     <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
 
     <div class="form-group">
