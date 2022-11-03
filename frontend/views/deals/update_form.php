@@ -41,26 +41,8 @@ use kartik\select2\Select2;
                 ],
             ]);
             ?>
-            <!--            --><? //= $form->field($model, 'tag')->widget(\kartik\select2\Select2::classname(), [
-            //                'data' => ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'),
-            //                'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
-            //                'pluginOptions' => [
-            //                    'allowClear' => true
-            //                ],
-            //            ]); ?>
-            <?php
-            //echo '<label class="control-label">Теги</label>';
-            //            echo \kartik\select2\Select2::widget([
-            //                'name' => 'tag',
-            //                 'hideSearch' => true,
-            //                'data' => ArrayHelper::map(\app\models\Tags::find()->all(), 'id', 'name'),
-            //                'size' => \kartik\select2\Select2::THEME_KRAJEE,
-            //                'options' => ['placeholder' => 'Select a state ...', 'multiple' => true, 'autocomplete' => 'off'],
-            //                'pluginOptions' => [
-            //                    'allowClear' => true
-            //                ],
-            //            ])
-            ?>
+           
+
         </div>
 
         <div class="col-md-6">
