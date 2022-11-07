@@ -144,11 +144,15 @@ class DealsController extends Controller
         $model->save();
         \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
         return $this->redirect(['deals/index']);
+    }else {
+        if (\Yii::$app->request->isAjax){
+            $model->tag = explode(',', $model->tag);
+            return $this->renderAjax('update_form', ['model' => $model]);
+        }
+        $model->tag = explode(',', $model->tag);
+        return $this->render('update', ['model' => $model,]);
     }
-        $model->tag= explode(',', $model->tag);
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+
     }
 
 
