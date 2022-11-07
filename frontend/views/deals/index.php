@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
                 <div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -179,7 +179,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
                 <div id="item' . $photo->id . '" class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[1] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) .
+                            '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'  ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum,
@@ -235,7 +236,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item2[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[2] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -296,7 +297,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item3[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[3] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -353,7 +354,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item4[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[4] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -410,7 +411,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item5[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[5] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
+                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -487,57 +488,12 @@ JS
 
 
 <?php $this->registerJs(<<<JS
-//$('a.datamodal').click(function (){
-//    var dataId = $(this).data('id');
-//    $('#saveBtn').attr('data-id', dataId);
-//    $.ajax({
-//            type: "POST",
-//            url: "",
-//            data: 'action=ajaxModal&&block_id='+dataId,
-//            dataType: 'JSON',
-//            beforeSend: function (){
-//                $('h5#exampleModalLabel').text('').addClass('spinner-border text-success spinner-border-sm');
-//                $('#recipient-name').val('');
-//                $('#message-text').val('');
-//                //$('form').trigger('reset');
-//                },
-//            success: function (data){
-//                console.log(data);
-//                $('#recipient-name').val(data.id);
-//                $('#message-text').val(data.message);
-//                $('h5#exampleModalLabel').removeClass('spinner-border text-success spinner-border-sm').text(data.name);
-//                $('.redactor-editor').html(data.message);
-//                $('#deals-name').val(data.name);
-//                $('#deals-tag').val(data.tag);
-//                $('#deals-phone').val(data.phone);
-//                $('#deals-status').val(data.status);
-//                $('#deals-id_filial').val(data.id_filial);
-//                $('#deals-id_operator').val(data.operator);
-//                $('#deals-deal_sum').val(data.sum);
-//            },
-//            error: function (jqXHR, exception) {
-//        var msg = "";
-//        if (jqXHR.status === 0) {
-//            msg = 'Not connect. Verify Network.';
-//        } else if (jqXHR.status == 404) {
-//            msg = 'Requested page not found. [404]';
-//        } else if (jqXHR.status == 500) {
-//            msg = 'Internal Server Error [500].';
-//        } else if (exception === 'parsererror') {
-//            msg = 'Requested JSON parse failed.';
-//        } else if (exception === 'timeout') {
-//            msg = 'Time out error.';
-//        } else if (exception === 'abort') {
-//            msg = 'Ajax request aborted.';
-//        } else {
-//            msg = 'Uncaught Error.' + jqXHR.responseText;
-//        }
-//        alert(msg+jqXHR.responseText);
-//    }
-//        })
-//})
-
-
+$('.linkModal').on('click', function (){
+    var data = $(this).data();
+    $('#exmodal').modal('show');
+     $('#exmodal').find('.modal-title').text('id ' +data.id);
+     $('#exmodal').find('.modal-body').load('/deals/update?id=' +data.id);
+})
 JS
 ); ?>
 
