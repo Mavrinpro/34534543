@@ -64,6 +64,7 @@ class DealsController extends Controller
 
     }
 
+    
     /**
      * Displays a single Deals model.
      * @param int $id ID
