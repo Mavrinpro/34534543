@@ -488,12 +488,12 @@ JS
 
 
 <?php $this->registerJs(<<<JS
-$('.linkModal').on('click', function (){
-    var data = $(this).data();
-    $('#exmodal').modal('show');
-     $('#exmodal').find('.modal-title').text('id ' +data.id);
-     $('#exmodal').find('.modal-body').load('/deals/update?id=' +data.id);
-})
+// $('.linkModal').on('click', function (){
+//     var data = $(this).data();
+//     $('#exmodal').modal('show');
+//      $('#exmodal').find('.modal-title').text('id ' +data.id);
+//      $('#exmodal').find('.modal-body').load('/deals/update?id=' +data.id);
+// })
 JS
 ); ?>
 
