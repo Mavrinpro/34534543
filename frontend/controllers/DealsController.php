@@ -43,6 +43,7 @@ class DealsController extends Controller
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
+        $dataProvider->pagination = ['pageSize' => 150];
         if ($_POST['action'] === 'dragged'){
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
@@ -60,7 +61,7 @@ class DealsController extends Controller
             'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            $dataProvider->pagination->pageSize=150
+            //$dataProvider->pagination->pageSize=1
         ]);
 
     }
