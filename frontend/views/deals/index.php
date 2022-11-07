@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
                 <div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -179,7 +179,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
                 <div id="item' . $photo->id . '" class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[1] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) .
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) .
                             '</div>
                 <div class="deal_phone">' . $photo->phone .'</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
@@ -236,7 +236,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item2[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[2] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -297,7 +297,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item3[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[3] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -354,7 +354,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item4[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[4] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
@@ -411,7 +411,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $item5[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[5] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
-                <div>' . Html::a($photo->name, ['#', 'id' => $photo->id],['data-id' => $photo->id, 'class' => 'linkModal']) . '</div>
+                <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">'. $photo->user[0]['username'].'</div>
                 '.implode(' ', $badge).'
