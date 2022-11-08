@@ -43,7 +43,9 @@ class ReviewController extends Controller
             'query' => Reviews::find(),
 
             'pagination' => [
-                'pageSize' => 5
+                'pageSize' => 5,
+                'pageSizeParam' => false,
+                'forcePageParam' => false
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -56,7 +58,7 @@ class ReviewController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            //'searchModel' => $searchModel,
+            'searchModel' => $searchModel,
         ]);
     }
 

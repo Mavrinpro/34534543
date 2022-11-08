@@ -40,13 +40,13 @@ class DealsController extends Controller
     public function actionIndex()
     {
         $query = Deals::find()->with('user')->orderBy('date_create DESC');
-        $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 50, 'pageSizeParam' =>
+        $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 15, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
         $model = $query->offset($pages->offset)->limit($pages->limit)->all();
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
-        $dataProvider->pagination = ['pageSize' => 150];
+        //$dataProvider->pagination = ['pageSize' => 150];
         if ($_POST['action'] === 'dragged'){
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
@@ -148,7 +148,7 @@ class DealsController extends Controller
         $model->id_comment = strip_tags($model->id_comment);
         $model->save();
         \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
-        return $this->redirect(['deals/index']);
+        return $this->redirect(['deals/']);
     }
 //        if (\Yii::$app->request->isAjax){
 //            $model->tag = explode(',', $model->tag);

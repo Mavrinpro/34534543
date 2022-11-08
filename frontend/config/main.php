@@ -56,9 +56,23 @@ return [
 	        //'suffix' => '.html',
 	        'rules' => [
 		        '' => 'site/index',
-                'deals' => 'deals/index',
-                'deals/<id:\d+>' => 'deals/update',
+//                'deals/page/<page:\d+>' => 'deals/index',
+//                'deals' => 'deals/index',
+//                'deals/update/<id:\d+>' => 'deals/update',
+//                'deals/view/<id:\d+>' => 'deals/view',
+//                'doctors' => 'doctors/index',
+//                'doctors/update/<id:\d+>' => 'doctors/update',
+//                'doctors/view/<id:\d+>' => 'doctors/view',
+//                'review/page/<page:\d+>' => 'review/index',
+//                'review/page/<page:\d+>' => 'review/index',
+
+                '<controller:(deals|doctors|review|tasks|branch|tags)>/create' => '<controller>/create',
+                '<controller:(deals|doctors|review|tasks|branch|tags)>/<action:(update|delete|view|page)>/<id:\d+>' =>
+                    '<controller>/<action>',
+                '<controller:(deals|doctors|review|tasks|branch|tags)>/<page:\d+>' => '<controller>/index',
+                //'<controller:(deals|doctors|review)>s' => '<controller>/index',
                 //'<action>'=>'site<action>',
+
 	        ],
         ],
         'assetManager' => [

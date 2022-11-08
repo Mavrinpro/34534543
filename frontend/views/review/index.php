@@ -80,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 ],
+
                 'urlCreator' => function ($action, Reviews $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
