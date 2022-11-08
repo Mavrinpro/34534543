@@ -14,16 +14,16 @@ use yii\widgets\Pjax;
             <a href="<?=\yii\helpers\Url::home()?>" class="nav-link">Главная</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/deals/" class="nav-link">Сделки</a>
+            <a href="<?=\yii\helpers\Url::to('/deals')?>" class="nav-link">Сделки</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/tasks/" class="nav-link">Задачи</a>
+            <a href="/tasks" class="nav-link">Задачи</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/doctors/" class="nav-link">Врачи</a>
+            <a href="/doctors" class="nav-link">Врачи</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/review/" class="nav-link">Отзывы</a>
+            <a href="/review" class="nav-link">Отзывы</a>
         </li>
 
         <li class="nav-item dropdown">

@@ -41,21 +41,24 @@
                         'label' => 'Аналитика',
                         'icon' => 'tachometer-alt',
                         'badge' => '<span class="right badge badge-info">2</span>',
-                        'items' => [
-                            ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
-                        ]
+                        'url' => ['site/index'],
+//                        'items' => [
+//                            ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
+//                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
+//                        ]
                     ],
-                    ['label' => 'Сделки', 'url' => ['/deals/index'], 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-                    ['label' => 'Yii2 PROVIDED', 'header' => true],
+                    ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>\Yii::$app->controller->id == 'deals'],
+                    ['label' => 'Задачи', 'url' => ['/tasks'], 'icon' => 'thumbtack', 'active'=>\Yii::$app->controller->id
+                    == 'tasks'],
+                    //['label' => 'Yii2 PROVIDED', 'header' => true],
                     ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
+                    //['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
+                    ['label' => 'Филиалы', 'url' => ['/branch'], 'iconStyle' => 'fa fa-city',
+                        'active'=>\Yii::$app->controller->id == 'branch', ],
+                    ['label' => 'Теги', 'url' => ['/tags'], 'iconStyle' => 'fa fa-tags',
+                        'active'=>\Yii::$app->controller->id == 'tags', ],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Филиалы', 'url' => ['/branch/#'], 'iconStyle' => 'far',
-                        'active'=>\Yii::$app->controller->id == 'branch', ],
-                    ['label' => 'Теги', 'url' => ['/tags/#'], 'iconStyle' => 'far',
-                        'active'=>\Yii::$app->controller->id == 'tags', ],
 //                    [
 //                        'label' => 'Level1',
 //                        'items' => [
