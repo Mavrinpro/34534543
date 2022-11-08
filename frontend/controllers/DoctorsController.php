@@ -43,14 +43,18 @@ class DoctorsController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Doctors::find(),
 
-//            'pagination' => [
-//                'pageSize' => 5
-//            ],
-//            'sort' => [
-//                'defaultOrder' => [
-//                    'id' => SORT_ASC,
-//                ]
-//            ],
+            'pagination' => [
+                'pageSize' => 5,
+                'pageSizeParam' =>
+                    false,
+                'forcePageParam' => false
+            ],
+
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_ASC,
+                ]
+            ],
 
         ]);
 
