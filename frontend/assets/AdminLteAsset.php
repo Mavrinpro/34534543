@@ -12,11 +12,11 @@ class AdminLteAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/adminlte.min.css',
+        //'css/adminlte.min.css',
         '/css/site.css',
     ];
     public $js = [
-        'js/adminlte.min.js',
+        //'js/adminlte.min.js',
         '/js/Chart.min.js',
         '/js/custom.js',
         '//www.amcharts.com/lib/4/core.js',
