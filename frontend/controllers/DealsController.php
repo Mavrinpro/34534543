@@ -39,7 +39,10 @@ class DealsController extends Controller
      */
     public function actionIndex()
     {
-        $model = Deals::find()->with('user')->orderBy('date_create DESC')->all();
+        $query = Deals::find()->with('user')->orderBy('date_create DESC');
+        $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 50, 'pageSizeParam' =>
+            false, 'forcePageParam' => false]);
+        $model = $query->offset($pages->offset)->limit($pages->limit)->all();
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
@@ -59,6 +62,7 @@ class DealsController extends Controller
 
         return $this->render('index', [
             'model' => $model,
+            'pages' => $pages,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             //$dataProvider->pagination->pageSize=1
