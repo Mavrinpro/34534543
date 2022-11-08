@@ -207,3 +207,13 @@ use yii\widgets\Pjax;
     </ul>
 </nav>
 <!-- /.navbar -->
+<?php
+$js = <<<JS
+   $(".main-header .navbar-nav [href]").each(function () {
+    if (this.href == window.location.href) {
+        $(this).addClass("active");
+    }
+});     
+JS;
+$this->registerJs($js);
+        ?>
