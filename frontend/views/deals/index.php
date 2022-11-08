@@ -447,7 +447,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::end(); ?>
 
     </div>
+<div class="col-12">
+    <?= yii\bootstrap4\LinkPager::widget(['pagination' => $pages,
 
+        ]) ?>
+</div>
 <?php $this->registerJs(<<<JS
         let arr = [];
 $('.dr').sortable({
