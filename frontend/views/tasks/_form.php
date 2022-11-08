@@ -28,7 +28,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
     </div>
     </div>
     <?php ActiveForm::end(); ?>

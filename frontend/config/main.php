@@ -56,9 +56,9 @@ return [
 	        //'suffix' => '.html',
 	        'rules' => [
 		        '' => 'site/index',
-
-
-		        '<action>'=>'site/<action>',
+                'deals' => 'deals/index',
+                'deals/<id:\d+>' => 'deals/update',
+                //'<action>'=>'site<action>',
 	        ],
         ],
         'assetManager' => [

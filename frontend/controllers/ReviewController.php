@@ -41,16 +41,16 @@ class ReviewController extends Controller
         $searchModel = new Reviews();
         $dataProvider = new ActiveDataProvider([
             'query' => Reviews::find(),
-            /*
+
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 5
             ],
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
                 ]
             ],
-            */
+
         ]);
 
 
