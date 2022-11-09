@@ -31,7 +31,7 @@ class Reviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_doc'], 'integer'],
+            [['id_doc', 'name', 'phone'], 'required'],
             [['review'], 'string'],
             [['date_create'], 'safe'],
             [['name'], 'string', 'max' => 100],
