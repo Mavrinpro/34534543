@@ -39,14 +39,17 @@ class DealsController extends Controller
      */
     public function actionIndex()
     {
+        $offset = 40;
         $query = Deals::find()->with('user')->orderBy('date_create DESC');
-        $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => 15, 'pageSizeParam' =>
+        $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
         $model = $query->offset($pages->offset)->limit($pages->limit)->all();
-        $searchModel = new SearchDeals();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
+        //$searchModel = new SearchDeals();
+        //$dataProvider = $searchModel->search($this->request->queryParams);
+        //$dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
         //$dataProvider->pagination = ['pageSize' => 150];
+
+
         if ($_POST['action'] === 'dragged'){
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
@@ -59,11 +62,10 @@ class DealsController extends Controller
             ];
             return json_encode($arr);
         }
-
         return $this->render('index', [
             'model' => $model,
             'pages' => $pages,
-            'searchModel' => $searchModel,
+            //'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             //$dataProvider->pagination->pageSize=1
         ]);
