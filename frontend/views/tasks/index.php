@@ -63,11 +63,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
-            'user_id',
+            //'user_id',
+            [
+                //label' => 'Полное имя',
+                'attribute'=>'user_id',
+                'value' => 'user.username',
+                'format' => 'text',
+
+// esli nujen select
+                'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
+
+            ],
             'date_create',
             'date_update',
             //'status',
