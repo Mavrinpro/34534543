@@ -38,8 +38,10 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
+        $tasks = Tasks::find()->orderBy('date_create ASC')->all();
         $searchModel = new TasksSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, $tasks);
+        $dataProvider->query->with('user');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
