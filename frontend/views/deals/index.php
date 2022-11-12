@@ -453,7 +453,7 @@ $('.dr').sortable({
         console.log(arr['id']+'---');
         $.ajax({
             type: "POST",
-            url: "index",
+            url: "/deals/index",
             data: 'action=dragged&statusID='+arr['statusID']+'&block_id='+arr['id'],
             dataType: 'JSON',
             success: function (data){

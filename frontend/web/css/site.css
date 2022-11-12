@@ -97,7 +97,7 @@ span.deal_date {
     font-size: 12px;
 }
 .deal_phone{
-    font-size: 15px !important;
+    font-size: 12px !important;
 }
 .text_ccc{
     color: #ccc;
@@ -142,6 +142,7 @@ g[aria-labelledby="id-66-title"]{
 
 .deal_tag {
     font-weight: 500;
+    font-size: 10px !important;
 }
 audio
 {
