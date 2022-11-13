@@ -14,6 +14,7 @@ use Yii;
  * @property string|null $date_create
  * @property string|null $date_update
  * @property int|null $status
+ * @property int|null $deals_id
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'user_id'], 'required'],
+            [['name', 'user_id', 'deals_id'], 'required'],
             //[['user_id', 'status'], 'integer'],
             [['date_create', 'date_update'], 'safe'],
             [['name'], 'string', 'max' => 100],
@@ -50,11 +51,17 @@ class Tasks extends \yii\db\ActiveRecord
             'date_create' => 'Date Create',
             'date_update' => 'Date Update',
             'status' => 'Status',
+            'deals_id' => 'Телефон'
         ];
     }
 
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getDeals()
+    {
+        return $this->hasOne(Deals::class(), ['id' => 'deals_id']);
     }
 }
