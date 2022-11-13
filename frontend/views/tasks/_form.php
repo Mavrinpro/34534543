@@ -28,7 +28,7 @@ use yii\jui\AutoComplete;
     </div>
         <div id="memberssearch-family_name_id"></div>
         <div class="col-md-4">
-            <label class="control-label">Телефон</label>
+<!--            <label class="control-label">Телефон</label>-->
             <?php
 //            Select2::widget([
 //                'model' => $model,
@@ -48,26 +48,48 @@ use yii\jui\AutoComplete;
 
             //фомируем список
             $listdata=\app\models\Deals::find()
-                ->select(['phone as value', 'phone as label'])
+                ->select(['phone as value', 'phone as label', 'id as id'])
                 ->asArray()
                 ->all();
 
 
-            echo AutoComplete::widget([
-                    'name' => 'deals_id',
-                'clientOptions' => [
-                    'source' => $listdata,
-                    'minLength'=>'3',
-                    'autoFill'=>true,
-                    //'class' => 'form-control',
-                    'select' => new JsExpression("function( event, ui ) {
-			        $('#memberssearch-family_name_id').val(ui.item.id);//#memberssearch-family_name_id is the id of hiddenInput.
-			     }")],
-                'options'=>[
-                    'class'=>'form-control',
-                ]
-            ]);
-            ?>
+//            echo AutoComplete::widget([
+//                    'name' => 'Tasks[deals_id]',
+//                //'value' => 6,
+//                'attribute' => 'deals_id',
+//                'clientOptions' => [
+//                    'source' => $listdata,
+//                    'minLength'=>'3',
+//                    'autoFill'=>false,
+//                    //'class' => 'form-control',
+//                    'select' => new JsExpression("function( event, ui ) {
+//			        $('#memberssearch-family_name_id').val(ui.item.id);//#memberssearch-family_name_id is the id of hiddenInput.
+//			     }")],
+//                'options'=>[
+//                    'class'=>'form-control',
+//                ]
+//            ]);
+
+            echo $form->field($model, 'deals_id')->widget(AutoComplete::class, [
+        'name' => 'deals_id',
+        'id' => 'deals_id',
+        'value' => $model->id,
+        'clientOptions' => [
+            'source' => $listdata,
+            'minLength'=>'3',
+            'limit'=>'10',
+            'select' => new JsExpression("function( event, ui ) {
+    $('#model-pedigrees_id').val(ui.item.id);
+    }")],
+
+        'options'=>[
+            'class'=>'form-control'
+
+        ],
+    ]); ?>
+
+
+
 
 
 
