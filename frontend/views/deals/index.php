@@ -113,7 +113,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 // $m =  $photo->getStatuses();
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
@@ -168,7 +172,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 $status = ['status' => $photo->status];
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
@@ -220,7 +228,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 $status = ['status' => $photo->status];
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
@@ -280,7 +292,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
@@ -336,7 +352,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
@@ -392,7 +412,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
-                } else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
+                } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
+                    $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_update));
+                } else if (date('d', strtotime($photo->date_update)) == date('d') - 1) {
+                    $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_update));
+                }else if (date('d', strtotime($photo->date_create)) == date('d') - 1) {
                     $DATA['date'] = 'Вчера ' . date('H:i', strtotime($photo->date_create));
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
