@@ -9,7 +9,7 @@ use kartik\select2\Select2;
 /** @var app\models\Deals $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<?= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+<?= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
 <div class="deals-form">
     <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
     <?php $date = date('Y-m-d H:i:s'); ?>
