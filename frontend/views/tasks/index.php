@@ -79,14 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ],
             [
-                //label' => 'Полное имя',
-                'attribute'=>'user_id',
-                'value' => 'user.username',
-                'format' => 'text',
-
-// esli nujen select
-                'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
-
+                'attribute'=>'status',
+                'filter'=>array("1"=>"Активные","0"=>"Просроченные"),
             ],
 
             //'date_update',
@@ -97,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return "<b>{$member->date_end}</b>";
                 },
             ],
-            'status',
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
