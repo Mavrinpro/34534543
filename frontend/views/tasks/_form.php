@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
+use yii\jui\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Tasks $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -20,7 +21,24 @@ use yii\jui\AutoComplete;
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
     <div class="col-md-4">
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'date_end')->widget(\kartik\date\DatePicker::className(),[
+
+        'options' => [
+            'autocomplete' => 'off',
+            'placeholder' => 'Выберите дату',
+            'data' => [
+                'picker' => 'datepicker'
+            ]
+        ],
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'startDate' => 'today',
+            'todayHighlight' => true,
+            'format' => 'yyyy-mm-dd',
+
+        ]
+    ]) ?>
 </div>
     <div class="col-md-4">
     <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
@@ -48,7 +66,7 @@ use yii\jui\AutoComplete;
 
             //фомируем список
             $listdata=\app\models\Deals::find()
-                ->select(['phone as value', 'phone as label', 'id as id'])
+                ->select(['id as value', 'phone as label', 'id as id'])
                 ->asArray()
                 ->all();
 
@@ -86,15 +104,17 @@ use yii\jui\AutoComplete;
             'class'=>'form-control'
 
         ],
-    ]); ?>
+    ]);
 
 
 
+            ?>
 
 
-
+            <?= $form->field($model, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label
+            (false) ?>
             <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
-            <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
+            <?= $form->field($model, 'status')->hiddenInput(['value' => true])->label(false) ?>
 
         </div>
         <div class="form-group col-12">

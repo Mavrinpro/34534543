@@ -32,10 +32,10 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'user_id', 'deals_id'], 'required'],
+            [['user_id', 'deals_id', 'date_end'], 'required'],
             //[['user_id', 'status'], 'integer'],
-            [['date_create', 'date_update'], 'safe'],
-            [['name'], 'string', 'max' => 100],
+            [['date_create', 'date_update', 'name', 'status'], 'safe'],
+           //[['date_end'], 'datetime'],
         ];
     }
 
@@ -51,7 +51,8 @@ class Tasks extends \yii\db\ActiveRecord
             'date_create' => 'Date Create',
             'date_update' => 'Date Update',
             'status' => 'Status',
-            'deals_id' => 'Телефон'
+            'deals_id' => 'Телефон',
+            'date_end' => 'Дата'
         ];
     }
 

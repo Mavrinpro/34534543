@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\Deals;
 use app\models\Tasks;
 use app\models\TasksSearch;
 use yii\web\Controller;
