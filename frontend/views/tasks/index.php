@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
+            //'id',
+            //'name',
             //'user_id',
             [
                 //label' => 'Полное имя',
@@ -78,14 +78,35 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
 
             ],
-            'date_create',
-            'date_update',
-            //'status',
+            [
+                //label' => 'Полное имя',
+                'attribute'=>'user_id',
+                'value' => 'user.username',
+                'format' => 'text',
+
+// esli nujen select
+                'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
+
+            ],
+
+            //'date_update',
+            [
+                'attribute' => 'date_end',
+                'content' => function( $member )
+                {
+                    return "<b>{$member->date_end}</b>";
+                },
+            ],
+            'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                  'content' => function( $member )
+                {
+                    return "<b>{$member->date_end}</b>";
+                },
             ],
         ],
     ]); ?>
