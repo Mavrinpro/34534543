@@ -18,11 +18,13 @@ Modal::begin([
 'footer' => 'Footer',
 ]);
 
-echo 'Say hello...';
+echo "<div id='modalContent'></div>";
 
 Modal::end();
 ?>
+<?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
 <?= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
+
 <div class="deals-form">
 
     <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
@@ -99,3 +101,27 @@ Modal::end();
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$this->registerJs(<<<JS
+    $(function(){
+        console.log($('#tasks-deals_id').attr('name'));
+    // changed id to class
+    $('.modalButton').on('click', function (){
+        var id = $(this).data('id');
+        var id_operator = $('#deals-id_operator').val();
+        console.log(id_operator);
+        $.get($(this).attr('href'), function(data) {
+          $('#w0').modal('show').find('#modalContent').html(data);
+          $('#w0').find('#tasks-deals_id').val(id);
+          $('#w0').find('#tasks-user_id').val(id_operator);
+          
+       });
+        //console.log($(this).data('id'));
+    //$('#tasks-deals_id').val($(this).data('id'));
+       return false;
+    });
+    
+}); 
+JS
+);

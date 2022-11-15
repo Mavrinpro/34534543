@@ -32,7 +32,7 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'deals_id', 'date_end'], 'required'],
+            [['user_id', 'deals_id', 'date_end'], 'safe'],
             //[['user_id', 'status'], 'integer'],
             [['date_create', 'date_update', 'name', 'status'], 'safe'],
            //[['date_end'], 'datetime'],

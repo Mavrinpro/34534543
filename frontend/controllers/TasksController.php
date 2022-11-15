@@ -87,6 +87,25 @@ class TasksController extends Controller
         ]);
     }
 
+    public function actionForma($id = null, $deals_id = null)
+    {
+        $model = new Tasks();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                //echo '<pre>';
+                //var_dump($model); die();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('update_form', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Updates an existing Tasks model.
      * If update is successful, the browser will be redirected to the 'view' page.
