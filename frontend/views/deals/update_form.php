@@ -4,13 +4,27 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
-
+use yii\bootstrap4\Modal;
+//use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 /** @var yii\widgets\ActiveForm $form */
+
+?>
+<?php
+Modal::begin([
+'title' => '<h5>Hello world</h5>',
+'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
+'footer' => 'Footer',
+]);
+
+echo 'Say hello...';
+
+Modal::end();
 ?>
 <?= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
 <div class="deals-form">
+
     <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
