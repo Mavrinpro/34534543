@@ -20,7 +20,7 @@ use yii\jui\DatePicker;
 
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
 
             <?= $form->field($model, 'date_end')->widget(\kartik\date\DatePicker::className(),[
 
@@ -40,9 +40,8 @@ use yii\jui\DatePicker;
                 ]
             ]) ?>
         </div>
-        <div class="col-md-4">
             <?= $form->field($model, 'user_id')->hiddenInput()->label(false) ?>
-        </div>
+
         <div id="memberssearch-family_name_id"></div>
 
         <?= $form->field($model, 'deals_id')->hiddenInput()->label(false) ?>

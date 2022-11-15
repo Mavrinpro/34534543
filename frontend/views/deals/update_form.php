@@ -13,9 +13,9 @@ use yii\bootstrap4\Modal;
 ?>
 <?php
 Modal::begin([
-'title' => '<h5>Hello world</h5>',
-'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
-'footer' => 'Footer',
+'title' => '<h5>Добавление задачи</h5>',
+//'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
+//'footer' => 'Footer',
 ]);
 
 echo "<div id='modalContent'></div>";
@@ -23,7 +23,7 @@ echo "<div id='modalContent'></div>";
 Modal::end();
 ?>
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
-<?= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
+<?//= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
 
 <div class="deals-form">
 
