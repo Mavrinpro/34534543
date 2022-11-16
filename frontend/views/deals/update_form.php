@@ -23,7 +23,6 @@ echo "<div id='modalContent'></div>";
 Modal::end();
 ?>
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
-<?//= Html::a('Создать задачу', ['tasks/create', 'id' => $model->id, 'deals_id' => $model->id], ['class' => 'btn btn-success']) ?>
 
 <div class="deals-form">
 
