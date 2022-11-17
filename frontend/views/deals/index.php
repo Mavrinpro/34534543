@@ -16,6 +16,7 @@ use kop\y2sp\ScrollPager;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
+/** @var app\models\Deals $model */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Сделки';
@@ -51,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($blockStatus as $key => $stat) {
         $BSTATUS[] = $key;
     }
-
+    $strToTime = strtotime(date('d.m.Y'));
     $WHERE_IDS = [];
     $TAGS_KEYS = [];
     $USER_KEYS = [];
@@ -95,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             foreach ($model as $k => $photo) {
-                //$user_id[] = $photo->getUser($photo->id_operator);
+                echo $photo->user->name;
                 $badge = [];
                 // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
                 // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
@@ -110,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
                 $size[] = $photo;
-                // $m =  $photo->getStatuses();
+
                 if (date('d.m.y', strtotime($photo->date_create)) == date('d.m.y')) {
                     $DATA['date'] = 'Сегодня ' . date('H:i', strtotime($photo->date_create));
                 } else if (date('d.m.y', strtotime($photo->date_update)) == date('d.m.y')) {
@@ -122,20 +123,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
-                $status = ['status' => $photo->status];
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
 
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ($photo->tasks[0]->deals_id != null && $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+                $status = ['status' => $photo->status];
                 if ($status['status'] == $BSTATUS[0]) {
 
-                    //$ph[] = $photo->name;
                     $items[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '">
                 <div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[0] . '" data-id="' . $photo->id . '">
                 <span class="deal_date text_ccc">' . $DATA['date'] . '</span>
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
-                <div class="deal_phone">' . $photo->phone . '</div>
+                <div class="deal_phone">' . $photo->phone .'-'.$photo->tasks[0]->deals_id.'</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
                 ' . implode(' ', $badge) . '
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end'].'
                 </div></div>'];
                 } else {
 
@@ -181,6 +191,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
+
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
+
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ($photo->tasks[0]->deals_id != null && $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+
                 if ($status['status'] == 2) {
 
                     $item[] = ['content' => '
@@ -190,7 +213,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div>' . Html::a($photo->name, ['update', 'id' => $photo->id]) . '</div>
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
-                ' . implode(' ', $badge) . '  ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . implode(' ', $badge) . '  ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end']. '
                 </div></div>'];
 
                 } else {
@@ -207,11 +230,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-md-2 dr">
             <div class="block_status border-bottom mb-2 text-center bg-olive"><?= $blockStatus[3] ?></div>
+
             <?php
             foreach ($model as $photo) {
-
                 $badge = [];
-
                 // Тут создаем массив из TAG который в табилце, т.к там через запятую данные, соответственно
                 // нужно по каждой проходиться в цикле, поэтому ниже мы делаем explode и проходимся по каждому ID
                 // и выписываем в отдельный badge чтобы было красиво, а ниже из массива badge просто делаем
@@ -237,6 +259,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 } else {
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
+
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
+
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ($photo->tasks[0]->deals_id != null && $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+
                 if ($status['status'] == 3) {
 
                     $item2[] = ['content' => '
@@ -246,7 +281,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
                 ' . implode(' ', $badge) . '
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end']. '
                 </div></div>'];
                 } else {
                     $item2[] = ['content' => ""];
@@ -302,6 +337,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
 
+
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
+
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ($photo->tasks[0]->deals_id != null && $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+
                 if ($status['status'] == 4) {
                     $item3[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[3] . '" data-id="' . $photo->id . '">
@@ -310,7 +358,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
                 ' . implode(' ', $badge) . '
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end']. '
                 </div></div>'];
                 } else {
                     $item3[] = ['content' => ""];
@@ -362,6 +410,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
 
+
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
+
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ( $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+
                 if ($status['status'] == 5) {
                     $item4[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[4] . '" data-id="' . $photo->id . '">
@@ -370,7 +431,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
                 ' . implode(' ', $badge) . '
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end'].'
                 </div></div>'];
                 } else {
                     $item4[] = ['content' => ""];
@@ -422,6 +483,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     $DATA['date'] = date('d.m.y', strtotime($photo->date_create));
                 }
 
+                $resultdate  = $strToTime > strtotime($photo->tasks[0]->date_end);
+
+                if ($photo->tasks[0]->deals_id != null) {
+                    $DATA['date_end'] = '<div class="badge badge-pill badge-success d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+
+                    if ($photo->tasks[0]->deals_id != null && $resultdate) {
+                        $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
+                    }
+                }else{
+                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                }
+
                 if ($status['status'] == 6) {
                     $item5[] = ['content' => '
                 <div class="mb-2 dgdfdg" data-id="' . $photo->id . '"><div class="rounded shadow-sm p-2 border position-relative bg-white" data-status="' . $BSTATUS[5] . '" data-id="' . $photo->id . '">
@@ -430,7 +503,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="deal_phone">' . $photo->phone . '</div>
                 <div class="deal_phone">' . $photo->user[0]['username'] . '</div>
                 ' . implode(' ', $badge) . '
-                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . '
+                ' . ($photo->deal_sum > 0 ? '<div class="ml-auto d-inline-block">' . number_format($photo->deal_sum, 0, ' ', ' ') . ' ₽</div>' : "") . $DATA['date_end'].'
                 </div></div>'];
                 } else {
                     $item5[] = ['content' => ""];

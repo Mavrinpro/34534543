@@ -3,6 +3,7 @@
 namespace app\models;
 
 use common\models\User;
+use app\models\Tasks;
 use Yii;
 use app\models\Statuses;
 use kartik\select2\Select2;
@@ -69,6 +70,9 @@ class Deals extends \yii\db\ActiveRecord
             'deal_sum' => 'Сумма сделки',
             'del' => 'Видимость',
         ];
+    }
+    public function getTasks(){
+        return $this->hasMany(Tasks::className(), ['deals_id' => 'id']);
     }
 
     public function getTags($id)

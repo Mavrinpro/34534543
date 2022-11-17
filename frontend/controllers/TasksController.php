@@ -71,11 +71,11 @@ class TasksController extends Controller
     public function actionCreate($id = null, $deals_id = null)
     {
         $model = new Tasks();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 //echo '<pre>';
                 //var_dump($model); die();
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
