@@ -25,7 +25,8 @@
         "kartik-v/yii2-widget-select2": "dev-master",
         "smalot/pdfparser": "^2.2",
         "gufy/pdftohtml-php": "~2",
-        "kop/yii2-scroll-pager": "dev-master"
+        "kop/yii2-scroll-pager": "dev-master",
+        "2amigos/yii2-chartjs-widget": "~2.0"
 
     },
     "require-dev": {
