@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $DATA['date_end'] = '<div class="badge badge-pill badge-danger d-block mt-2">' . date('d.m.Y', strtotime($photo->tasks[0]->date_end)) . '</div>';
                     }
                 }else{
-                    $DATA['date_end'] = '<div class="deal_tag badge badge-pill d-block mt-2 text-right">нет задач</div>';
+                    $DATA['date_end'] = '<div class="deal_tag badge d-block mt-2 text-right">нет задач</div>';
                 }
                 $status = ['status' => $photo->status];
                 if ($status['status'] == $BSTATUS[0]) {
