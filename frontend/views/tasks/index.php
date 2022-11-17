@@ -79,11 +79,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'status',
+                'format' => 'html',
                'value' => function($model){
                          if($model->status == '1'){
-                            return 'Активная';
+                            return '<span class="text-success">Активная</span>';
+                         }else if($model->status == '0'){
+                             return '<span class="text-danger">Просроченная</span>';
                          }else{
-                             return 'Просроченная';
+                             return '<span class="text-gray">Не определена</span>';
                          }
                        },
                 'filter'=>array("1"=>"Активные","0"=>"Просроченные"),
@@ -92,9 +95,13 @@ $this->params['breadcrumbs'][] = $this->title;
             //'date_update',
             [
                 'attribute' => 'date_end',
+                'format' => 'html',
                 'content' => function( $member )
                 {
-                    return "<b>{$member->date_end}</b>";
+                    if (date('d.m.Y', strtotime($member->date_end)) == '01.01.1970'){
+                        return 'Дата не установлена';
+                    }
+                    return date('d.m.Y', strtotime($member->date_end));
                 },
             ],
 
