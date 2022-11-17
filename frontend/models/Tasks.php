@@ -33,7 +33,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'deals_id', 'date_end'], 'safe'],
-            //[['user_id', 'status'], 'integer'],
+            [['date_end'], 'required'],
             [['date_create', 'date_update', 'name', 'status'], 'safe'],
            //[['date_end'], 'datetime'],
         ];
