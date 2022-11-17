@@ -58,7 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -80,6 +79,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'status',
+               'value' => function($model){
+                         if($model->status == '1'){
+                            return 'Активная';
+                         }else{
+                             return 'Просроченная';
+                         }
+                       },
                 'filter'=>array("1"=>"Активные","0"=>"Просроченные"),
             ],
 
