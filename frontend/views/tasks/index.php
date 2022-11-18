@@ -7,43 +7,12 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use common\widgets\Alert;
+use kartik\date\DatePicker;
 //use Smalot\PdfParser\Parser;
 /** @var yii\web\View $this */
 /** @var app\models\TasksSearch $searchModel */
+/** @var app\models\Tasks $model */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-
-// Parse PDF file and build necessary objects.
-//$parser = new \Smalot\PdfParser\Parser;
-//$pdf = $parser->parseFile("http://cdn.glazcentre.ru/docs/text.pdf");
-
-//$data = $pdf->getPages()[0]->getDataTm();
-
-//var_dump($data);
-//foreach ($data as $key => $datum) {
-//    //echo $datum[1].'<br>';
-//}
-?>
-<!--Ф.И.О: --><?//= $data[8][1]. "</br>" ?>
-<!--Пол: --><?//= $data[10][1]. "</br>" ?>
-<!--Год рождения: --><?//= $data[12][1]. "</br>" ?>
-<!--Дата взятия биоматериала: --><?//= $data[14][1]. "</br>" ?>
-<!--<table style="width: 100%;">-->
-<!--    <thead>-->
-<!--    <th>-->
-<!--        <td>--><?//= $data ?><!--</td>-->
-<!--        <td>shsrth</td>-->
-<!--        <td>shsrth</td>-->
-<!--    </th>-->
-<!--    </thead>-->
-<!--</table>-->
-<?php
-//
-//foreach ($data as $items) {
-//
-//}
-
-
-
 
 $this->title = 'Задачи';
 $this->params['breadcrumbs'][] = $this->title;
@@ -67,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             //'name',
             //'user_id',
+
             [
                 //label' => 'Полное имя',
                 'attribute'=>'user_id',
@@ -96,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'date_end',
                 'format' => 'html',
+
                 'content' => function( $member )
                 {
                     if (date('d.m.Y', strtotime($member->date_end)) == '01.01.1970'){
@@ -103,6 +74,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return date('d.m.Y', strtotime($member->date_end));
                 },
+                'filter' => DatePicker::widget([
+                        'model' => $searchModel,
+                    //'options' => ['width' => '100px'],
+                    'attribute' => 'date_end',
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'pluginOptions' => [
+                        'format' => 'yyyy-mm-dd',
+                        'autoclose' => true,
+                        'todayHighlight' => true,
+                    ]
+                ]),
             ],
 
             [
