@@ -43,7 +43,8 @@ class TasksController extends Controller
         $searchModel = new TasksSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $tasks);
         $dataProvider->query->with('user');
-
+        $date = date('Y-m-d H:i:s');
+        Tasks::updateAll(['status' => 1], ['>', 'date_end', $date ]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
