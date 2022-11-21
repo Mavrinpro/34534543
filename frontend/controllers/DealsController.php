@@ -40,7 +40,7 @@ class DealsController extends Controller
     public function actionIndex()
     {
         $offset = 40;
-        $query = Deals::find()->with('user')->orderBy('date_create DESC');
+        $query = Deals::find()->with('user', 'tasks')->orderBy('date_create DESC');
         $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
         $model = $query->offset($pages->offset)->limit($pages->limit)->all();
