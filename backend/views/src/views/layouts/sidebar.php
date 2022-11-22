@@ -57,6 +57,8 @@
                         'active'=>\Yii::$app->controller->id == 'branch', ],
                     ['label' => 'Теги', 'url' => ['/tags'], 'iconStyle' => 'fa fa-tags',
                         'active'=>\Yii::$app->controller->id == 'tags', ],
+                    ['label' => 'Шаблоны писем', 'url' => ['/layouts-mail/index'], 'iconStyle' => 'fa fa-envelope',
+                        'active'=>\Yii::$app->controller->id == 'layouts-mail', ],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
 //                    [

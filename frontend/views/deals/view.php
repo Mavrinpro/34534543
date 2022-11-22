@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -22,6 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
         <?= Html::a('Все', '/deals/', ['class' => 'btn btn-warning']) ?>
+    </div>
+    <div class="col-md-6">
+        <h3>Отправить письмо</h3>
     </div>
 </div>
 <div class="row">
@@ -59,6 +62,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </audio></div></b>
 
         </div>
+    </div>
+    <div class="col-md-6 mb-5 mt-3">
+        <div class="shadow p-3 rounded-lg">
+            haerhaer
+        </div>
+
     </div>
 </div>
 <!--<div class="deals-view">-->
