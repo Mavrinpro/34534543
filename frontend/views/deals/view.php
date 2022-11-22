@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 
@@ -65,7 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-6 mb-5 mt-3">
         <div class="shadow p-3 rounded-lg">
-            haerhaer
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+            <?= $form->field($model, 'id')->dropDownList(ArrayHelper::map(\app\models\LayoutsMail::find()->all(), 'id', 'name'),
+                ['prompt'=>'Выбрать шаблон письма...']); ?>
+            <?php ActiveForm::end(); ?>
         </div>
 
     </div>
