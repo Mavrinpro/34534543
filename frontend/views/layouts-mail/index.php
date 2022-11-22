@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -53,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
                     if ($data->file != '') {
 
-                        return Html::a($data->file, ['foldermail/' . $data->file], ['target'=>'_blank', 'class' =>'awfWEF']);
+                        return Html::a($data->file, ['foldermail/' . $data->file], ['target'=>'_blank',
+                            'data-pjax'=>false, 'class' => 'target_class']);
                     }else{
                         return '';
                     }
@@ -95,5 +95,13 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
-
 </div>
+<?php
+$js = <<<JS
+$('.target_class').attr('target', '_blank');
+
+
+
+JS;
+$this->registerJs($js);
+?>
