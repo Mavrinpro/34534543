@@ -74,17 +74,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return date('d.m.Y', strtotime($member->date_end));
                 },
-                'filter' => DatePicker::widget([
-                        'model' => $searchModel,
-                    //'options' => ['width' => '100px'],
-                    'attribute' => 'date_end',
-                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                    'pluginOptions' => [
-                        'format' => 'yyyy-mm-dd',
-                        'autoclose' => true,
-                        'todayHighlight' => true,
-                    ]
-                ]),
+//                'filter' => DatePicker::widget([
+//                    //'options' => ['width' => '100px'],
+//                    'options' => [
+//            'autocomplete' => 'off',
+//            'placeholder' => 'Выберите дату',
+//            'data' => [
+//                'picker' => 'datepicker'
+//            ]
+//        ],
+//                    'attribute' => 'date_end',
+//                    'model' => $searchModel,
+//                    'value' => $searchModel->date_create,
+//                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+//                    'pluginOptions' => [
+//                        'format' => 'yyyy-mm-dd',
+//
+//                        'autoclose' => true,
+//                        'todayHighlight' => true,
+//                    ]
+//                ]),
             ],
 
             [

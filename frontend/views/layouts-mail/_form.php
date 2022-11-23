@@ -27,13 +27,17 @@ use yii\redactor\models\FileUploadModel;
 <?php
 if (Yii::$app->controller->action->id == 'create'){ ?>
     <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+    </div>
 <?php }else{ ?>
 
     <?= $form->field($model, 'date_update')->hiddenInput(['value' => $date])->label(false) ?>
-<?php } ?>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
     </div>
+<?php } ?>
+
 
     <?php ActiveForm::end(); ?>
 
