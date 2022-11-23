@@ -197,8 +197,6 @@ class DealsController extends Controller
     {
         $model = $this->findModel($id);
         if ($this->request->isAjax) {
-
-
             return $model->name;
         }
     }

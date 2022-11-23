@@ -97,4 +97,17 @@ class Deals extends \yii\db\ActiveRecord
     {
         return Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
     }
+
+    public function actionSend() {
+        $send = Yii::$app->mailer->compose()
+            ->setFrom('from_mail@gmail.com')
+            ->setTo('to_mail@gmail.com')
+            ->setSubject('Test Message')
+            ->setTextBody('Plain text content. YII2 Application')
+            ->setHtmlBody('<b>HTML content <i>Ram Pukar</i></b>')
+            ->send();
+        if($send){
+            echo "Send";
+        }
+    }
 }
