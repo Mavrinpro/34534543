@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 
@@ -12,6 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Детально', 'url' => ['inde
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+
 <div class="row">
     <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -66,10 +68,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-6 mb-5 mt-3">
         <div class="shadow p-3 rounded-lg">
+            <?php Pjax::begin(); ?>
             <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
             <?= $form->field($model, 'id')->dropDownList(ArrayHelper::map(\app\models\LayoutsMail::find()->all(), 'id', 'name'),
-                ['prompt'=>'Выбрать шаблон письма...']); ?>
+                ['prompt'=>'Выбрать шаблон письма...'])->label(false); ?>
+            <div class="form-group">
+<!--                --><?//= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Отправить', ['deals/sendmail', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+            </div>
             <?php ActiveForm::end(); ?>
+            <?php Pjax::end(); ?>
         </div>
 
     </div>

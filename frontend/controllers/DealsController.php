@@ -192,4 +192,14 @@ class DealsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionSendmail($id)
+    {
+        $model = $this->findModel($id);
+        if ($this->request->isAjax) {
+
+
+            return $model->name;
+        }
+    }
 }

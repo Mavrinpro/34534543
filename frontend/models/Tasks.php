@@ -50,7 +50,7 @@ class Tasks extends \yii\db\ActiveRecord
             'user_id' => 'Кому',
             'date_create' => 'Date Create',
             'date_update' => 'Date Update',
-            'status' => 'Status',
+            'status' => 'Статус',
             'deals_id' => 'Телефон',
             'date_end' => 'Дата'
         ];

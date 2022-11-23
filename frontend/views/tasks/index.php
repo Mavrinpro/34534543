@@ -52,9 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                'value' => function($model){
                          if($model->status == '1'){
-                            return '<span class="text-success">Активная</span>';
+                            return '<span class="text-success"><span class="badge badge-success">Активная</span></span>';
                          }else if($model->status == '0'){
-                             return '<span class="text-danger">Просроченная</span>';
+                             return '<span class="text-danger"><span class="badge badge-danger">Просроченная</span></span>';
                          }else{
                              return '<span class="text-gray">Не определена</span>';
                          }
