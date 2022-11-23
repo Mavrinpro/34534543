@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Deals;
+use app\models\Mail;
 use common\models\User;
 use frontend\models\SearchDeals;
 use yii\web\Controller;
@@ -80,8 +81,17 @@ class DealsController extends Controller
      */
     public function actionView($id)
     {
+        $mail = new Mail();
+        if ($this->request->isPost) {
+
+
+                file_put_contents('text.txt', json_encode($this->request->Post('Deals')['id']));
+                //return $this->request->post('id');
+
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'mail' => $mail,
         ]);
     }
 
@@ -195,9 +205,6 @@ class DealsController extends Controller
 
     public function actionSendmail($id)
     {
-        $model = $this->findModel($id);
-        if ($this->request->isAjax) {
-            return $model->name;
-        }
+
     }
 }
