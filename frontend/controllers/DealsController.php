@@ -85,8 +85,8 @@ class DealsController extends Controller
         if ($this->request->isPost) {
 
 
-                file_put_contents('text.txt', json_encode($this->request->Post('Deals')['id']));
-                //return $this->request->post('id');
+            file_put_contents('text.txt', json_encode($this->request->Post('Deals')['id']));
+            //return $this->request->post('id');
 
         }
         return $this->render('view', [
@@ -201,10 +201,5 @@ class DealsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionSendmail($id)
-    {
-
     }
 }
