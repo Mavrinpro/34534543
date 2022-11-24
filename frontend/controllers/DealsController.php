@@ -84,14 +84,16 @@ class DealsController extends Controller
     {
         $mail = new Mail();
 
-        if ($this->request->isPost && $this->request->Post('Deals')['id'] != '') {
-            $layout = $mail->getLayouts($this->request->Post('Deals')['id']);
+        if ($this->request->isPost) {
+            if ($this->request->Post('Deals')['id'] != '') {
+                $layout = $mail->getLayouts($this->request->Post('Deals')['id']);
 
-                \Yii::$app->session->setFlash('success', 'Письмо "'.$layout->name.'" успешно отправлено '.
-                $this->request->Post('Deals')['id']);
-            file_put_contents('text.txt', json_encode([$this->request->Post('Deals')['id'], $layout->name]));
-            return $this->refresh();
-
+                \Yii::$app->session->setFlash('success', 'Письмо "<b class="text-warning">' . $layout->name . '</b>" успешно отправлено ');
+                file_put_contents('text.txt', json_encode([$this->request->Post('Deals')['id'], $layout->name]));
+                return $this->refresh();
+            }else{
+                \Yii::$app->session->setFlash('error', 'Нужно выбрать шаблон письма');
+            }
         }
         return $this->render('view', [
             'model' => $this->findModel($id),
