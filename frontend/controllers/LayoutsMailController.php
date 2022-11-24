@@ -116,7 +116,6 @@ class LayoutsMailController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{
                 return $this->redirect(['view', 'id' => $model->id]);
-
             }
         }
 

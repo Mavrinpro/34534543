@@ -89,7 +89,7 @@ class DealsController extends Controller
             if ($this->request->Post('Deals')['id'] != '') {
                 $layout = $mail->getLayouts($this->request->Post('Deals')['id']);
 
-                \Yii::$app->session->setFlash('success', 'Письмо "<b class="text-warning">' . $layout->name . '</b>" успешно отправлено ');
+                \Yii::$app->session->setFlash('success', 'Письмо: ' . $layout->name . ' успешно отправлено');
                 file_put_contents('text.txt', json_encode([$this->request->Post('Deals')['id'], $layout->name]));
                 return $this->refresh();
             }else{
