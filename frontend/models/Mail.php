@@ -30,4 +30,9 @@ class Mail extends Model
             'id' => 'ID',
         ];
     }
+
+    public function getLayouts($id)
+    {
+        return LayoutsMail::find()->where(['id' => $id])->one();
+    }
 }

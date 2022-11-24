@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use common\widgets\Alert;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 
@@ -13,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Детально', 'url' => ['inde
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-
+<?= Alert::widget() ?>
 <div class="row">
     <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

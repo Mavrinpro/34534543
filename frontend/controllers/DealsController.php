@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Deals;
+use app\models\LayoutsMail;
 use app\models\Mail;
 use common\models\User;
 use frontend\models\SearchDeals;
@@ -82,11 +83,14 @@ class DealsController extends Controller
     public function actionView($id)
     {
         $mail = new Mail();
-        if ($this->request->isPost) {
 
+        if ($this->request->isPost && $this->request->Post('Deals')['id'] != '') {
+            $layout = $mail->getLayouts($this->request->Post('Deals')['id']);
 
-            file_put_contents('text.txt', json_encode($this->request->Post('Deals')['id']));
-            //return $this->request->post('id');
+                \Yii::$app->session->setFlash('success', 'Письмо "'.$layout->name.'" успешно отправлено '.
+                $this->request->Post('Deals')['id']);
+            file_put_contents('text.txt', json_encode([$this->request->Post('Deals')['id'], $layout->name]));
+            return $this->refresh();
 
         }
         return $this->render('view', [
