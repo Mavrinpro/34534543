@@ -8,7 +8,6 @@ use yii\helpers\ArrayHelper;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
-use common\widgets\Alert;
 use yii\jui\DatePicker;
 use yii\jui\Sortable;
 use yii\bootstrap4\Modal;
@@ -34,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
     //    ]);
     //    Alert::end();
     //     }?>
-    <?= Alert::widget() ?>
     <p>
         <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

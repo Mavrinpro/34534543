@@ -14,25 +14,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Детально', 'url' => ['inde
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<?= \lavrentiev\widgets\toastr\NotificationFlash::widget([
-    'options' => [
-        "closeButton" => true,
-        "debug" => false,
-        "newestOnTop" => false,
-        "progressBar" => false,
-        "positionClass" => \lavrentiev\widgets\toastr\NotificationFlash::POSITION_TOP_RIGHT,
-        "preventDuplicates" => false,
-        "onclick" => null,
-        "showDuration" => "300",
-        "hideDuration" => "1000",
-        "timeOut" => "500000",
-        "extendedTimeOut" => "1000",
-        "showEasing" => "swing",
-        "hideEasing" => "linear",
-        "showMethod" => "fadeIn",
-        "hideMethod" => "fadeOut"
-    ]
-]) ?>
 <div class="row">
     <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

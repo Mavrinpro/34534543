@@ -26,7 +26,8 @@
         "smalot/pdfparser": "^2.2",
         "gufy/pdftohtml-php": "~2",
         "kop/yii2-scroll-pager": "dev-master",
-        "2amigos/yii2-chartjs-widget": "~2.0"
+        "2amigos/yii2-chartjs-widget": "~2.0",
+        "lavrentiev/yii2-toastr": "dev-master"
 
     },
     "require-dev": {
