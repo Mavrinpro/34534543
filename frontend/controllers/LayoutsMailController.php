@@ -77,7 +77,14 @@ class LayoutsMailController extends Controller
                     //$model->file->saveAs('foldermail/' . $model->file->baseName . '.' . $model->file->extension);
                     //$model->file = 'twet';
                     $model->save();
+
                 }
+                if ($model->save()){
+                \Yii::$app->session->setFlash('success', 'Шаблон письма успешно добавлен');
+                }else{
+                    \Yii::$app->session->setFlash('error', 'Произошла внутренняя ошибк! Обратитесь к администратору');
+                }
+
                 return $this->redirect(['view', 'id' => $model->id]);
 
             }
@@ -102,15 +109,17 @@ class LayoutsMailController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                \Yii::$app->session->setFlash('success', 'Шаблон письма успешно добавлен');
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->upload()) {
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{
                 return $this->redirect(['view', 'id' => $model->id]);
-            }
 
+            }
         }
+
 
         return $this->render('update', [
             'model' => $model,
