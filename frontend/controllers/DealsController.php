@@ -10,6 +10,7 @@ use frontend\models\SearchDeals;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap4\Toast;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
