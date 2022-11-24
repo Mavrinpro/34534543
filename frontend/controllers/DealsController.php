@@ -67,7 +67,7 @@ class DealsController extends Controller
             'model' => $model,
             'pages' => $pages,
             //'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            //'dataProvider' => $dataProvider,
             //$dataProvider->pagination->pageSize=1
         ]);
 
