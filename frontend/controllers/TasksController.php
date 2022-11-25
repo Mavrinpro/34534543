@@ -76,7 +76,7 @@ class TasksController extends Controller
             if ($model->load($this->request->post()) && $model->save()) {
                 //echo '<pre>';
                 //var_dump($model); die();
-
+                \Yii::$app->session->setFlash('success', 'Задача создана');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -119,6 +119,7 @@ class TasksController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            \Yii::$app->session->setFlash('success', 'Задача успешно обновлена');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
