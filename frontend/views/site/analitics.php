@@ -110,8 +110,6 @@ $this->title = 'Статистика';
 <!--    <div id="legenddiv3" class="hidden d-none"></div>-->
 <!--</div>-->
 <!--</div>-->
-
-
 <?php $this->registerJs(<<<JS
         
      jQuery(function($) {
