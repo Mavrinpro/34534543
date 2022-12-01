@@ -33,6 +33,7 @@
         </div> -->
 
         <!-- Sidebar Menu -->
+
         <nav class="mt-2">
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
@@ -43,11 +44,14 @@
                         'badge' => '<span class="right badge badge-info">2</span>',
                         'url' => ['site/index'],
 //                        'items' => [
-//                            ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
+                          // ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
 //                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
 //                        ]
+                        'active'=>\Yii::$app->controller->id == 'site'
                     ],
-                    ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>\Yii::$app->controller->id == 'deals'],
+                    ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'],
+                    ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
+                        'active'=>$this->context->route == 'deals/search-deals'],
                     ['label' => 'Задачи', 'url' => ['/tasks'], 'icon' => 'thumbtack', 'active'=>\Yii::$app->controller->id
                     == 'tasks'],
                     //['label' => 'Yii2 PROVIDED', 'header' => true],
