@@ -207,4 +207,16 @@ class DealsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    // Страница поиска всех сделок
+    public function actionSearchDeals()
+    {
+        $searchModel = new SearchDeals();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('search-deals', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
