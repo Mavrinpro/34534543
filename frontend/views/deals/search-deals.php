@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var frontend\models\SearchDeals $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Филиалы';
+$this->title = 'Поиск сделок';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="branch-index">
