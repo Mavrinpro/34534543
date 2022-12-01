@@ -32,9 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Branch $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'buttons' => [
+                    'update' => function ($url,$model, $key) {
+                        return Html::a(
+                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning"></i>',
+                            $url);
+                    },
+                    'view' => function ($url,$model, $key) {
+                        return Html::a(
+                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success"></i>',
+                            $url);
+                    },
+                    'delete' => function ($url,$model, $key) {
+                        return Html::a(
+                            '<i class="fa fa-trash-alt btn btn-sm btn-danger"></i>',
+                            $url,[
+                            //'title' => Yii::t('app', 'Delete'),
+                            'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
+                            'data-method' => 'post', 'data-pjax' => '1',
+                        ]);
+                    },
+
+
+                ],
             ],
         ],
     ]); ?>
