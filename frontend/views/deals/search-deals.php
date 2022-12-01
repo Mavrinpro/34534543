@@ -31,7 +31,30 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'phone',
             'tag',
-            'status',
+            //'status',
+            [
+                'attribute'=>'status',
+                'format' => 'html',
+                'value' => function($model){
+                    if($model->status == '1'){
+                        return '<span class="text-success"><span class="badge badge-success bg_blue">Звонки</span></span>';
+                    }else if($model->status == '2'){
+                        return '<span class="text-danger"><span class="badge badge-danger bg-olive">Думает</span></span>';
+                    }else if($model->status == '3'){
+                        return '<span class="text-danger"><span class="badge badge-danger">Записан на прием</span></span>';
+                    }
+                    else if($model->status == '4'){
+                        return '<span class="text-danger"><span class="badge badge-danger">Отказ</span></span>';
+                    }
+                    else if($model->status == '5'){
+                        return '<span class="text-danger"><span class="badge badge-danger">Информ звонок</span></span>';
+                    }
+                    else if($model->status == '6'){
+                        return '<span class="text-danger"><span class="badge badge-danger">Без тегов</span></span>';
+                    }
+                },
+                'filter'=>array("1"=>"Звонки","2"=>"Думает", "3" => "Записан на прием", "4" => "Отказ", "5" => "Информ звонок", "6" => "Без тегов" ),
+            ],
             [
                 'class' => ActionColumn::className(),
                 'buttons' => [
