@@ -6,6 +6,8 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\jui\DatePicker;
+//use kop\y2sp\ScrollPager;
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -30,8 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             'name',
             'phone',
-            'tag',
-            //'status',
+            //'tag',
+            //'date_create',
+            [
+                //label' => 'Полное имя',
+                'attribute'=>'tag',
+                'value' => function($model)
+                {
+                    return implode(',', $model->getTags2($model->tag)->column());
+                },
+                'format' => 'text',
+
+// esli nujen select
+                'filter'=>\app\models\Tags::find()->select(['name', 'id'])->indexBy('id')->column(),
+
+            ],
             [
                 'attribute'=>'status',
                 'format' => 'html',
