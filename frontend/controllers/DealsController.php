@@ -213,6 +213,7 @@ class DealsController extends Controller
     {
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = 15;
 
         return $this->render('search-deals', [
             'searchModel' => $searchModel,
