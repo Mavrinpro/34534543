@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use app\models\Tags;
+use common\models\User;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Deals;
