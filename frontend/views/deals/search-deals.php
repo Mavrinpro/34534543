@@ -39,7 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'tag',
                 'value' => function($model)
                 {
-                    return implode(',', $model->getTags2($model->tag)->column());
+
+                        if ($model->tag != "")
+                        {
+                            return 'Теги';
+                        }else{
+                            return 'нет тегов';
+                        }
+
                 },
                 'format' => 'text',
 
