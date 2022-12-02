@@ -37,20 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 //label' => 'Полное имя',
                 'attribute'=>'tag',
-                'value' => function($model)
-                {
+                'value' => 'tegi.name',
 
-                        if ($model->tag != "")
-                        {
-                            return 'Теги';
-                        }else{
-                            return 'нет тегов';
-                        }
-
-                },
                 'format' => 'text',
 
-// esli nujen select
                 'filter'=>\app\models\Tags::find()->select(['name', 'id'])->indexBy('id')->column(),
 
             ],

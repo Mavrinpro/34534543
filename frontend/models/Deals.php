@@ -102,6 +102,11 @@ class Deals extends \yii\db\ActiveRecord
         return Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
     }
 
+    public function getTegi()
+    {
+        return $this->hasOne(Tags::class, ['id' => 'tag']);
+    }
+
     public function actionSend($model) {
         $send = Yii::$app->mailer->compose()
             ->setFrom('from_mail@gmail.com')
