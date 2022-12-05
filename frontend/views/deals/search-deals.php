@@ -49,21 +49,33 @@ $this->params['breadcrumbs'][] = $this->title;
             //'date_create',
 
             [
+
+                    //'autocomplete'=> false,
                     'attribute' => 'date_create',
+                    'filterInputOptions' => [
+                            'autocomplete' => 'off'
+                    ],
                 //'model' => $searchModel,
                 'filter' => DateRangePicker::widget([
                 'name' => 'Deals[date_create]',
                 'model'=>$searchModel,
                 'attribute'=>'date_create',
-                'convertFormat'=>true,
-                    //'useWithAddon'=>true,
+                    'convertFormat'=>true,
+                    'useWithAddon'=>false,
                 'pluginOptions'=>[
                     'timePicker'=>true,
                     //'timePickerIncrement'=>30,
                     'locale'=>[
-                        'format'=>'Y-m-d H:i:s'
+                        'format'=>'Y-m-d'
+                    ],
+
+                ],
+                    'options' => [
+                        'autocomplete' => 'off',
+                        'class' => 'form-control'
                     ]
-                ]
+
+
             ])
 
             ],
