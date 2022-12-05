@@ -211,11 +211,13 @@ class DealsController extends Controller
     // Страница поиска всех сделок
     public function actionSearchDeals()
     {
+        $model = Deals::find();
         $searchModel = new SearchDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->pagination->pageSize = 15;
 
         return $this->render('search-deals', [
+            'model' => $model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

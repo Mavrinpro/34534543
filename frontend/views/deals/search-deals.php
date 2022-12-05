@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\jui\DatePicker;
+use kartik\daterange\DateRangePicker;
 //use kop\y2sp\ScrollPager;
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
@@ -32,8 +32,41 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id',
             'name',
             'phone',
+            //'id_operator',
+
+                [
+                    //label' => 'Полное имя',
+                    'attribute'=>'id_operator',
+                    'value' => 'us.username',
+                    'format' => 'text',
+
+// esli nujen select
+                    'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
+
+                ],
+
             //'tag',
             //'date_create',
+
+            [
+                    'attribute' => 'date_create',
+                //'model' => $searchModel,
+                'filter' => DateRangePicker::widget([
+                'name' => 'Deals[date_create]',
+                'model'=>$searchModel,
+                'attribute'=>'date_create',
+                'convertFormat'=>true,
+                    //'useWithAddon'=>true,
+                'pluginOptions'=>[
+                    'timePicker'=>true,
+                    //'timePickerIncrement'=>30,
+                    'locale'=>[
+                        'format'=>'Y-m-d H:i:s'
+                    ]
+                ]
+            ])
+
+            ],
             [
                 //label' => 'Полное имя',
                 'attribute'=>'tag',

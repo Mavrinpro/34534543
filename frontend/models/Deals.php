@@ -106,6 +106,10 @@ class Deals extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tags::class, ['id' => 'tag']);
     }
+    public function getUs()
+    {
+        return $this->hasOne(User::class, ['id' => 'id_operator']);
+    }
 
     public function actionSend($model) {
         $send = Yii::$app->mailer->compose()
