@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -112,8 +112,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter'=>array("1"=>"Звонки","2"=>"Думает", "3" => "Записан на прием", "4" => "Отказ", "5" => "Информ звонок", "6" => "Без тегов" ),
             ],
+
             [
                 'class' => ActionColumn::className(),
+                'header' =>    Html::a('Сбросить фильтр', ['deals/search-deals'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(
