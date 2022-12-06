@@ -95,11 +95,11 @@ class SearchDeals extends Deals
         }
 
         // фильтр по Номеру телефона
-        if($this->phone > 0) {
-            $query->andFilterWhere([
-                'phone' => $this->phone,
-            ]);
-        }
+//        if($this->phone > 0) {
+//            $query->andFilterWhere([
+//                'phone' => $this->phone,
+//            ]);
+//        }
 
         // фильтр по городам
         if($this->id_filial > 0) {
@@ -125,7 +125,7 @@ class SearchDeals extends Deals
             $query->andFilterWhere(['like', 'name', $this->name]);
         }
         // фильтра по телефону
-        if(strlen($this->name) > 1) {
+        if(strlen($this->phone) > 1) {
             $query->andFilterWhere(['like', 'phone', $this->phone]);
         }
 
