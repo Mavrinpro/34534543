@@ -1,5 +1,7 @@
 <?php
-use yii\helpers\Html;
+//use yii\helpers\Html;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\ActiveForm;
 ?>
 <div class="card">
     <div class="card-body login-card-body">
@@ -26,17 +28,17 @@ use yii\helpers\Html;
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
-            <div class="col-8">
-                <?= $form->field($model, 'rememberMe')->checkbox([
-                    'template' => '<div class="icheck-primary">{input}{label}</div>',
-                    'labelOptions' => [
-                        'class' => ''
-                    ],
-                    'uncheck' => null
-                ]) ?>
-            </div>
-            <div class="col-4">
-                <?= Html::submitButton('Sign In', ['class' => 'btn btn-primary btn-block']) ?>
+<!--            <div class="col-8">-->
+<!--                --><?//= $form->field($model, 'rememberMe')->checkbox([
+//                    'template' => '<div class="icheck-primary">{input}{label}</div>',
+//                    'labelOptions' => [
+//                        'class' => ''
+//                    ],
+//                    'uncheck' => null
+//                ]) ?>
+<!--            </div>-->
+            <div class="col-12">
+                <?= Html::submitButton('Войти', ['class' => 'btn btn-warning btn-block']) ?>
             </div>
         </div>
 
@@ -53,12 +55,28 @@ use yii\helpers\Html;
 <!--        </div>-->
         <!-- /.social-auth-links -->
 
-        <p class="mb-1">
-            <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-            <a href="register.html" class="text-center">Register a new membership</a>
-        </p>
+<!--        <p class="mb-1">-->
+<!--            <a href="forgot-password.html">I forgot my password</a>-->
+<!--        </p>-->
+<!--        <p class="mb-0">-->
+<!--            <a href="register.html" class="text-center">Register a new membership</a>-->
+<!--        </p>-->
     </div>
     <!-- /.login-card-body -->
 </div>
+
+<?php
+$css = <<<CSS
+body{
+    background: url(/img/forest.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.card{
+background-color: rgb(255 255 255 / 15%);
+    box-shadow: 0 0 47px -22px #000;
+}
+
+CSS;
+$this->registerCss($css);
+
