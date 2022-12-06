@@ -59,20 +59,16 @@ class SearchDeals extends Deals
      */
     public function search($params)
     {
+
         $query = Deals::find();
-
-
+        $query->with(['us', 'tegi']);
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
-
-        $this->load($params);
         if (!$this->validate()) {
-            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -131,10 +127,6 @@ class SearchDeals extends Deals
         // фильтра по телефону
         if(strlen($this->name) > 1) {
             $query->andFilterWhere(['like', 'phone', $this->phone]);
-        }
-        // фильтра по названию
-        if(strlen($this->name) > 1) {
-            $query->andFilterWhere(['like', 'name', $this->name]);
         }
 
 /*

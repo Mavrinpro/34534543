@@ -59,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => DateRangePicker::widget([
                 'name' => 'Deals[date_create]',
                 'model'=>$searchModel,
+
                 'attribute'=>'date_create',
                     'convertFormat'=>true,
                     'useWithAddon'=>false,
