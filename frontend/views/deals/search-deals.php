@@ -90,6 +90,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>\app\models\Tags::find()->select(['name', 'id'])->indexBy('id')->column(),
 
             ],
+
+
             [
                 'attribute'=>'status',
                 'format' => 'html',
@@ -112,6 +114,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
                 'filter'=>array("1"=>"Звонки","2"=>"Думает", "3" => "Записан на прием", "4" => "Отказ", "5" => "Информ звонок", "6" => "Без тегов" ),
+            ],
+
+            [
+                //label' => 'Полное имя',
+                'attribute'=>'id_filial',
+                'value' => 'branch.name',
+
+                'format' => 'text',
+
+                'filter'=>\app\models\Branch::find()->select(['name', 'id'])->indexBy('id')->column(),
+
             ],
 
             [

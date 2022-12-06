@@ -61,7 +61,7 @@ class SearchDeals extends Deals
     {
 
         $query = Deals::find();
-        $query->with(['us', 'tegi']);
+        $query->with(['us', 'tegi', 'branch']);
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
