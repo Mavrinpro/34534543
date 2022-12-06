@@ -149,5 +149,11 @@ audio
     padding: 0px;
     margin-bottom: -20px;
 }
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background: linear-gradient(270deg, #5461ac, #3f51b5ed);
+    background: -moz-linear-gradient(270deg, #5461ac, #3f51b5ed);
+    background: -webkit-linear-gradient(270deg, #5461ac, #3f51b5ed);
+    color: #8a9cff;
+}
 
 
