@@ -36,12 +36,6 @@
 
         <nav class="mt-2">
             <?php
-//            if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']){
-//                echo 199;
-//            }
-
-           // print_r(Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId()));
-            //echo Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())[0];
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
                     [
@@ -54,8 +48,9 @@
 //                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
 //                        ]
                         'active'=>\Yii::$app->controller->id == 'site',
-                        //'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
-                        //['superadmin']->name == 'superadmin',
+                        'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['admin']->name == 'admin',
+
                     ],
                     ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'],
                     ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
