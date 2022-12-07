@@ -16,7 +16,7 @@ return [
         'redactor' => 'yii\redactor\RedactorModule',
     ],
     'components' => [
-
+        'language' => 'ru',
         'view' => [
             'theme' => [
                 'pathMap' => [
@@ -24,6 +24,7 @@ return [
                 ],
             ],
         ],
+
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

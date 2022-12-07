@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use app\models\Deals;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
