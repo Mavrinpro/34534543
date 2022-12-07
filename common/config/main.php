@@ -17,9 +17,25 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+
         'language' => 'ru',
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+    ],
+    // Доступ только авторизованным пользователям
+    'as beforeRequest' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'actions' => ['login'],
+                'allow' => true,
+            ],
+            [
+
+                'allow' => true,
+                'roles' => ['@'],
+            ],
         ],
     ],
 ];
