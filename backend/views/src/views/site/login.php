@@ -5,7 +5,7 @@ use yii\bootstrap4\ActiveForm;
 ?>
 <div class="card">
     <div class="card-body login-card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg text-white text-center">Войдите в систему</p>
 
         <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
 
@@ -68,7 +68,7 @@ use yii\bootstrap4\ActiveForm;
 <?php
 $css = <<<CSS
 body{
-    background: url(/img/forest.jpg);
+    background: url(/img/eye.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
