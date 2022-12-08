@@ -23,6 +23,10 @@ return [
           ],
     ],
     'components' => [
+        'formatter' => [
+            'dateFormat'=>'dd-MM-yyyy',
+            'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
+        ],
         'log' => [
             'targets' => [
                 [
