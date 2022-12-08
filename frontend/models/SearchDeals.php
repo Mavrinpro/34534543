@@ -59,7 +59,7 @@ class SearchDeals extends Deals
      */
     public function search($params)
     {
-
+        //$query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]); - для конкретного пользователя
         $query = Deals::find();
         $query->with(['us', 'tegi', 'branch']);
         // add conditions that should always apply here
@@ -69,6 +69,7 @@ class SearchDeals extends Deals
 
         $this->load($params);
         if (!$this->validate()) {
+            $query->where('id_operator' == '1');
             return $dataProvider;
         }
 

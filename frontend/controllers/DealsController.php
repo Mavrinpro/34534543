@@ -59,7 +59,14 @@ class DealsController extends Controller
     public function actionIndex()
     {
         $offset = 40;
-        $query = Deals::find()->with('user', 'tasks')->orderBy('date_create DESC');
+        if  (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name ==
+            'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name ==
+            'admin'){
+            $query = Deals::find()->with('user', 'tasks')->orderBy('date_create DESC');
+        }else{
+
+        $query = Deals::find()->with('user', 'tasks')->where(['id_operator' =>  \Yii::$app->user->id])->orderBy('date_create DESC');
+        }
         $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
         $model = $query->offset($pages->offset)->limit($pages->limit)->all();
