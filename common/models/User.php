@@ -221,6 +221,7 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => 'Статус',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',
+            'role' => 'Роль'
         ];
     }
 }

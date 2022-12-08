@@ -49,7 +49,8 @@
 //                        ]
                         'active'=>\Yii::$app->controller->id == 'site',
                         'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
-                        ['admin']->name == 'admin',
+                        ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                            ['superadmin']->name == 'superadmin',
 
                     ],
                     ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'],
@@ -66,6 +67,10 @@
                         'active'=>\Yii::$app->controller->id == 'tags', ],
                     ['label' => 'Шаблоны писем', 'url' => ['/layouts-mail/index'], 'iconStyle' => 'fa fa-envelope',
                         'active'=>\Yii::$app->controller->id == 'layouts-mail', ],
+                    ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
+                        'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['superadmin']->name == 'superadmin', ],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'],
 //                    [
