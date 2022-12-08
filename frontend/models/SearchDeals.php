@@ -60,7 +60,11 @@ class SearchDeals extends Deals
     public function search($params)
     {
         //$query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]); - для конкретного пользователя
-        $query = Deals::find();
+        if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
+            $query = Deals::find();
+        }else{
+            $query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]);
+        }
         $query->with(['us', 'tegi', 'branch']);
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([

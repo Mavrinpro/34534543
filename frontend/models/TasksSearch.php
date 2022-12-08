@@ -2,9 +2,9 @@
 
 namespace app\models;
 
+use app\models\Tasks;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Tasks;
 
 /**
  * TasksSearch represents the model behind the search form of `app\models\Tasks`.
@@ -40,7 +40,12 @@ class TasksSearch extends Tasks
      */
     public function search($params)
     {
-        $query = Tasks::find();
+        if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
+            $query = Tasks::find();
+        }else{
+            $query = Tasks::find()->where(['user_id' =>  \Yii::$app->user->id]);
+        }
+
 
         // add conditions that should always apply here
 
