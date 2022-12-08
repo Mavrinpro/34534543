@@ -68,7 +68,7 @@ use yii\bootstrap4\ActiveForm;
 <?php
 $css = <<<CSS
 body{
-    background: url(/img/eye.jpg);
+    background-image: linear-gradient(358deg, rgb(0 0 0 / 58%), rgb(5 5 5 / 61%)), url(/img/eye.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }

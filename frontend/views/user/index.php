@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'format' => 'html',
+                'filter'=>array("10"=>"Активный","9"=>"Не активный", "0" => "Удаленный"),
                 'value'=> function($model)
                 {
                     if ($model->status == 10)

@@ -39,6 +39,7 @@ use yii\widgets\MaskedInput;
                 'options' => [
                     'placeholder' => 'Выбрать теги ...',
                     'multiple' => true,
+                    'theme'=>Select2::THEME_BOOTSTRAP
                 ],
             ]);
             ?>
