@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'date_update',
             [
                 'class' => ActionColumn::className(),
+                'header' =>    Html::a('Сбросить фильтр', ['layouts-mail/index'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(

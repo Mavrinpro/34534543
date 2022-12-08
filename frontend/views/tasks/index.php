@@ -98,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => ActionColumn::className(),
+                'header' =>    Html::a('Сбросить фильтр', ['index'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(
