@@ -130,6 +130,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'header' =>    Html::a('Сбросить фильтр', ['deals/search-deals'], ['class' => 'btn btn-sm btn-outline-primary']),
+                'visibleButtons' => [
+
+                    'delete' => function ($model) {
+                        return \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin';
+                    },
+                ],
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(
