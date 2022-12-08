@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password_hash',
             //'password_reset_token',
             'email:email',
-            'status',
+            //'status',
             [
               'attribute' => 'status',
                 'format' => 'html',
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('d.m.Y H:i:s', ($model->updated_at));
                 }
             ],
-            'verification_token',
+            //'verification_token',
         ],
     ]) ?>
 
