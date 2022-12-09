@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\User;
 use frontend\models\SearchUsers;
 use frontend\models\SignupForm;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,6 +23,21 @@ class UserController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'actions' => ['delete', 'index', 'update', 'view'],
+                            'allow' => true,
+                            'roles' => ['superadmin'],
+                        ],
+                        [
+                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
