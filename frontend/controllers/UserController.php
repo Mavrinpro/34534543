@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\User;
 use frontend\models\SearchUsers;
+use frontend\models\SignupForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,15 +68,17 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new SignupForm();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            if ($model->load($this->request->post()) && $model->signup()) {
+                \Yii::$app->session->setFlash('success', 'Новый пользователь зарегистрирован.');
+
+                    return $this->refresh();
+
+
             }
-        } else {
-            $model->loadDefaultValues();
-        }
+
 
         return $this->render('create', [
             'model' => $model,

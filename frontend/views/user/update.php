@@ -1,9 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\User $model */
+/** @var yii\bootstrap4\ActiveForm $form */
+/** @var \frontend\models\SignupForm $model */
+
+use yii\bootstrap4\Html;
+use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Update User: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
