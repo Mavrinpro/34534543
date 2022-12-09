@@ -12,7 +12,9 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'email')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Создать', ['class' => 'btn btn-success']) ?>
