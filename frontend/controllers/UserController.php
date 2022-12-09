@@ -74,7 +74,7 @@ class UserController extends Controller
             if ($model->load($this->request->post()) && $model->signup()) {
                 \Yii::$app->session->setFlash('success', 'Новый пользователь зарегистрирован.');
 
-                    return $this->refresh();
+                    return $this->redirect('/user/index');
 
 
             }

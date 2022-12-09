@@ -7,9 +7,8 @@
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
-$this->title = 'Регистрация нового пользователя';
-$this->params['breadcrumbs'][] = $this->title;
-echo Yii::$app->controller->action->id;
+// Проверка на использование экшена
+//echo Yii::$app->controller->action->id;
 ?>
 
 <div class="user-form col-md-5">
@@ -17,6 +16,8 @@ echo Yii::$app->controller->action->id;
     <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
     <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'status')->dropdownList([10 => 'Активный', 9 => 'Неактивный']) ?>
+
 
     <?= $form->field($model, 'email') ?>
 <?php if (Yii::$app->controller->action->id == 'create'){  ?>
@@ -24,7 +25,11 @@ echo Yii::$app->controller->action->id;
     <?php } ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+        <?php if (Yii::$app->controller->action->id == 'create'){  ?>
+        <?= Html::submitButton('Зарегистрировать', ['class' => 'btn btn-success', 'name' => 'signup-button']); ?>
+        <?php }else{
+            echo Html::submitButton('Изменить', ['class' => 'btn btn-success', 'name' => 'signup-button']);
+        } ?>
     </div>
     <?php ActiveForm::end(); ?>
 
