@@ -29,7 +29,7 @@ class UserController extends Controller
                         [
                             'actions' => ['delete', 'index', 'update', 'view'],
                             'allow' => true,
-                            'roles' => ['superadmin'],
+                            'roles' => ['superadmin', 'admin'],
                         ],
                         [
                             'actions' => ['view', 'logout', 'create', 'update', 'search-deals'],

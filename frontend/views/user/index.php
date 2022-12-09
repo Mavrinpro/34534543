@@ -24,6 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function ($model, $key, $index, $grid)
+        {
+            if($model->status == 10) {
+                return ['style' => 'background-color:#b5e9b7;'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -72,6 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'verification_token',
             [
                 'class' => ActionColumn::className(),
+                'header' =>    Html::a('Сбросить фильтр', ['index'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'visibleButtons' => [
 
                     'delete' => function ($model) {
