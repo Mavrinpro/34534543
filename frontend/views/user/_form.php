@@ -9,6 +9,7 @@ use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Регистрация нового пользователя';
 $this->params['breadcrumbs'][] = $this->title;
+echo Yii::$app->controller->action->id;
 ?>
 
 <div class="user-form col-md-5">
@@ -18,8 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
     <?= $form->field($model, 'email') ?>
-
+<?php if (Yii::$app->controller->action->id == 'create'){  ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
+    <?php } ?>
 
     <div class="form-group">
         <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
