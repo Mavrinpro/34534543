@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -78,24 +78,33 @@ $this->params['breadcrumbs'][] = $this->title;
             //'verification_token',
             [
                 'class' => ActionColumn::className(),
+                'template'=>'{view}{update}{check}{delete}',
                 'header' =>    Html::a('Сбросить фильтр', ['index'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'visibleButtons' => [
 
                     'delete' => function ($model) {
                         return \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin';
                     },
+                    'check' => function ($model) {
+                        return \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin';
+                    },
+
                 ],
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning"></i>',
+                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning mr-2"></i>',
                             $url);
                     },
                     'view' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success"></i>',
+                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success mr-2"></i>',
                             $url);
                     },
+                    'check' => function ($url, $model) {
+                        return Html::a('<i class="btn btn-sm btn-secondary mr-2"><i class="fas fa-lock"></i></i>', ['user/change-password', 'id' => $model->id]);
+                    },
+
                     'delete' => function ($url,$model, $key) {
                         return Html::a(
                             '<i class="fa fa-trash-alt btn btn-sm btn-danger"></i>',

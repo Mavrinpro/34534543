@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('<i class="fas fa-fingerprint"></i> Изменить пароль', ['user/change-password', 'id' => $model->id], ['class' => 'btn btn-secondary']) ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

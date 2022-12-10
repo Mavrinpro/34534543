@@ -3,10 +3,12 @@
 namespace common\models;
 
 use app\models\Deals;
+use Illuminate\Support\Facades\Auth;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\filters\auth\AuthMethod;
 use yii\web\IdentityInterface;
 
 /**
@@ -58,6 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['password', 'safe']
         ];
     }
 
@@ -181,6 +184,14 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
+    public function getPassword()
+
+    {
+
+        return '';
+
+    }
+
     /**
      * Generates "remember me" authentication key
      */
@@ -219,7 +230,7 @@ class User extends ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Логин',
             'full_name' => 'ФИО',
-            'password_hash' => 'Пароль',
+            'password' => 'Пароль',
             'status' => 'Статус',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',

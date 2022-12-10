@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\auth\AuthMethod;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -27,12 +28,12 @@ class UserController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'index', 'update', 'view'],
+                            'actions' => ['delete', 'index', 'update', 'view', 'change-password'],
                             'allow' => true,
                             'roles' => ['superadmin', 'admin'],
                         ],
                         [
-                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals'],
+                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals', 'change-password'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -88,6 +89,14 @@ class UserController extends Controller
 
 
             if ($model->load($this->request->post()) && $model->signup()) {
+                $userRole = \Yii::$app->authManager->getRole('user');
+                if ($model->signup()) {
+                    // Назначаем роль в методе afterSave модели User
+                    $auth = Yii::$app->authManager;
+                    $editor = $auth->getRole('user'); // Получаем роль editor
+                    $auth->can($editor, $this->id); // Назначаем пользователю, которому принадлежит модель User
+
+                }
                 \Yii::$app->session->setFlash('success', 'Новый пользователь зарегистрирован.');
 //                echo '<pre>'; die;
 //                var_dump($model);
@@ -158,5 +167,24 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+// Смена пароля пользователя
+    public function actionChangePassword($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(\Yii::$app->request->post())) {
+
+            $model->setPassword($this->request->Post('User')['password']);
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', 'Пароль изменен.');
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('change-password', [
+            'model'=>$model
+        ]);
     }
 }

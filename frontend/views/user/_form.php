@@ -33,7 +33,7 @@ use yii\bootstrap4\Html;
                 ],
             ])->hiddenInput(['value' => 10, 'class' => false])->label(false) ?>
         <?php }else{ ?>
-        <div class=" col-md-6">
+
             <div class="form-group">
                 <?= $form->field($model, 'status')->dropdownList([10 => 'Активный', 9 => 'Неактивный']); ?>
             </div>
@@ -57,5 +57,6 @@ use yii\bootstrap4\Html;
             </div>
         </div>
         <?php ActiveForm::end(); ?>
+
 
     </div>
