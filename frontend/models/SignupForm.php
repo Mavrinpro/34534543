@@ -12,6 +12,7 @@ use common\models\User;
 class SignupForm extends Model
 {
     public $username;
+    public $full_name;
     public $email;
     public $password;
     public $status;
@@ -40,6 +41,11 @@ class SignupForm extends Model
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['status', 'safe'],
+
+            ['full_name', 'trim'],
+            ['full_name', 'required'],
+            ['full_name','match', 'pattern' => '/^[а-я\s]+$/msiu', 'message' => 'Только русские буквы'],
+
         ];
     }
 
@@ -56,6 +62,7 @@ class SignupForm extends Model
         
         $user = new User();
         $user->username = $this->username;
+        $user->full_name = $this->full_name;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
@@ -93,6 +100,7 @@ class SignupForm extends Model
         return [
             'id' => 'ID',
             'username' => 'Логин',
+            'full_name' => 'ФИО',
             'password' => 'Пароль',
             'status' => 'Статус',
             'created_at' => 'Дата создания',

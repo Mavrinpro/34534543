@@ -68,7 +68,7 @@ return [
 //                'review/page/<page:\d+>' => 'review/index',
 
                 //'<controller:(deals|doctors|review|tasks|branch|tags)>/create' => '<controller>/create',
-                '<controller:(deals|doctors|review|tasks|branch|tags)>/<action:(update|delete|view)>/<id:\d+>' =>
+                '<controller:(deals|doctors|review|tasks|branch|tags|layouts-mail|user)>/<action:(update|delete|view)>/<id:\d+>' =>
                     '<controller>/<action>',
                 '<controller:\w+>/<page:\d+>' => '<controller>/index',
                 //'<controller:(deals|doctors|review)>s' => '<controller>/index',

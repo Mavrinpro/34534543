@@ -89,7 +89,8 @@ class UserController extends Controller
 
             if ($model->load($this->request->post()) && $model->signup()) {
                 \Yii::$app->session->setFlash('success', 'Новый пользователь зарегистрирован.');
-
+//                echo '<pre>'; die;
+//                var_dump($model);
                     return $this->redirect('/user/index');
 
 
@@ -112,7 +113,12 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->username = $this->request->Post('User')['username'];
+            $model->full_name = $this->request->Post('User')['full_name'];
+            $model->email = $this->request->Post('User')['email'];
+            $model->update();
+            //var_dump($model);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

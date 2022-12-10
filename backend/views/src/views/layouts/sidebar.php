@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Html;
+?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
@@ -14,7 +17,8 @@
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info"><?php //$userModel = Yii::$app->user->identity;var_dump($userModel->username); ?>
-                <a href="#" class="d-block"><?= Yii::$app->user->identity->username; ?></a>
+                <?= Html::a(Yii::$app->user->identity->username, ['user/view',  'id' => Yii::$app->user->identity->getId()], ['class' => 'profile-link']) ?>
+
             </div>
 
         </div>
