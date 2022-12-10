@@ -18,7 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class'=>'btn btn-success']) ?>
-        <?= Html::a('Назад', ['index'], ['class'=>'btn btn-warning']) ?>
+        <?php if (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){ ?>
+            <?= Html::a('Назад', ['index'], ['class'=>'btn btn-warning']) ?>
+       <?php } ?>
+
     </div>
 </div>
 <?php ActiveForm::end() ?>
