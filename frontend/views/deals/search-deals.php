@@ -27,11 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter' => true,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
             //'id',
             'name',
             'phone',
+            //'deal_sum',
+            [
+                'attribute' => 'deal_sum',
+                'value' => function($model)
+                {
+                    return number_format($model->deal_sum,  false, '',' ');
+                },
+                'footer' => number_format($dataProvider->query->sum('deal_sum'),  false, '',' '),
+            ]    ,
             //'id_operator',
 
                 [

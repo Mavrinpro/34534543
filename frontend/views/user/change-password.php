@@ -25,3 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php ActiveForm::end() ?>
+<div class="row">
+<div class="col-md-12">
+    <iframe src="https://serblog.ru/demo/password-generator/" frameborder="0" height="800px" width="100%"></iframe>
+</div>
+</div>

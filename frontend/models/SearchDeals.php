@@ -35,7 +35,7 @@ class SearchDeals extends Deals
     public function rules()
     {
         return [
-            [['id', 'id_operator', 'id_filial', 'id_comment'], 'integer'],
+            [['id', 'id_operator', 'id_filial', 'id_comment', 'deal_sum'], 'integer'],
             [['name', 'phone', 'tag', 'status'], 'safe'],
             [['date_create'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
@@ -125,6 +125,13 @@ class SearchDeals extends Deals
             ]);
         }
 
+        // фильтра по сумме
+        if($this->deal_sum > 0) {
+            $query->andFilterWhere([
+                'deal_sum' => $this->deal_sum,
+            ]);
+        }
+
         // фильтра по названию
         if(strlen($this->name) > 1) {
             $query->andFilterWhere(['like', 'name', $this->name]);
@@ -132,6 +139,11 @@ class SearchDeals extends Deals
         // фильтра по телефону
         if(strlen($this->phone) > 1) {
             $query->andFilterWhere(['like', 'phone', $this->phone]);
+        }
+
+        // фильтра по сумме
+        if(strlen($this->deal_sum) > 1) {
+            $query->andFilterWhere(['like', 'deal_sum', $this->deal_sum]);
         }
 
 /*
