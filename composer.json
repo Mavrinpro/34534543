@@ -27,7 +27,9 @@
         "gufy/pdftohtml-php": "~2",
         "kop/yii2-scroll-pager": "dev-master",
         "2amigos/yii2-chartjs-widget": "~2.0",
-        "lavrentiev/yii2-toastr": "dev-master"
+        "lavrentiev/yii2-toastr": "dev-master",
+        "kartik-v/yii2-date-range": "dev-master",
+        "practically/yii2-chartjs": "^1.1"
 
     },
     "require-dev": {

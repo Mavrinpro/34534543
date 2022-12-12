@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= DetailView::widget([
         'model' => $model,
+        //'template' => '<div class="mb-2" style="font-size: 20px"> {label} - {value}</div>',
         'attributes' => [
             'id',
             'username',
@@ -69,5 +70,4 @@ $this->params['breadcrumbs'][] = $this->title;
             //'verification_token',
         ],
     ]) ?>
-
 </div>

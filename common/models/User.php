@@ -16,7 +16,6 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
- * @property string $full_name
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
@@ -26,13 +25,14 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $full_name
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
-    public $full_name;
+    //public $full_name;
 
     /**
      * {@inheritdoc}
@@ -60,7 +60,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['password', 'safe']
+            ['password', 'safe'],
+            ['full_name', 'safe'],
         ];
     }
 

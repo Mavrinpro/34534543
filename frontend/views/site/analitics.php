@@ -1,7 +1,11 @@
 <?php
 //use app\models\Branch;
 use dosamigos\chartjs\ChartJs;
+use practically\chartjs\Chart;
 /** @var yii\web\View $this */
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\widgets\Pjax;
 
 $this->title = 'Статистика';
 
@@ -38,7 +42,6 @@ $this->title = 'Статистика';
         ];
     }
     $DATA_GRAF = json_encode($DATA_GRAF);
-
     ?>
 <div class="row">
 <div class="col-md-6">
@@ -61,7 +64,7 @@ $this->title = 'Статистика';
         </div>
     </div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
     <div class="card card-info">
         <div class="card-body">
             <?= ChartJs::widget([
@@ -96,6 +99,69 @@ $this->title = 'Статистика';
                     ]
                 ]
             ]);
+            ?>
+<?php $labels = \app\models\Branch::find()->select('name')->all();
+$users = \common\models\User::find()->select('username')->orderBy('id')->all();
+foreach ($labels as $label)
+{
+    $arrLabel[] = $label['name']; // Список городов для графика (по филиалам)
+}
+            foreach ($users as $user)
+            {
+                $arrUser[] = $user['username']; // Список городов для графика (по филиалам)
+            }
+
+$model = new \app\models\Deals();
+ Pjax::begin();
+//            $form = ActiveForm::begin();
+//            echo $form->field($model, 'status')->dropDownList([
+//                '0' => 'Активный',
+//                '1' => 'Отключен',
+//                '2'=>'Удален'
+//            ]);
+//            ActiveForm::end();
+            ?>
+            <?= Chart::widget([
+                'type' => Chart::TYPE_BAR,
+                'labels' => $arrLabel,
+                'datasets' => [
+
+
+                    [
+                        'label' => 'По филиалам',
+                        'query' => \app\models\Deals::find()
+                            ->select('id_filial')
+                            ->addSelect('count(*) as data')
+                            ->groupBy('id_filial')
+                            ->createCommand(),
+                        'labelAttribute' => 'id_filial',
+
+                    ],
+                ],
+
+
+            ]);
+
+            echo Chart::widget([
+                'type' => Chart::TYPE_BAR,
+                'labels' => $arrUser,
+                'datasets' => [
+
+                    [
+                        'label' => 'По Сотрудникам',
+                        'query' => \app\models\Deals::find()
+                            ->select('id_operator')
+                            ->addSelect('count(*) as data')
+                            ->groupBy('id_operator')
+                            ->createCommand(),
+                        'labelAttribute' => 'id_operator',
+
+                    ],
+                ],
+
+
+            ]);
+            Pjax::end();
             ?>
         </div>
     </div>

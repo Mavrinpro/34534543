@@ -92,7 +92,7 @@ class UserController extends Controller
                 $userRole = \Yii::$app->authManager->getRole('user');
                 if ($model->signup()) {
                     // Назначаем роль в методе afterSave модели User
-                    $auth = Yii::$app->authManager;
+                    $auth = \Yii::$app->authManager;
                     $editor = $auth->getRole('user'); // Получаем роль editor
                     $auth->can($editor, $this->id); // Назначаем пользователю, которому принадлежит модель User
 
@@ -126,10 +126,15 @@ class UserController extends Controller
             $model->username = $this->request->Post('User')['username'];
             $model->full_name = $this->request->Post('User')['full_name'];
             $model->email = $this->request->Post('User')['email'];
+            //echo '<pre>';
+            //print_r($model); die;
             $model->update();
-            //var_dump($model);
+
+            \Yii::$app->session->setFlash('success', 'Данные обновлены.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+
 
         return $this->render('update', [
             'model' => $model,
