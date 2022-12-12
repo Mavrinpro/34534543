@@ -27,6 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function ($model) {
+            if ($model->status == '3') {
+                return ['class' => 'bg-success'];
+            }
+        },
         'showFooter' => true,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
@@ -36,11 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'deal_sum',
             [
                 'attribute' => 'deal_sum',
+                //'contentOptions' => [ Изменение цвета колонки
+                    //'class' => 'bg-gray'
+                //],
                 'value' => function($model)
                 {
                     return number_format($model->deal_sum,  false, '',' ');
                 },
-                'footer' => number_format($dataProvider->query->sum('deal_sum'),  false, '',' '),
+                'footer' => '<b>'.number_format($dataProvider->query->sum('deal_sum'),  false, '',' ').' ₽</b>',
             ]    ,
             //'id_operator',
 
