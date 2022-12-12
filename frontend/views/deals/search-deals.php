@@ -27,12 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-bordered table-hover',
+        ],
         'rowOptions' => function ($model) {
             if ($model->status == '3') {
                 return ['class' => 'bg-success'];
             }
         },
         'showFooter' => true,
+        'footerRowOptions'=>['class'=>'bg-dark'],
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
             //'id',
