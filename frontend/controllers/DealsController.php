@@ -34,7 +34,7 @@ class DealsController extends Controller
                             'roles' => ['admin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
