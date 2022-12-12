@@ -84,6 +84,9 @@ $this->params['breadcrumbs'][] = $this->title;
             $TAGS_KEYS[$res['id']] = $res;
         }
     }
+ if(sizeof($model) > 0)
+ {
+
 
     ?>
     <div class="row draggable">
@@ -519,6 +522,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+    <?php }else{
+     echo '<div class="alert alert-danger">У вас пока нет ни одной сделки.</div>';
+ } ?>
+
 
     <!--    --><? //= GridView::widget(['dataProvider' => $dataProvider, 'filterModel' => $searchModel, 'columns' => [//['class' => 'yii\grid\SerialColumn'],
     //
@@ -545,7 +552,7 @@ $('.dr').sortable({
        let block_id = $(this).find('.ui-sortable-handle .ui-sortable-helper').children('.dgdfdg').data('id');
        //var statusID = ($('.ui-sortable-handle.ui-sortable-helper').find('.rounded').data('status'));
         arr['statusID'] =  $(this).data('id');
-        console.log(arr['id']+'---');
+        //console.log(arr['id']+'---');
         $.ajax({
             type: "POST",
             url: "/deals/index",
