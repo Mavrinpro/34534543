@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                     ],
-
+                    'deal_email'
 
 
 
