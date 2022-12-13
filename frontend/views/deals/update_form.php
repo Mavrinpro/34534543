@@ -85,6 +85,7 @@ Modal::end();
                 <?=
                $model->date_update != null ?  date('d.m.y H:i:s', strtotime($model->date_update)) :
                     "не производилось" ?></p>
+            <?= $form->field($model, 'deal_email')->hiddenInput(['type' => 'email']); ?>
         </div>
 
         <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>

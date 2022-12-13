@@ -58,11 +58,7 @@ return [
 	        'basePath' => '@webroot/assets',
 	        'baseUrl' => '@web/assets'
         ],
-        
-        'assetManager' => [
-	        'basePath' => '@webroot/assets',
-	        'baseUrl' => '@web/assets'
-        ],
+
 
     ],
     'params' => $params,

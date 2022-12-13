@@ -73,10 +73,12 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-md-6">
     <?= $form->field($model, 'deal_sum')->textInput(['type'=>'number']) ?>
+    <?= $form->field($model, 'deal_email')->textInput() ?>
         </div>
 
             <?= $form->field($model, 'del')->hiddenInput(['value' => 0])->label(false); ?>
             <?= $form->field($model, 'create_form')->hiddenInput(['value' => 0])->label(false); ?>
+
 
     </div>
     <div class="form-group">

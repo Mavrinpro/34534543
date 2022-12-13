@@ -32,18 +32,18 @@ return [
         ],
     ],
     // Доступ только авторизованным пользователям
-    'as beforeRequest' => [
-        'class' => 'yii\filters\AccessControl',
-        'rules' => [
-            [
-                'actions' => ['login'],
-                'allow' => true,
-            ],
-            [
-
-                'allow' => true,
-                'roles' => ['@'],
-            ],
-        ],
-    ],
+//    'as beforeRequest' => [
+//        'class' => 'yii\filters\AccessControl',
+//        'rules' => [
+//            [
+//                'actions' => ['login'],
+//                'allow' => true,
+//            ],
+//            [
+//
+//                'allow' => true,
+//                'roles' => ['@'],
+//            ],
+//        ],
+//    ],
 ];
