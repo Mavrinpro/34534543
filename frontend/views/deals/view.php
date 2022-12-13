@@ -95,12 +95,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'html',
                         'value' => function($model)
                         {
-                          return '<audio controls="">
+                            if (isset($model->call_recording))
+                            {
+                                return '<audio controls="">
                         <source src="'.$model->call_recording.'" type="audio/ogg; codecs=vorbis">
                         <source src="'.$model->call_recording.'" type="audio/mpeg">
                         Тег audio не поддерживается вашим браузером.
                         <a href="'.$model->call_recording.'" target="_blank">Скачайте музыку</a>.
                     </audio>';
+                            }else{
+                                return 'Записи нет';
+                            }
+
                         }
 
                     ],
@@ -119,6 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(); ?>
             <?= $form->field($model, 'id')->dropDownList(ArrayHelper::map(\app\models\LayoutsMail::find()->all(), 'id', 'name'),
                 ['prompt'=>'Выбрать шаблон письма...'])->label(false); ?>
+             <?= $form->field($model, 'deal_email')->hiddenInput([value($model->deal_email)])->label(false) ?>
             <div class="form-group">
                 <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
                 <!--                --><?//= Html::a('Отправить', ['deals/view', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
