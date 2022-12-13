@@ -21,6 +21,7 @@ return [
             ],
         ],
         'request' => [
+            'baseUrl' => '/admin',
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
@@ -57,16 +58,11 @@ return [
 	        'basePath' => '@webroot/assets',
 	        'baseUrl' => '@web/assets'
         ],
-        'request' => [
-	        'baseUrl' => '/admin'
-        ],
+        
         'assetManager' => [
 	        'basePath' => '@webroot/assets',
 	        'baseUrl' => '@web/assets'
         ],
-        'request' => [
-	        'baseUrl' => '/admin'
-        ]
 
     ],
     'params' => $params,

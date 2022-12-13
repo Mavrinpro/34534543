@@ -26,6 +26,10 @@ return [
         ],
 
         'request' => [
+            'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -57,6 +61,7 @@ return [
 	        //'suffix' => '.html',
 	        'rules' => [
 		        '' => 'site/index',
+                ['class' => \yii\rest\UrlRule::class, 'controller' => 'statuses'],
 //                'deals/page/<page:\d+>' => 'deals/index',
 //                'deals' => 'deals/index',
 //                'deals/update/<id:\d+>' => 'deals/update',
@@ -80,9 +85,7 @@ return [
 	        'basePath' => '@webroot/assets',
 	        'baseUrl' => '@web/assets'
         ],
-        'request' => [
-	        'baseUrl' => ''
-        ],
+
 
 
     ],
