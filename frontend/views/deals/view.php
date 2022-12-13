@@ -33,36 +33,83 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-6 mb-5 mt-3">
         <div class="shadow p-3 rounded-lg">
-            <?php $adress = \app\models\Branch::findOne(['id' => $model->id_filial])?>
-            <?php $status = \app\models\Statuses::findOne(['id' => $model->status])?>
-            <?php $tags = \app\models\Tags::find()->where(['id' => explode(',',$model->tag)])->all()?>
+            <?= DetailView::widget([
+                'model' => $model,
+                'template' => '<b> {label}</b> - {value}</div><hr>',
+                'attributes' => [
+                    'id',
+                    'name',
+                    'phone',
+                    [
+                        'attribute' => 'tag',
+                        'format' => 'html',
+                        'value' => function($model)
+                        {
+                            $tag = \app\models\Tags::find()->where(['id' => explode(',',$model->tag)])->all();
 
-            <b>ID:</b> <?= $model->id ?>
-            <hr>
-            <b>Название: </b><?= $model->name ?>
-            <hr>
-            <b>Телефон:</b> <?= $model->phone ?>
-            <hr>
-            <b>Теги:</b> <?php foreach ($tags as $tag){
-                echo '<div class="deal_tag badge badge-pill badge-light d-inline-block border">'.$tag['name']
-               .'</div>';
-            } ?>
-            <hr>
-            <b>Филиал:</b> <?= $adress->name ?>
-            <hr>
-            <b>Дата:</b> <?= date('d.m.Y' ,strtotime($model->date_create)) ?>
-            <hr>
-            <b>Статус:</b> <?= $status->name ?>
-            <?= isset($model->deal_sum) ? '<hr><b>Сумма сделки: </b>'.$model->deal_sum .' ₽' : '' ?>
-            <hr>
-            <b>Комментарий:</b> <?= $model->id_comment ?>
-            <hr>
-            <b><div class="mb-3">Запись звонка: <audio controls="">
-                        <source src="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863" type="audio/ogg; codecs=vorbis">
-                        <source src="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863" type="audio/mpeg">
+                            foreach ($tag as $t)
+                            {
+                                // Вывод списка тегов (только таким образом. Через .=)
+                                $res .= '<div class="deal_tag badge badge-pill badge-light d-inline-block border">'
+                                    .$t->name.'</div>';
+
+                            }
+                            return $res;
+                        },
+                    ],
+                    [
+                          'attribute' => 'id_filial',
+                        'value' => function($model)
+                        {
+                            $adress = \app\models\Branch::find()->where(['id' => $model->id_filial])->one();
+                            return $adress->name;
+                        }
+                    ],
+                    'date_create',
+                    'date_update',
+                    [
+                          'attribute'  => 'status',
+                        'value' => function($model)
+                        {
+                            $status = \app\models\Statuses::findOne(['id' => $model->status]);
+                            return $status->name;
+                        }
+                    ],
+                    [
+                        'attribute' => 'deal_sum',
+                        //'contentOptions' => [ Изменение цвета колонки
+                        //'class' => 'bg-gray'
+                        //],
+                        'value' => function($model)
+                        {
+                            return number_format($model->deal_sum,  false, '',' ');
+                        },
+
+                    ],
+                    [
+                        'attribute' => 'id_comment',
+
+                    ],
+                    [
+                      'attribute' => 'call_recording',
+                        'format' => 'html',
+                        'value' => function($model)
+                        {
+                          return '<audio controls="">
+                        <source src="'.$model->call_recording.'" type="audio/ogg; codecs=vorbis">
+                        <source src="'.$model->call_recording.'" type="audio/mpeg">
                         Тег audio не поддерживается вашим браузером.
-                        <a href="https://sipuni.com/api/crm/record?id=1666940852.1574544&amp;hash=a1c8c33d711c3f5cdfd28f4f06fd51cd&amp;user=060863">Скачайте музыку</a>.
-                    </audio></div></b>
+                        <a href="'.$model->call_recording.'" target="_blank">Скачайте музыку</a>.
+                    </audio>';
+                        }
+
+                    ],
+
+
+
+
+                ],
+            ]) ?>
 
         </div>
     </div>

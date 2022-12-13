@@ -20,6 +20,7 @@ use kartik\select2\Select2;
  * @property int|null $id_operator
  * @property int|null $id_filial
  * @property int|null $id_comment
+ * @property int|null $call_recording
  */
 
 class Deals extends \yii\db\ActiveRecord
@@ -40,6 +41,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['name', 'phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create'], 'safe'],
+            [['call_recording'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
@@ -69,6 +71,7 @@ class Deals extends \yii\db\ActiveRecord
             'id_comment' => 'Сомментарий (id)',
             'deal_sum' => 'Сумма сделки',
             'del' => 'Видимость',
+            'call_recording' => 'Запись звонка'
         ];
     }
     public function getTasks(){
