@@ -11,7 +11,7 @@ $this->title = 'Изменить пароль пользователя';
 $this->params['breadcrumbs'][] = ['label'=>'Пользователи', 'url'=>['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<div class="alert alert-danger">Выбирайте сложный пароль! Это важно!</div>
 <?php $form = ActiveForm::begin() ?>
 <div class="col-md-6">
 <?= $form->field($model, 'password')->passwordInput(['maxlength'=>true]) ?>
