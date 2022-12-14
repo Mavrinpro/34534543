@@ -13,6 +13,7 @@ class m221213_115424_add extends Migration
     public function safeUp()
     {
         $this->addColumn('{{%deals}}', 'email', $this->string());
+
     }
 
     /**
