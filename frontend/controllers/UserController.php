@@ -86,17 +86,18 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new SignupForm();
-
+        $user = new User;
 
             if ($model->load($this->request->post()) && $model->signup()) {
-                $userRole = \Yii::$app->authManager->getRole('user');
-                if ($model->signup()) {
-                    // Назначаем роль в методе afterSave модели User
-                    $auth = \Yii::$app->authManager;
-                    $editor = $auth->getRole('user'); // Получаем роль editor
-                    $auth->can($editor, $this->id); // Назначаем пользователю, которому принадлежит модель User
+                $lastUserId = User::getEntity();
+                //$userRole = \Yii::$app->authManager->getRole('user');
+                $user_id = \Yii::$app->user->GetId();
 
-                }
+                //$id = $user->getId();
+                $auth = \Yii::$app->authManager;
+                $userRole = $auth->getRole('user'); // Получаем роль editor
+                $auth->assign($userRole, $lastUserId); // Назначаем пользователю, которому принадлежит модель User
+
                 \Yii::$app->session->setFlash('success', 'Новый пользователь зарегистрирован.');
 //                echo '<pre>'; die;
 //                var_dump($model);

@@ -47,9 +47,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function behaviors()
     {
-        return [
-            TimestampBehavior::className(),
-        ];
+        return [TimestampBehavior::className(),];
     }
 
     /**
@@ -57,12 +55,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function rules()
     {
-        return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['password', 'safe'],
-            ['full_name', 'safe'],
-        ];
+        return [['status', 'default', 'value' => self::STATUS_ACTIVE], ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]], ['password', 'safe'], ['full_name', 'safe'],];
     }
 
     /**
@@ -104,10 +97,7 @@ class User extends ActiveRecord implements IdentityInterface
             return null;
         }
 
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
+        return static::findOne(['password_reset_token' => $token, 'status' => self::STATUS_ACTIVE,]);
     }
 
     /**
@@ -116,11 +106,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
-        return static::findOne([
-            'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
-        ]);
+    public static function findByVerificationToken($token)
+    {
+        return static::findOne(['verification_token' => $token, 'status' => self::STATUS_INACTIVE]);
     }
 
     /**
@@ -135,7 +123,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -227,15 +215,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function attributeLabels()
     {
-        return [
-            'id' => 'ID',
-            'username' => 'Логин',
-            'full_name' => 'ФИО',
-            'password' => 'Пароль',
-            'status' => 'Статус',
-            'created_at' => 'Дата создания',
-            'updated_at' => 'Дата обновления',
-            'role' => 'Роль'
-        ];
+        return ['id' => 'ID', 'username' => 'Логин', 'full_name' => 'ФИО', 'password' => 'Пароль', 'status' => 'Статус', 'created_at' => 'Дата создания', 'updated_at' => 'Дата обновления', 'role' => 'Роль'];
+    }
+
+    public static function getEntity()
+    {
+        $id = Yii::$app->db->getLastInsertID();
+        return $id;
+
     }
 }

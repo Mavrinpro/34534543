@@ -26,10 +26,8 @@ return [
         ],
 
         'request' => [
+            //'parsers' =>['application/json' => 'yii\web\JsonParser', ],
             'baseUrl' => '',
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ],
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -57,11 +55,27 @@ return [
 
         'urlManager' => [
 	        'enablePrettyUrl' => true,
+            //'enableStrictParsing' => true,
 	        'showScriptName' => false,
 	        //'suffix' => '.html',
 	        'rules' => [
-		        '' => 'site/index',
-                ['class' => \yii\rest\UrlRule::class, 'controller' => 'statuses'],
+
+                //['class' => \yii\rest\UrlRule::class, 'controller' => 'app/frontend/statuses/index'],
+
+                // Правила для API контроллера
+                'api/getcalls'   => 'api/get-calls',
+                'api/getorders'  => 'api/get-orders',
+
+                //'restApi/users'  => 'rest-api/index',
+                /*
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'rest-api',
+                    //'restApi/index'  => 'rest-api/index',
+                ],
+                */
+
+		        //'' => 'site/index',
 //                'deals/page/<page:\d+>' => 'deals/index',
 //                'deals' => 'deals/index',
 //                'deals/update/<id:\d+>' => 'deals/update',
@@ -71,6 +85,7 @@ return [
 //                'doctors/view/<id:\d+>' => 'doctors/view',
 //                'review/page/<page:\d+>' => 'review/index',
 //                'review/page/<page:\d+>' => 'review/index',
+                //'restApi' => 'restApi/index',
 
                 //'<controller:(deals|doctors|review|tasks|branch|tags)>/create' => '<controller>/create',
                 '<controller:(deals|doctors|review|tasks|branch|tags|layouts-mail|user)>/<action:(update|delete|view|change-password)>/<id:\d+>' =>
@@ -85,7 +100,6 @@ return [
 	        'basePath' => '@webroot/assets',
 	        'baseUrl' => '@web/assets'
         ],
-
 
 
     ],
