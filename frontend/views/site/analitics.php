@@ -64,44 +64,74 @@ $this->title = 'Статистика';
         </div>
     </div>
 </div>
+    <div class="col-md-6 bg-light">
+        <?php
+        $users = \common\models\User::find()->where(['!=','status', 8])->andWhere(['!=','status', 9])->select('username')->orderBy('id')->all();
+        foreach ($users as $user)
+        {
+            $arrUser[] = $user['username']; // Список городов для графика (по филиалам)
+        }
+
+        echo Chart::widget([
+            'type' => Chart::TYPE_DOUGHNUT,
+            'labels' => $arrUser,
+            'datasets' => [
+
+                [
+                    'label' => 'По Сотрудникам',
+                    'query' => \app\models\Deals::find()
+                        ->select('id_operator')
+                        ->addSelect('count(*) as data')
+                        ->groupBy('id_operator')
+                        ->createCommand(),
+                    'labelAttribute' => 'id_operator',
+
+                ],
+            ],
+
+
+        ]);
+        ?>
+    </div>
 <div class="col-md-12">
     <div class="card card-info">
         <div class="card-body">
-            <?= ChartJs::widget([
-                'type' => 'bar',
-                'options' => [
-                    'height' => 400,
-                    'width' => 400
-                ],
-                'data' => [
-                    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-                    'datasets' => [
-                        [
-                            'label' => "My First dataset",
-                            'backgroundColor' => "rgba(179,181,198,0.2)",
-                            'borderColor' => "rgba(179,181,198,1)",
-                            'pointBackgroundColor' => "rgba(179,181,198,1)",
-                            'pointBorderColor' => "#fff",
-                            'pointHoverBackgroundColor' => "#fff",
-                            'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                            'data' => [65, 59, 90, 81, 56, 55, 40]
-                        ],
-                        [
-                            'label' => "My Second dataset",
-                            'backgroundColor' => "rgba(255,99,132,0.2)",
-                            'borderColor' => "rgba(255,99,132,1)",
-                            'pointBackgroundColor' => "rgba(255,99,132,1)",
-                            'pointBorderColor' => "#fff",
-                            'pointHoverBackgroundColor' => "#fff",
-                            'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                            'data' => [28, 48, 40, 19, 96, 27, 100]
-                        ]
-                    ]
-                ]
-            ]);
-            ?>
+<!--            --><?//= ChartJs::widget([
+//                'type' => 'bar',
+//                'options' => [
+//                    'height' => 400,
+//                    'width' => 400
+//                ],
+//                'data' => [
+//                    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
+//                    'datasets' => [
+//                        [
+//                            'label' => "My First dataset",
+//                            'backgroundColor' => "rgba(179,181,198,0.2)",
+//                            'borderColor' => "rgba(179,181,198,1)",
+//                            'pointBackgroundColor' => "rgba(179,181,198,1)",
+//                            'pointBorderColor' => "#fff",
+//                            'pointHoverBackgroundColor' => "#fff",
+//                            'pointHoverBorderColor' => "rgba(179,181,198,1)",
+//                            'data' => [65, 59, 90, 81, 56, 55, 40]
+//                        ],
+//                        [
+//                            'label' => "My Second dataset",
+//                            'backgroundColor' => "rgba(255,99,132,0.2)",
+//                            'borderColor' => "rgba(255,99,132,1)",
+//                            'pointBackgroundColor' => "rgba(255,99,132,1)",
+//                            'pointBorderColor' => "#fff",
+//                            'pointHoverBackgroundColor' => "#fff",
+//                            'pointHoverBorderColor' => "rgba(255,99,132,1)",
+//                            'data' => [28, 48, 40, 19, 96, 27, 100]
+//                        ]
+//                    ]
+//                ]
+//            ]);
+//            ?>
 <?php $labels = \app\models\Branch::find()->select('name')->all();
-$users = \common\models\User::find()->select('username')->orderBy('id')->all();
+$users = \common\models\User::find()->where(['!=','status', 8])->andWhere(['!=','status', 9])->select('username')
+    ->orderBy('id')->all();
 foreach ($labels as $label)
 {
     $arrLabel[] = $label['name']; // Список городов для графика (по филиалам)
@@ -143,7 +173,7 @@ $model = new \app\models\Deals();
             ]);
 
             echo Chart::widget([
-                'type' => Chart::TYPE_BAR,
+                'type' => Chart::TYPE_DOUGHNUT,
                 'labels' => $arrUser,
                 'datasets' => [
 

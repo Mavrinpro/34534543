@@ -84,8 +84,6 @@ use yii\widgets\Pjax;
         mr-3 ']) ?>
         <?php } ?>
 
-
-
     </div>
 
     <!-- Right navbar links -->
