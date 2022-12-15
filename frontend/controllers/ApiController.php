@@ -14,9 +14,15 @@ class ApiController extends Controller
     {
 
         // Вызываем модель в которое делаем запись в базу, отправку в телегу и т.д и т.п
-
-
-        return '111111111111';
+        if (!isset(\Yii::$app->request->cookies['test'])) {
+            // Установить куки
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'test',
+                'value' => '600'
+            ]));
+        }
+        //return  /Yii::$app->request->cookies['test'];
+        return '111111111111'. \Yii::$app->request->cookies['test']; // получаем значение куки
     }
 
     /**

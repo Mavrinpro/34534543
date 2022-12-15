@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\Tracking;
 use common\models\User;
 use frontend\models\SearchUsers;
 use frontend\models\SignupForm;
@@ -28,12 +29,12 @@ class UserController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'index', 'update', 'view', 'change-password'],
+                            'actions' => ['delete', 'index', 'update', 'view', 'change-password', 'session-start', 'session-end'],
                             'allow' => true,
                             'roles' => ['superadmin', 'admin'],
                         ],
                         [
-                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals', 'change-password'],
+                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals', 'change-password', 'session-start', 'session-end'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -192,5 +193,63 @@ class UserController extends Controller
         return $this->render('change-password', [
             'model'=>$model
         ]);
+    }
+
+    // Учет рабочего времени
+    public function actionSessionStart()
+    {
+        $model = new Tracking();
+
+        $date = date('U');
+        if (\Yii::$app->request->get('sessionstart') == 'yes') {
+            $model->date_at = $date;
+            $model->session_start = $date;
+            $model->user_id = \Yii::$app->user->id;
+            \Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'session_start',
+                'value' => $date
+            ]));
+        }
+
+        if ($model->save())
+        {
+            //var_dump($model); die;
+            \Yii::$app->session->setFlash('success', 'Вы начали рабочий день.' .\Yii::$app->request->cookies['session_start']);
+            return $this->redirect('/deals/index');
+        }
+    }
+
+    // Учет рабочего времени
+    public function actionSessionEnd()
+    {
+        $model = new Tracking();
+        $sessId = \Yii::$app->request->cookies['session_start'];
+        $tracking = Tracking::find()->where('session_start' == $sessId)->one();
+        $date = date('U');
+        if (\Yii::$app->request->get('sessionend') == 'yes') {
+            //$model->date_end = $date;
+            //$model->session_end = $date;
+            //$model->user_id = \Yii::$app->user->id;
+
+            //\Yii::$app->db->createCommand()
+                //->update('time_tracking', ['date_end' => $date, 'session_end' => $date],'session_start' == $sessId)
+                //->execute();
+
+            \Yii::$app->db->createCommand("UPDATE time_tracking SET date_end=:column1, session_end=:column2 WHERE session_start=:id")
+                ->bindValue(':id', $sessId)
+                ->bindValue(':column1', $date)
+            ->bindValue(':column2', $date)
+            ->execute();
+
+            \Yii::$app->response->cookies->remove('session_start');
+            //$model->update();
+            \Yii::$app->session->setFlash('success', 'Вы закончили рабочий день.' . $sessId);
+            return $this->redirect('/deals/index');
+        }
+
+
+            //var_dump($model); die;
+
+
     }
 }
