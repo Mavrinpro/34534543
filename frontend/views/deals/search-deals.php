@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="col-md-12"><div class="alert alert-secondary" role="alert">Здесь можно настроить и экспортироовать отчет в выбранном формате</div>
+    </div>
+
 <?php
 $gridColumns = [
       'name',
@@ -69,6 +72,8 @@ echo ExportMenu::widget([
     'columns' => $gridColumns,
 ]);
 ?>
+
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
