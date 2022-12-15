@@ -31,6 +31,12 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'modules' => [
+        'gridview' => [
+            'class' => 'kartik\grid\Module',
+            // other module settings
+        ]
+    ],
     // Доступ только авторизованным пользователям
     'as beforeRequest' => [
         'class' => 'yii\filters\AccessControl',

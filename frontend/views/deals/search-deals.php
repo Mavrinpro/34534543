@@ -7,6 +7,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\daterange\DateRangePicker;
+use kartik\export\ExportMenu;
 //use kop\y2sp\ScrollPager;
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
@@ -23,18 +24,55 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php
+$gridColumns = [
+      'name',
+    'phone',
+    'deal_sum',
+    [
+        //label' => 'Полное имя',
+        'attribute'=>'id_operator',
+        'value' => 'us.username',
+        'format' => 'text',
+
+// esli nujen select
+        'filter'=>\common\models\User::find()->where(['!=','status', 8])->select(['username', 'id'])
+            ->indexBy
+            ('id')->column(),
+
+    ],
+    [
+        //label' => 'Полное имя',
+        'attribute'=>'tag',
+        'value' => 'tegi.name',
+
+        'format' => 'text',
+
+        'filter'=>\app\models\Tags::find()->select(['name', 'id'])->indexBy('id')->column(),
+
+    ],
+    [
+        //label' => 'Полное имя',
+        'attribute'=>'id_filial',
+        'value' => 'branch.name',
+
+        'format' => 'text',
+
+        'filter'=>\app\models\Branch::find()->select(['name', 'id'])->indexBy('id')->column(),
+
+    ],
+
+
+];
+echo ExportMenu::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => $gridColumns,
+]);
+?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'tableOptions' => [
-            'class' => 'table table-bordered table-hover',
-        ],
-        'rowOptions' => function ($model) {
-            if ($model->status == '3') {
-                return ['class' => 'bg-success'];
-            }
-        },
         'showFooter' => true,
         'footerRowOptions'=>['class'=>'bg-dark'],
         'columns' => [
@@ -45,14 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'deal_sum',
             [
                 'attribute' => 'deal_sum',
-                //'contentOptions' => [ Изменение цвета колонки
-                    //'class' => 'bg-gray'
-                //],
                 'value' => function($model)
                 {
                     return number_format($model->deal_sum,  false, '',' ');
                 },
-                'footer' => '<b>'.number_format($dataProvider->query->sum('deal_sum'),  false, '',' ').' ₽</b>',
+                'footer' => number_format($dataProvider->query->sum('deal_sum'),  false, '',' '),
             ]    ,
             //'id_operator',
 
