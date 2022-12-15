@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-use yii\bootstrap4\ActiveForm;
-/** @var app\models\Tracking $model */
 ?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -77,17 +75,16 @@ use yii\bootstrap4\ActiveForm;
     </form>
 
     <div class="ml-2">
-        <?php $date = date('U'); ?>
-        <?php $user_id = \Yii::$app->user->id; ?>
-        <?php $form = ActiveForm::begin(); ?>
+        <?php
+        $session_start =  \Yii::$app->request->cookies['session_start'];
+        if (!empty($session_start)) { ?>
+            <?= Html::a('Завершить', ['user/session-end?sessionend=yes'],['class' => 'btn btn-sm btn-success']) ?>
+        <?php }else{ ?>
+            <?= Html::a('Начать работу', ['user/session-start?sessionstart=yes'], ['class' => 'btn btn-sm btn-danger 
+        mr-3 ']) ?>
+        <?php } ?>
 
-        <?= $form->field($model, 'date_at')->hiddenInput(['value' => $date])->label(false) ?>
-        <?= $form->field($model, 'session_start')->hiddenInput(['value' => $date])->label(false) ?>
-        <?= $form->field($model, 'user_id')->hiddenInput(['value' => $user_id])->label(false) ?>
-        <?= Html::submitButton('Начать работу', ['class' => 'btn btn-success']) ?>
-        <?php ActiveForm::end(); ?>
 
-        <?= Html::button('Завершить', ['class' => 'btn btn-sm btn-success', 'disabled' => true]) ?>
 
     </div>
 
@@ -125,8 +122,7 @@ use yii\bootstrap4\ActiveForm;
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                        <img src="<?= $assetDir?>/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3
-                        img-circle">
+                        <img src="<?=$assetDir?>/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Brad Diesel

@@ -55,7 +55,7 @@ class SearchUsers extends User
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->where(['!=','status', '8']); // не выводить пользователей со статусом 8
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

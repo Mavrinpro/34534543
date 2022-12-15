@@ -63,7 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'text',
 
 // esli nujen select
-                    'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
+                    'filter'=>\common\models\User::find()->where(['!=','status', 8])->select(['username', 'id'])
+                        ->indexBy
+                    ('id')->column(),
 
                 ],
 
