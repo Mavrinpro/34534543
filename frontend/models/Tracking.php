@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -41,11 +42,11 @@ class Tracking extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'date_at' => 'Date At',
-            'date_end' => 'Date End',
-            'session_start' => 'Session Start',
-            'session_end' => 'Session End',
+            'user_id' => 'Пользователь',
+            'date_at' => 'Дата',
+            'date_end' => 'Дата окончания',
+            'session_start' => 'Начало работы',
+            'session_end' => 'Окончание',
         ];
     }
 
@@ -58,5 +59,10 @@ class Tracking extends \yii\db\ActiveRecord
             return $user->session_end;
         }
 
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']); // Связь
     }
 }

@@ -9,6 +9,7 @@ use yii\widgets\Pjax;
 use kartik\daterange\DateRangePicker;
 use kartik\export\ExportMenu;
 //use kop\y2sp\ScrollPager;
+use practically\chartjs\Chart;
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -23,6 +24,35 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
+    <?php $datestart = 1671096781;
+    $dateend = 1671096886;
+    $sundate = $dateend - $datestart;
+
+
+
+    ?>
+    <?=
+    Chart::widget([
+        'type' => Chart::TYPE_BAR,
+        //'labels' => $arrLabel,
+        'datasets' => [
+
+
+            [
+                'label' => 'По филиалам',
+                'query' => \app\models\Deals::find()
+                    ->select('id_filial')
+                    ->addSelect('count(*) as data')
+                    ->groupBy('id_filial')
+                    ->createCommand(),
+                'labelAttribute' => 'id_filial',
+
+            ],
+        ],
+
+
+    ]);
+    ?>
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="col-md-12"><div class="alert alert-secondary" role="alert">Здесь можно настроить и экспортироовать отчет в выбранном формате</div>
     </div>
@@ -225,7 +255,28 @@ echo ExportMenu::widget([
             ],
         ],
     ]); ?>
+    <?=
+    Chart::widget([
+    'type' => Chart::TYPE_BAR,
+    //'labels' => $arrLabel,
+    'datasets' => [
 
+
+    [
+    'label' => 'По филиалам',
+    'query' => \app\models\Deals::find()
+    ->select('id_filial')
+    ->addSelect('count(*) as data')
+    ->groupBy('id_filial')
+    ->createCommand(),
+    'labelAttribute' => 'id_filial',
+
+    ],
+    ],
+
+
+    ]);
+    ?>
     <?php Pjax::end(); ?>
 
 </div>

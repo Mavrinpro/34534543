@@ -88,7 +88,7 @@ return [
                 //'restApi' => 'restApi/index',
 
                 //'<controller:(deals|doctors|review|tasks|branch|tags)>/create' => '<controller>/create',
-                '<controller:(deals|doctors|review|tasks|branch|tags|layouts-mail|user)>/<action:(update|delete|view|change-password)>/<id:\d+>' =>
+                '<controller:(deals|doctors|review|tasks|branch|tags|layouts-mail|user|tracking)>/<action:(index|update|delete|view|change-password)>/<id:\d+>' =>
                     '<controller>/<action>',
                 '<controller:\w+>/<page:\d+>' => '<controller>/index',
                 //'<controller:(deals|doctors|review)>s' => '<controller>/index',
