@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-
+        //'showFooter' => true,
+        //'footerRowOptions'=>['class'=>'bg-dark'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -43,12 +44,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>User::find()->where(['!=','status', '8'])->select(['username', 'id'])->indexBy('id')->column(),
 
             ],
+//            [
+//                    'attribute' => 'date_at',
+//                    'value' => function($model)
+//                    {
+//                        return date('d.m.Y H:i:s', $model->date_at);
+//                    }
+//            ],
             [
-                    'attribute' => 'date_at',
-                    'value' => function($model)
-                    {
-                        return date('d.m.Y H:i:s', $model->date_at);
-                    }
+
+                //'autocomplete'=> false,
+                'attribute' => 'date_at',
+                'filterInputOptions' => [
+                    'autocomplete' => 'off'
+                ],
+                //'model' => $searchModel,
+                'filter' => \kartik\daterange\DateRangePicker::widget([
+                    'name' => 'Deals[date_create]',
+                    'model'=>$searchModel,
+
+                    'attribute'=>'date_at',
+                    'convertFormat'=>true,
+                    'useWithAddon'=>false,
+                    'pluginOptions'=>[
+                        'timePicker'=>true,
+                        //'timePickerIncrement'=>30,
+                        'locale'=>[
+                            'format'=>'Y-m-d H:i:s'
+                        ],
+
+                    ],
+                    'options' => [
+                        'autocomplete' => 'off',
+                        'class' => 'form-control'
+                    ]
+
+
+                ])
+
             ],
             //'date_end',
             [
@@ -72,7 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     //return date('d.m.Y H:i:s', $model->session_start);
                 },
-                'filter' => 'Количество рабочих часов'
             ],
 
             [

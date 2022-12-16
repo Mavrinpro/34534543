@@ -75,6 +75,10 @@ use yii\helpers\Html;
                         'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                         ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                         ['superadmin']->name == 'superadmin', ],
+                    ['label' => 'Учет времени', 'url' => ['/tracking'], 'iconStyle' => 'fa fa-history',
+                        'active'=>\Yii::$app->controller->id == 'tracking', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['superadmin']->name == 'superadmin', ],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'],
 //                    [
