@@ -13,45 +13,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
-function num_word($value, $words, $show = true)
-{
-    $num = $value % 100;
-    if ($num > 19) {
-        $num = $num % 10;
-    }
 
-    $out = ($show) ?  $value . ' ' : '';
-    switch ($num) {
-        case 1:  $out .= $words[0]; break;
-        case 2:
-        case 3:
-        case 4:  $out .= $words[1]; break;
-        default: $out .= $words[2]; break;
-    }
-
-    return $out;
-}
-
-function secToStr($secs)
-{
-    $res = '';
-
-    $days = floor($secs / 86400);
-    $secs = $secs % 86400;
-    $res .= num_word($days, array('день', 'дня', 'дней')) . ', ';
-
-    $hours = floor($secs / 3600);
-    $secs = $secs % 3600;
-    $res .= num_word($hours, array('час', 'часа', 'часов')) . ', ';
-
-    $minutes = floor($secs / 60);
-    $secs = $secs % 60;
-    $res .= num_word($minutes, array('минута', 'минуты', 'минут')) . ', ';
-
-    $res .= num_word($secs, array('секунда', 'секунды', 'секунд'));
-
-    return $res;
-}
 ?>
 <div class="user-index">
     <p>
@@ -78,7 +40,7 @@ function secToStr($secs)
 
                 'format' => 'text',
 
-                'filter'=>User::find()->select(['username', 'id'])->indexBy('id')->column(),
+                'filter'=>User::find()->where(['!=','status', '8'])->select(['username', 'id'])->indexBy('id')->column(),
 
             ],
             [
@@ -102,7 +64,12 @@ function secToStr($secs)
                 'value' => function($model)
                 {
                     $sum = $model->session_end - $model->session_start;
-                    return  secToStr($sum);
+                    if (isset($model->session_end)){
+                        return  secToStr($sum);
+                    }else{
+                        return 'Сотрудник в работе';
+                    }
+
                     //return date('d.m.Y H:i:s', $model->session_start);
                 },
                 'filter' => 'Количество рабочих часов'
@@ -112,7 +79,11 @@ function secToStr($secs)
                 'attribute' => 'session_end',
                 'value' => function($model)
                 {
-                    return date('d.m.Y H:i:s', $model->session_end);
+                    if (isset($model->session_end)){
+                        return  date('d.m.Y H:i:s', $model->session_end);
+                    }else{
+                        return 'Не завершен';
+                    }
                 }
             ],
 
@@ -130,7 +101,7 @@ function secToStr($secs)
 
                     'view' => function ($url,$model, $key) {
                         return Html::a(
-                            '<button class="fa-solid fa fa-eye btn btn-sm btn-success"> Детально</button>',
+                            '<button class="btn btn-sm btn-success"><i class="fa-solid fa fa-eye"></i> Детально</button>',
                             $url);
                     },
 
