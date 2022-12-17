@@ -22,7 +22,7 @@ use yii\bootstrap4\Html;
             <?php if (Yii::$app->controller->action->id == 'create'){ ?>
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
             <?php }else{ ?>
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'disabled' => true]) ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
             <?php } ?>
         </div>
         <div class="form-group">

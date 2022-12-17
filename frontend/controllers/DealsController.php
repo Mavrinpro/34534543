@@ -29,12 +29,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete'],
+                            'actions' => ['delete', 'updater'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],

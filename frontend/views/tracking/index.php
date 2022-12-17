@@ -22,7 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
 <?php
-
+$addon = <<< HTML
+<span class="input-group-text">
+    <i class="fas fa-calendar-alt"></i>
+</span>
+HTML;
 ?>
 
     <?= GridView::widget([
@@ -69,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions'=>[
                         'timePicker'=>true,
                         //'timePickerIncrement'=>30,
+
                         'locale'=>[
                             'format'=>'Y-m-d H:i:s'
                         ],

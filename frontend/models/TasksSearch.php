@@ -42,8 +42,10 @@ class TasksSearch extends Tasks
     {
         if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
             $query = Tasks::find();
+            $query->where(['>','status', 0]);
         }else{
-            $query = Tasks::find()->where(['user_id' =>  \Yii::$app->user->id]);
+            $query = Tasks::find()->where(['user_id' =>  \Yii::$app->user->id])->andWhere(['>','status', 0]);
+            //query->where(['>','status', 0]);
         }
 
 

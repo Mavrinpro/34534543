@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('<i class="fa fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $model->id], [
+        <?= Html::a('<i class="fa fa-times-circle"></i>', ['tasks/updater', 'id' => $model->id, 'updater' => 'yes'], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,9 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'user_id',
+            'user.full_name',
             'date_create',
-            'date_end',
+            //'date_end',
+            [
+                'attribute' =>'date_end',
+                'label' => 'Дата окончания',
+                'value' => function($model){
+                    return $model->date_end;
+                }
+            ],
             'status',
         ],
     ]) ?>

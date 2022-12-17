@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            //'name',
+            'name',
             //'user_id',
 
             [
@@ -52,9 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'status',
                 'format' => 'html',
                'value' => function($model){
-                         if($model->status == '1'){
+                         if(date('Y-m-d H:i:s', strtotime($model->date_end)) > date('Y-m-d H:i:s')){
                             return '<span class="text-success"><span class="badge badge-success">Активная</span></span>';
-                         }else if($model->status == '0'){
+                         }else if(date('Y-m-d H:i:s', strtotime($model->date_end)) < date('Y-m-d H:i:s')){
                              return '<span class="text-danger"><span class="badge badge-danger">Просроченная</span></span>';
                          }else{
                              return '<span class="text-gray">Не определена</span>';
@@ -99,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => ActionColumn::className(),
+                'template'=>'{view}{update}{check}{updater}',
                 'header' =>    Html::a('Сбросить фильтр', ['index'], ['class' => 'btn btn-sm btn-outline-primary']),
                 'visibleButtons' => [
 
@@ -110,19 +111,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'update' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning"></i>',
+                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning mr-2"></i>',
                             $url);
                     },
                     'view' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success"></i>',
+                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success mr-2"></i>',
                             $url);
                     },
-                    'delete' => function ($url,$model, $key) {
+//                    'delete' => function ($url,$model, $key) {
+//                        return Html::a(
+//                            '<i class="fa fa-trash-alt btn btn-sm btn-danger"></i>',
+//                            $url,[
+//                            //'title' => Yii::t('app', 'Delete'),
+//                            'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
+//                            'data-method' => 'post', 'data-pjax' => '1',
+//                        ]);
+//                    },
+
+                    'updater' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa fa-trash-alt btn btn-sm btn-danger"></i>',
-                            $url,[
-                            //'title' => Yii::t('app', 'Delete'),
+                            '<i class="fas fa-times-circle btn btn-sm btn-danger"></i>',
+                            ['tasks/updater', 'id' => $model->id],[
+                            //'title' => Yii::t('app', 'Закрыть задачу'),
                             'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
                             'data-method' => 'post', 'data-pjax' => '1',
                         ]);

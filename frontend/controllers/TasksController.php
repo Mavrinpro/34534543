@@ -44,7 +44,7 @@ class TasksController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams, $tasks);
         $dataProvider->query->with('user');
         $date = date('Y-m-d H:i:s');
-        Tasks::updateAll(['status' => 1], ['>', 'date_end', $date ]);
+        //Tasks::updateAll(['status' => 1], ['>', 'date_end', $date ]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -120,7 +120,7 @@ class TasksController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash('success', 'Задача успешно обновлена');
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['tasks/index', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -140,6 +140,31 @@ class TasksController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    /**
+     * Deletes an existing Tasks model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdater($id)
+    {
+        $model = $this->findModel($id);
+
+            $model->status = 0;
+            \Yii::$app->session->setFlash('success', 'Задача закрыта!');
+            $model->update();
+            return $this->redirect('/tasks/index');
+
+        return $this->redirect('index');
+
+
+
+
+
+
+
     }
 
     /**

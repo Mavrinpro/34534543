@@ -42,7 +42,7 @@ use yii\jui\DatePicker;
 </div>
     <div class="col-md-4">
     <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
-        ['prompt'=>'Оператор...']) ?>
+        ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
     </div>
         <div id="memberssearch-family_name_id"></div>
         <div class="col-md-4">
@@ -110,9 +110,13 @@ use yii\jui\DatePicker;
 
             ?>
 
-
+            <?php if (Yii::$app->controller->action->id == 'create'){ ?>
             <?= $form->field($model, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label
             (false) ?>
+            <?php }else{ ?>
+                <?= $form->field($model, 'name')->hiddenInput()->label
+                (false) ?>
+            <?php } ?>
             <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
             <?= $form->field($model, 'status')->hiddenInput(['value' => true])->label(false) ?>
 
