@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            'deals.phone',
             'user.full_name',
             'date_create',
             //'date_end',

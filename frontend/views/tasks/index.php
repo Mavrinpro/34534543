@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'name',
-            //'user_id',
+            'deals.phone',
 
             [
                 //label' => 'Полное имя',
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                              return '<span class="text-gray">Не определена</span>';
                          }
                        },
-                'filter'=>array("1"=>"Активные","0"=>"Просроченные"),
+                'filter'=>   ['1' => 'Актывные', '0' => 'Просроченные'],
             ],
 
             //'date_update',

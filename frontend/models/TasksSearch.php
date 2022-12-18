@@ -18,7 +18,7 @@ class TasksSearch extends Tasks
     {
         return [
             [['id', 'user_id', 'status'], 'integer'],
-            [['name', 'date_create', 'date_update'], 'safe'],
+            [['name', 'date_create', 'date_update', 'deals_id', 'date_end'], 'safe'],
         ];
     }
 
@@ -66,13 +66,17 @@ class TasksSearch extends Tasks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'deals_id' => $this->deals_id,
             'user_id' => $this->user_id,
             'date_create' => $this->date_create,
             'date_update' => $this->date_update,
             'status' => $this->status,
+            'date_end' => $this->date_end,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'deals_id', $this->deals_id]);
+        $query->andFilterWhere(['like', 'date_end', $this->date_end]);
 
         return $dataProvider;
     }

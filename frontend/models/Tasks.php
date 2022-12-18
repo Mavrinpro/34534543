@@ -33,7 +33,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'deals_id', 'date_end'], 'safe'],
-            [['date_end'], 'required'],
+            [[], 'required'],
             [['date_create', 'date_update', 'name', 'status'], 'safe'],
            //[['date_end'], 'datetime'],
         ];
@@ -48,17 +48,22 @@ class Tasks extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Название',
             'user_id' => 'Кому',
-            'date_create' => 'Date Create',
-            'date_update' => 'Date Update',
+            'date_create' => 'Дата создания',
+            'date_update' => 'Дата обновления',
             'status' => 'Статус',
             'deals_id' => 'Телефон',
-            'date_end' => 'Дата'
+            'date_end' => 'Дата окончания'
         ];
     }
 
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getDeals()
+    {
+        return $this->hasOne(Deals::className(), ['id' => 'deals_id']);
     }
 
 //    public function getDeals()
