@@ -65,7 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>   ['1' => 'Актывные', '2' => 'Просроченные'],
             ],
 
-            //'date_update',
             [
                 'attribute' => 'date_end',
                 'format' => 'html',
