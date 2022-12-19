@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                              return '<span class="text-gray">Не определена</span>';
                          }
                        },
-                'filter'=>   ['1' => 'Актывные', '0' => 'Просроченные'],
+                'filter'=>   ['1' => 'Актывные', '2' => 'Просроченные'],
             ],
 
             //'date_update',

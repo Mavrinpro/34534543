@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use app\models\Tasks;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class ApiController extends Controller
@@ -37,6 +39,30 @@ class ApiController extends Controller
         return 'ssrhsrthr';
     }
 
+    public function actionStatusTask()
+    {
+        $now = date('Y-m-d H:i:s');
+        if ($this->request->get('cron') == 'status'){
+            file_put_contents('text.txt', '100 ', FILE_APPEND);
+
+            // Меняем статус задачи по крону, если дата истекла
+            $models = Tasks::find()->all();
+            foreach ($models as $model) {
+                //return $model->status;
+                if ($now > date('Y-m-d H:i:s', strtotime($model->date_end))){
+                    $model->status = 2;
+                    $model->update();
+                }
+
+                // skipping validation as no user input is involved
+            }
+
+
+
+        }
+
+        //return  strtotime($now. $model->date_end);
+    }
 
 
 
