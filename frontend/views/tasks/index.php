@@ -45,7 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visible' => \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin',
 
 // esli nujen select
-                'filter'=>\common\models\User::find()->select(['username', 'id'])->indexBy('id')->column(),
+                'filter'=>\common\models\User::find()->select(['username', 'id'])->where(['!=', 'status', 8])->indexBy
+                ('id')
+                    ->column(),
 
             ],
             [
