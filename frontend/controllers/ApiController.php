@@ -38,14 +38,15 @@ class ApiController extends Controller
 
         return 'ssrhsrthr';
     }
-
+// Меняем статус задачи по крону, если дата истекла
     public function actionStatusTask()
     {
         $now = date('Y-m-d H:i:s');
+        $text = 'Cron отработал '. $now.' ';
         if ($this->request->get('cron') == 'status'){
-            file_put_contents('text.txt', '100 ', FILE_APPEND);
+            file_put_contents('text.txt', $text, FILE_APPEND);
 
-            // Меняем статус задачи по крону, если дата истекла
+
             $models = Tasks::find()->all();
             foreach ($models as $model) {
                 //return $model->status;
@@ -54,16 +55,10 @@ class ApiController extends Controller
                     $model->update();
                 }
 
-                // skipping validation as no user input is involved
             }
-
-
 
         }
 
-        //return  strtotime($now. $model->date_end);
     }
-
-
 
 }

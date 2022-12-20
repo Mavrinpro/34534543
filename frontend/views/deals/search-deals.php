@@ -31,28 +31,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     ?>
-    <?=
-    Chart::widget([
-        'type' => Chart::TYPE_BAR,
-        //'labels' => $arrLabel,
-        'datasets' => [
-
-
-            [
-                'label' => 'По филиалам',
-                'query' => \app\models\Deals::find()
-                    ->select('id_filial')
-                    ->addSelect('count(*) as data')
-                    ->groupBy('id_filial')
-                    ->createCommand(),
-                'labelAttribute' => 'id_filial',
-
-            ],
-        ],
-
-
-    ]);
-    ?>
+<!--    --><?//=
+//    Chart::widget([
+//        'type' => Chart::TYPE_BAR,
+//        //'labels' => $arrLabel,
+//        'datasets' => [
+//
+//
+//            [
+//                'label' => 'По филиалам',
+//                'query' => \app\models\Deals::find()
+//                    ->select('id_filial')
+//                    ->addSelect('count(*) as data')
+//                    ->groupBy('id_filial')
+//                    ->createCommand(),
+//                'labelAttribute' => 'id_filial',
+//
+//            ],
+//        ],
+//
+//
+//    ]);
+//    ?>
     <?php  // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="col-md-12"><div class="alert alert-secondary" role="alert">Здесь можно настроить и экспортироовать отчет в выбранном формате</div>
     </div>
@@ -177,9 +177,22 @@ echo ExportMenu::widget([
             [
                 //label' => 'Полное имя',
                 'attribute'=>'tag',
-                'value' => 'tegi.name',
+                //'value' => 'tegi.name',
+                'value' => function($model)
+                {
+                    $tag = \app\models\Tags::find()->where(['id' => explode(',',$model->tag)])->all();
 
-                'format' => 'text',
+                    foreach ($tag as $t)
+                    {
+                        // Вывод списка тегов (только таким образом. Через .=)
+                        $res .= '<div class="deal_tag badge badge-pill badge-light d-inline-block border">'
+                            .$t->name.'</div>';
+
+                    }
+                    return $res;
+                },
+
+                'format' => 'html',
 
                 'filter'=>\app\models\Tags::find()->select(['name', 'id'])->indexBy('id')->column(),
 
