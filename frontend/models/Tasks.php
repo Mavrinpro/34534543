@@ -3,6 +3,7 @@
 namespace app\models;
 
 use common\models\User;
+use Illuminate\Support\Facades\Auth;
 use Yii;
 
 /**
@@ -33,7 +34,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'deals_id', 'date_end'], 'safe'],
-            [[], 'required'],
+            [['date_end'], 'required'],
             [['date_create', 'date_update', 'name', 'status'], 'safe'],
            //[['date_end'], 'datetime'],
         ];
@@ -65,9 +66,4 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Deals::className(), ['id' => 'deals_id']);
     }
-
-//    public function getDeals()
-//    {
-//        return $this->hasMany(Deals::className(), ['deals_id' => 'id']);
-//    }
 }

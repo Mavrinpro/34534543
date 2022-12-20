@@ -66,7 +66,7 @@ $this->title = 'Статистика';
 </div>
     <div class="col-md-6 bg-light">
         <?php
-        $users = \common\models\User::find()->where(['!=','status', 8])->andWhere(['!=','status', 9])->select('username')->orderBy('id')->all();
+        $users = \common\models\User::find()->where(['!=','status', 8])->andWhere(['!=','status', 9])->andWhere(['!=', 'status', 0])->select('username')->orderBy('id')->all();
         foreach ($users as $user)
         {
             $arrUser[] = $user['username']; // Список городов для графика (по филиалам)
@@ -136,10 +136,10 @@ foreach ($labels as $label)
 {
     $arrLabel[] = $label['name']; // Список городов для графика (по филиалам)
 }
-            foreach ($users as $user)
-            {
-                $arrUser[] = $user['username']; // Список городов для графика (по филиалам)
-            }
+//            foreach ($users as $user)
+//            {
+//                $arrUser[] = $user['username']; // Список городов для графика (по филиалам)
+//            }
 
 $model = new \app\models\Deals();
  Pjax::begin();

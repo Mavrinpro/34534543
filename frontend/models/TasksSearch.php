@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\Tasks;
+use kartik\daterange\DateRangeBehavior;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -11,6 +12,21 @@ use yii\data\ActiveDataProvider;
  */
 class TasksSearch extends Tasks
 {
+    public $createTimeRange;
+    public $createTimeStart;
+    public $createTimeEnd;
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => DateRangeBehavior::className(),
+                'attribute' => 'date_create',
+                'dateStartAttribute' => 'createTimeStart',
+                'dateEndAttribute' => 'createTimeEnd',
+            ]
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -19,6 +35,7 @@ class TasksSearch extends Tasks
         return [
             [['id', 'user_id', 'status'], 'integer'],
             [['name', 'date_create', 'date_update', 'deals_id', 'date_end'], 'safe'],
+            [['date_end'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
     }
 
@@ -68,11 +85,20 @@ class TasksSearch extends Tasks
             'id' => $this->id,
             'deals_id' => $this->deals_id,
             'user_id' => $this->user_id,
-            'date_create' => $this->date_create,
+            //'date_create' => $this->date_create,
             'date_update' => $this->date_update,
             'status' => $this->status,
-            'date_end' => $this->date_end,
+            //'date_end' =>  $this->createTimeEnd,
         ]);
+
+        // Фильтра по датам
+        if(strlen($this->createTimeStart) > 0) {
+            $query->andFilterWhere([
+                '(date_end) >' =>  date('Y-m-d', $this->createTimeStart),
+                '(date_end) <' =>  date('Y-m-d', $this->createTimeEnd),
+            ]);
+        }
+
 
         $query->andFilterWhere(['like', 'name', $this->name]);
         $query->andFilterWhere(['like', 'deals_id', $this->deals_id]);

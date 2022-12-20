@@ -133,7 +133,7 @@ echo ExportMenu::widget([
                     'format' => 'text',
 
 // esli nujen select
-                    'filter'=>\common\models\User::find()->where(['!=','status', 8])->select(['username', 'id'])
+                    'filter'=>\common\models\User::find()->where(['!=','status', 8])->andWhere(['!=', 'status', 0])->select(['username', 'id'])
                         ->indexBy
                     ('id')->column(),
 
