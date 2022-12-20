@@ -129,7 +129,7 @@ echo ExportMenu::widget([
                 [
                     //label' => 'Полное имя',
                     'attribute'=>'id_operator',
-                    'value' => 'us.username',
+                    'value' => 'us.full_name',
                     'format' => 'text',
 
 // esli nujen select
@@ -267,29 +267,34 @@ echo ExportMenu::widget([
                 ],
             ],
         ],
-    ]); ?>
-    <?=
-    Chart::widget([
-    'type' => Chart::TYPE_BAR,
-    //'labels' => $arrLabel,
-    'datasets' => [
-
-
-    [
-    'label' => 'По филиалам',
-    'query' => \app\models\Deals::find()
-    ->select('id_filial')
-    ->addSelect('count(*) as data')
-    ->groupBy('id_filial')
-    ->createCommand(),
-    'labelAttribute' => 'id_filial',
-
-    ],
-    ],
-
-
     ]);
-    ?>
+//    $branch = \app\models\Branch::find()->all();
+//    foreach ($branch as $bran) {
+//        $br[] = $bran['name'];
+//    }
+//    ?>
+<!--    --><?//=
+//    Chart::widget([
+//    'type' => Chart::TYPE_BAR,
+//    'labels' => $br,
+//    'datasets' => [
+//
+//
+//    [
+//    'label' => 'По филиалам',
+//    'query' => \app\models\Deals::find()
+//    ->select('id_filial')
+//    ->addSelect('count(*) as data')
+//    ->groupBy('id_filial')
+//    ->createCommand(),
+//    'labelAttribute' => 'id_filial',
+//
+//    ],
+//    ],
+//
+//
+//    ]);
+//    ?>
     <?php Pjax::end(); ?>
 
 </div>

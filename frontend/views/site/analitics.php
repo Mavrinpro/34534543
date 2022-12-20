@@ -188,6 +188,9 @@ $model = new \app\models\Deals();
 
                     ],
                 ],
+                'options' => [
+                        'events' => ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove']
+                ],
 
 
             ]);
