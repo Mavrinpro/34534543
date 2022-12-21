@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+$taskCount  = new \app\models\Tasks();
 ?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -177,9 +178,10 @@ use yii\widgets\Pjax;
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header">15 Notifications</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
+                <a href="/tasks" class="dropdown-item">
+                    <i class="fas fa-envelope mr-2"></i> Просроченные задачи <span class="badge badge-danger"><?php \yii\widgets\Pjax::begin(['id' => 'badge']); echo $taskCount->overdueTransactions
+                    (); \yii\widgets\Pjax::end();?></span>
+
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
@@ -221,3 +223,16 @@ $js = <<<JS
 JS;
 $this->registerJs($js);
         ?>
+<?php
+$js = <<< JS
+
+
+ function updateList() {
+         $.pjax.reload({container: "#badge", async: false});
+        }
+        setInterval(updateList, 300000);
+
+JS;
+
+$this->registerJs($js);
+$this->registerJs($js);
