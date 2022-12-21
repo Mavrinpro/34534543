@@ -237,6 +237,7 @@ echo ExportMenu::widget([
             [
                 'class' => ActionColumn::className(),
                 'header' =>    Html::a('Сбросить фильтр', ['deals/search-deals'], ['class' => 'btn btn-sm btn-outline-primary']),
+                'template'=>'{view}{update}{updater}',
                 'visibleButtons' => [
 
                     'delete' => function ($model) {
@@ -246,21 +247,21 @@ echo ExportMenu::widget([
                 'buttons' => [
                     'update' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning"></i>',
+                            '<i class="fa-solid fa fa-edit btn btn-sm btn-warning mr-2"></i>',
                             $url);
                     },
                     'view' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success"></i>',
+                            '<i class="fa-solid fa fa-eye btn btn-sm btn-success mr-2"></i>',
                             $url);
                     },
-                    'delete' => function ($url,$model, $key) {
+                    'updater' => function ($url,$model, $key) {
                         return Html::a(
-                            '<i class="fa fa-trash-alt btn btn-sm btn-danger"></i>',
-                            $url,[
-                            //'title' => Yii::t('app', 'Delete'),
+                            '<i class="fas fa-times-circle btn btn-sm btn-danger"></i>',
+                            ['deals/updater', 'id' => $model->id],[
+                            //'title' => Yii::t('app', 'Закрыть задачу'),
                             'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
-                            'data-method' => 'post', 'data-pjax' => '1',
+                            'data-method' => 'post', 'data-pjax' => '0',
                         ]);
                     },
 

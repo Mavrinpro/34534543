@@ -31,7 +31,7 @@ class DealsController extends Controller
                         [
                             'actions' => ['delete', 'updater'],
                             'allow' => true,
-                            'roles' => ['admin'],
+                            'roles' => ['admin', 'superadmin'],
                         ],
                         [
                             'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater'],
@@ -158,15 +158,15 @@ class DealsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        $model->del = 1;
             \Yii::$app->session->setFlash('error', 'Сделка удалена!');
-                $model->del = 1;
+
 
                 $model->update();
 
                 return $this->redirect(['deals/index']);
 
-        }
+
 
         return $this->render('update', [
             'model' => $model,

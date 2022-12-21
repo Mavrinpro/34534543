@@ -40,10 +40,18 @@ use yii\jui\DatePicker;
         ]
     ]) ?>
 </div>
+        <?php if (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())
+        ['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()
+            ->identity->getId())['admin']->name == 'admin'){ ?>
     <div class="col-md-4">
-    <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
-        ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
+
+            <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
+                ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
     </div>
+       <?php }else{ ?>
+            <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false) ?>
+       <?php } ?>
+
         <div id="memberssearch-family_name_id"></div>
         <div class="col-md-4">
 <!--            <label class="control-label">Телефон</label>-->
@@ -122,7 +130,11 @@ use yii\jui\DatePicker;
 
         </div>
         <div class="form-group col-12">
+            <?php if (Yii::$app->controller->action->id == 'create'){ ?>
             <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
+            <?php }else{ ?>
+                <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
+            <?php } ?>
         </div>
 
     </div>

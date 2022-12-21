@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $model->id], [
+        <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Хотите удалить сделку № '.$model->id.'?',
                 'method' => 'post',
             ],
         ]) ?>
