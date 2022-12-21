@@ -48,13 +48,7 @@ HTML;
                 'filter'=>User::find()->where(['!=','status', '8'])->select(['username', 'id'])->indexBy('id')->column(),
 
             ],
-//            [
-//                    'attribute' => 'date_at',
-//                    'value' => function($model)
-//                    {
-//                        return date('d.m.Y H:i:s', $model->date_at);
-//                    }
-//            ],
+
             [
 
                 //'autocomplete'=> false,
@@ -62,6 +56,10 @@ HTML;
                 'filterInputOptions' => [
                     'autocomplete' => 'off'
                 ],
+                'value' => function($model)
+                {
+                    return date('d.m.Y H:i:s', $model->date_at);
+                },
                 //'model' => $searchModel,
                 'filter' => \kartik\daterange\DateRangePicker::widget([
                     'name' => 'Deals[date_create]',
