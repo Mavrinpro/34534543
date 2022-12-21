@@ -46,7 +46,7 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'deals_id')->hiddenInput()->label(false) ?>
 
-            <?= $form->field($model, 'name')->hiddenInput()->label
+            <?= $form->field($model, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label
             (false) ?>
             <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
             <?= $form->field($model, 'status')->hiddenInput(['value' => true])->label(false) ?>

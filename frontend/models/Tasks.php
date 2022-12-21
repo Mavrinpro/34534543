@@ -66,4 +66,8 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Deals::className(), ['id' => 'deals_id']);
     }
+
+    public function getPhone() {
+        return $this->deals->phone;
+    }
 }

@@ -35,7 +35,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'name',
-            'deals.phone',
+            //'deals.phone',
+            [
+               'attribute' => 'deals_id',
+                'value' => 'phone'
+            ],
 
             [
                 //label' => 'Полное имя',

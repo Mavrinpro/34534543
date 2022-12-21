@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
  */
 class TasksSearch extends Tasks
 {
+    public $phone;
     public $createTimeRange;
     public $createTimeStart;
     public $createTimeEnd;
@@ -34,7 +35,7 @@ class TasksSearch extends Tasks
     {
         return [
             [['id', 'user_id', 'status'], 'integer'],
-            [['name', 'date_create', 'date_update', 'deals_id', 'date_end'], 'safe'],
+            [['name', 'date_create', 'date_update', 'deals_id', 'date_end', 'phone'], 'safe'],
             [['date_end'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
     }
@@ -67,11 +68,16 @@ class TasksSearch extends Tasks
 
 
         // add conditions that should always apply here
-
+        //$query->joinWith(['deals']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        $dataProvider->sort->attributes['deals'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['tbl_deals.phone' => SORT_ASC],
+            'desc' => ['tbl_deals.phone' => SORT_DESC],
+        ];
         $this->load($params);
 
         if (!$this->validate()) {
@@ -83,13 +89,14 @@ class TasksSearch extends Tasks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'deals_id' => $this->deals_id,
+            //'phone' => $this->deals_id,
             'user_id' => $this->user_id,
-            //'date_create' => $this->date_create,
+            //'deals_id' => $this->deals_id,
             'date_update' => $this->date_update,
             'status' => $this->status,
             //'date_end' =>  $this->createTimeEnd,
         ]);
+        //$query->andFilterWhere(['like', Deals::tableName() . 'phone', $this->deals_id]);
 
         // Фильтра по датам
 
@@ -103,7 +110,7 @@ class TasksSearch extends Tasks
 
         $query->andFilterWhere(['like', 'name', $this->name]);
         $query->andFilterWhere(['like', 'deals_id', $this->deals_id]);
-        //$query->andFilterWhere(['like', 'date_end', $this->date_end]);
+
 
         return $dataProvider;
     }
