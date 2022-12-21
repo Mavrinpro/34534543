@@ -70,4 +70,15 @@ class Tasks extends \yii\db\ActiveRecord
     public function getPhone() {
         return $this->deals->phone;
     }
+
+    // Просроченные сделки в сайдбаре
+    public function overdueTransactions()
+    {
+        if (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
+       return $this::find()->where(['status' => 2])->count();
+        }else{
+            return $this::find()->where(['status' => 2, 'user_id' => Yii::$app->user->getId()])->count();
+        }
+    }
+
 }

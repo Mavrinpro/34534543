@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+$taskCount  = new \app\models\Tasks();
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -61,7 +62,8 @@ use yii\helpers\Html;
                     ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
                         'active'=>$this->context->route == 'deals/search-deals'],
                     ['label' => 'Задачи', 'url' => ['/tasks'], 'icon' => 'thumbtack', 'active'=>\Yii::$app->controller->id
-                    == 'tasks'],
+                    == 'tasks',  'badge' => '<span class="right badge badge-danger">'.$taskCount->overdueTransactions
+                        ().'</span>',],
                     //['label' => 'Yii2 PROVIDED', 'header' => true],
                     ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
                     //['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
