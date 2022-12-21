@@ -32,8 +32,8 @@ HTML;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        //'showFooter' => true,
-        //'footerRowOptions'=>['class'=>'bg-dark'],
+        'showFooter' => true,
+        'footerRowOptions'=>['class'=>'bg-dark'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -108,6 +108,7 @@ HTML;
 
                     //return date('d.m.Y H:i:s', $model->session_start);
                 },
+                'footer' => secToStr($dataProvider->query->sum('count_time')),
             ],
 
             [
