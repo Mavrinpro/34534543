@@ -62,10 +62,11 @@ class DealsController extends Controller
         if  (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name ==
             'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name ==
             'admin'){
-            $query = Deals::find()->with('user', 'tasks')->orderBy('date_create DESC');
+            $query = Deals::find()->with('user', 'tasks')->where(['del' =>  0])->orderBy('date_create DESC');
         }else{
 
-        $query = Deals::find()->with('user', 'tasks')->where(['id_operator' =>  \Yii::$app->user->id])->orderBy('date_create DESC');
+        $query = Deals::find()->with('user', 'tasks')->where(['id_operator' =>  \Yii::$app->user->id])->andWhere(['del' =>  0])
+            ->orderBy('date_create DESC');
         }
         $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
