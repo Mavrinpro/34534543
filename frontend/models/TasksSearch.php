@@ -21,7 +21,7 @@ class TasksSearch extends Tasks
         return [
             [
                 'class' => DateRangeBehavior::className(),
-                'attribute' => 'date_create',
+                'attribute' => 'date_end',
                 'dateStartAttribute' => 'createTimeStart',
                 'dateEndAttribute' => 'createTimeEnd',
             ]
@@ -59,7 +59,7 @@ class TasksSearch extends Tasks
     {
         if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
             $query = Tasks::find();
-            $query->where(['>','status', 0]);
+            $query->where(['>','status', 0])->with('deals');
         }else{
             $query = Tasks::find()->where(['user_id' =>  \Yii::$app->user->id])->andWhere(['>','status', 0]);
             //query->where(['>','status', 0]);
@@ -92,17 +92,18 @@ class TasksSearch extends Tasks
         ]);
 
         // Фильтра по датам
+
         if(strlen($this->createTimeStart) > 0) {
             $query->andFilterWhere([
-                '(date_end) >' =>  date('Y-m-d', $this->createTimeStart),
-                '(date_end) <' =>  date('Y-m-d', $this->createTimeEnd),
+                'DATE(date_end) >' =>  date('Y-m-d', $this->createTimeStart),
+                'DATE(date_end) <' =>  date('Y-m-d', $this->createTimeEnd),
             ]);
         }
 
 
         $query->andFilterWhere(['like', 'name', $this->name]);
         $query->andFilterWhere(['like', 'deals_id', $this->deals_id]);
-        $query->andFilterWhere(['like', 'date_end', $this->date_end]);
+        //$query->andFilterWhere(['like', 'date_end', $this->date_end]);
 
         return $dataProvider;
     }
