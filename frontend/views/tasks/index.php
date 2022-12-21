@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                              return '<span class="text-gray">Не определена</span>';
                          }
                        },
-                'filter'=>   ['1' => 'Актывные', '2' => 'Просроченные'],
+                'filter'=>   ['1' => 'Активные', '2' => 'Просроченные'],
             ],
 
             [
@@ -77,34 +77,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return date('d.m.Y', strtotime($member->date_end));
                 },
-//                'filter' => DatePicker::widget([
-//                    //'options' => ['width' => '100px'],
-//                    'options' => [
-//            'autocomplete' => 'off',
-//            'placeholder' => 'Выберите дату',
-//            'data' => [
-//                'picker' => 'datepicker'
-//            ]
-//        ],
-//                    'attribute' => 'date_end',
-//                    'model' => $searchModel,
-//                    'value' => $searchModel->date_create,
-//                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
-//                    'pluginOptions' => [
-//                        'format' => 'yyyy-mm-dd',
-//
-//                        'autoclose' => true,
-//                        'todayHighlight' => true,
-//                    ]
-//                ]),
+
                 'filterInputOptions' => [
                     'autocomplete' => 'off'
                 ],
             'filter' => \kartik\daterange\DateRangePicker::widget([
-                'name' => 'Deals[date_create]',
+                'name' => 'TasksSearch[date_end]',
                 'model'=>$searchModel,
 
-                'attribute'=>'date_create',
+                'attribute'=>'date_end',
                 'convertFormat'=>true,
                 'useWithAddon'=>false,
                 'pluginOptions'=>[
