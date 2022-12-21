@@ -42,7 +42,7 @@ class TasksController extends Controller
         $tasks = Tasks::find()->orderBy('date_create ASC')->all();
         $searchModel = new TasksSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $tasks);
-        $dataProvider->query->with('user');
+        $dataProvider->query->with('user', 'deals');
         $date = date('Y-m-d H:i:s');
         //Tasks::updateAll(['status' => 1], ['>', 'date_end', $date ]);
         return $this->render('index', [

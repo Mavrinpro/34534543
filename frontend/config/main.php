@@ -65,7 +65,7 @@ return [
                 // Правила для API контроллера
                 'api/getcalls'   => 'api/get-calls',
                 'api/getorders'  => 'api/get-orders',
-
+                'api/statustask'  => 'api/status-task',
                 //'restApi/users'  => 'rest-api/index',
                 /*
                 [

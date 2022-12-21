@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 // esli nujen select
                 'filter'=>\common\models\User::find()->select(['username', 'id'])->where(['!=', 'status', 8])
-                    ->andWhere(['!=', 'status', 0])->indexBy
+                    ->andWhere(['!=', 'status', 0])->andWhere(['!=', 'id', 1])->indexBy
                 ('id')
                     ->column(),
 
@@ -97,6 +97,31 @@ $this->params['breadcrumbs'][] = $this->title;
 //                        'todayHighlight' => true,
 //                    ]
 //                ]),
+                'filterInputOptions' => [
+                    'autocomplete' => 'off'
+                ],
+            'filter' => \kartik\daterange\DateRangePicker::widget([
+                'name' => 'Deals[date_create]',
+                'model'=>$searchModel,
+
+                'attribute'=>'date_create',
+                'convertFormat'=>true,
+                'useWithAddon'=>false,
+                'pluginOptions'=>[
+                    'timePicker'=>true,
+                    //'timePickerIncrement'=>30,
+                    'locale'=>[
+                        'format'=>'Y-m-d'
+                    ],
+
+                ],
+                'options' => [
+                    'autocomplete' => 'off',
+                    'class' => 'form-control'
+                ]
+
+
+            ]),
             ],
 
             [

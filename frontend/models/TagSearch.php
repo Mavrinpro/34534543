@@ -55,7 +55,6 @@ class TagSearch extends Tags
             // $query->where('0=1');
             return $dataProvider;
         }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

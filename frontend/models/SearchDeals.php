@@ -65,7 +65,8 @@ class SearchDeals extends Deals
         }else{
             $query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]);
         }
-        $query->with(['us', 'tegi', 'branch']);
+        $query->with(['us', 'branch']);
+        $query->with('tegi');
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -145,23 +146,6 @@ class SearchDeals extends Deals
         if(strlen($this->deal_sum) > 1) {
             $query->andFilterWhere(['like', 'deal_sum', $this->deal_sum]);
         }
-
-/*
-        $query->andFilterWhere([
-            'id' => $this->id,
-            //'id_operator' => $this->id_operator,
-            //'id_filial' => $this->id_filial,
-            //'id_comment' => $this->id_comment,
-        ]);
-*/
-
-
-/*
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'tag', $this->tag])
-            ->andFilterWhere(['like', 'status', $this->status]);
-*/
 
 
         return $dataProvider;
