@@ -50,7 +50,7 @@ class ApiController extends Controller
             $models = Tasks::find()->all();
             foreach ($models as $model) {
                 //return $model->status;
-                if ($now > date('Y-m-d H:i:s', strtotime($model->date_end))){
+                if ($now > date('Y-m-d H:i:s', strtotime($model->date_end)) && $model->status == 1){
                     $model->status = 2;
                     $model->update();
                 }

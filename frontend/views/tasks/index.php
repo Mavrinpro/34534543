@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'status',
                 'format' => 'html',
+                'filter'=>   ['1' => 'Активные', '2' => 'Просроченные'],
                'value' => function($model){
                          if(date('Y-m-d H:i:s', strtotime($model->date_end)) > date('Y-m-d H:i:s')){
                             return '<span class="text-success"><span class="badge badge-success">Активная</span></span>';
@@ -63,7 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                              return '<span class="text-gray">Не определена</span>';
                          }
                        },
-                'filter'=>   ['1' => 'Активные', '2' => 'Просроченные'],
             ],
 
             [
