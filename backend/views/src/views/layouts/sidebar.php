@@ -104,14 +104,14 @@ $taskCount  = new \app\models\Tasks();
     <!-- /.sidebar -->
 </aside>
 <?php
-$js = <<< JS
+//$js = <<< JS
 
 
- function updateList() {
-         $.pjax.reload({container: "#badge", async: false});
-        }
-        setInterval(updateList, 1000);
+// function updateList() {
+//         $.pjax.reload({container: "#badge", async: false});
+//        }
+//        setInterval(updateList, 1000);
+//
+//JS;
 
-JS;
-
-$this->registerJs($js);
+//$this->registerJs($js);
