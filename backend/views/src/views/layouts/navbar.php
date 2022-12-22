@@ -5,7 +5,10 @@ use yii\widgets\Pjax;
 $taskCount  = new \app\models\Tasks();
 ?>
 <?php Pjax::begin(['id' => 'alert']); ?>
+<?php if (Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())['admin']->name != 'admin' &&
+    Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())['superadmin']->name != 'superadmin'){ ?>
     <?php $taskCount->Notyfication($taskCount->overdueTransactions(), $taskCount->overdueTransactions() ) ?>
+    <?php } ?>
 <?php Pjax::end(); ?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">

@@ -84,7 +84,7 @@ class Tasks extends \yii\db\ActiveRecord
 
     public function Notyfication($count, $num)
     {
-        if ($count > 0 && Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())['admin']->name != 'admin'){
+        if ($count > 0){
             \Yii::$app->session->setFlash('error', 'Есть просроченные задачи '. $num);
             echo \lavrentiev\widgets\toastr\NotificationFlash::widget([
     'options' => [
