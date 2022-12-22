@@ -205,6 +205,7 @@ class UserController extends Controller
             $model->date_at = $date;
             $model->session_start = $date;
             $model->user_id = \Yii::$app->user->id;
+            $model->work = true;
             \Yii::$app->response->cookies->add(new \yii\web\Cookie([
                 'name' => 'session_start',
                 'value' => $date
@@ -229,10 +230,11 @@ class UserController extends Controller
 
         if (\Yii::$app->request->get('sessionend') == 'yes') {
 
-            \Yii::$app->db->createCommand("UPDATE time_tracking SET date_end=:column1, session_end=:column2 WHERE session_start=:id")
+            \Yii::$app->db->createCommand("UPDATE time_tracking SET date_end=:column1, session_end=:column2, work=:workfalse WHERE session_start=:id")
                 ->bindValue(':id', $sessId)
                 ->bindValue(':column1', $date)
             ->bindValue(':column2', $date)
+            ->bindValue(':workfalse', false)
             ->execute();
 
 

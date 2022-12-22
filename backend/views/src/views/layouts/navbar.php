@@ -176,9 +176,15 @@ $taskCount  = new \app\models\Tasks();
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-danger navbar-badge"><?php \yii\widgets\Pjax::begin(['id' => 'noty']); echo
-                    $taskCount->overdueTransactions
-                    (); \yii\widgets\Pjax::end();?></span>
+                <?php \yii\widgets\Pjax::begin(['id' => 'noty']);
+                if ($taskCount->overdueTransactions
+                () > 0){ ?>
+                    <span class="badge badge-danger navbar-badge"><?php  echo
+                        $taskCount->overdueTransactions
+                        (); ?></span>
+               <?php }
+                \yii\widgets\Pjax::end(); ?>
+
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header"> Уведомлений: <?php echo $taskCount->overdueTransactions

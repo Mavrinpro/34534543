@@ -14,6 +14,7 @@ use Yii;
  * @property int|null $date_end
  * @property int|null $session_start
  * @property int|null $session_end
+ * @property bool|null $work
  */
 class Tracking extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class Tracking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'date_at', 'date_end', 'session_start', 'session_end'], 'safe'],
+            [['user_id', 'date_at', 'date_end', 'session_start', 'session_end', 'work'], 'safe'],
         ];
     }
 
@@ -47,6 +48,7 @@ class Tracking extends \yii\db\ActiveRecord
             'date_end' => 'Дата окончания',
             'session_start' => 'Начало работы',
             'session_end' => 'Окончание',
+            'work' => 'В работе'
         ];
     }
 
