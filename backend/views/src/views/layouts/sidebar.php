@@ -42,7 +42,6 @@ $tracking = new \app\models\Tracking();
 
         <nav class="mt-2">
             <?php
-            \yii\widgets\Pjax::begin(['id' => 'badge']);
             if ($taskCount->overdueTransactions
             () > 0){
 
@@ -52,7 +51,7 @@ $tracking = new \app\models\Tracking();
             }else{
                 $badgeCount = '';
             }
-            \yii\widgets\Pjax::end();
+
             $menuItems   = [];
             $menuItems[] = [
                 'label' => 'Аналитика',
@@ -72,10 +71,8 @@ $tracking = new \app\models\Tracking();
             $menuItems[] = ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'];
             $menuItems[] = ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
                 'active'=>$this->context->route == 'deals/search-deals'];
-
              $menuItems[] =['label' => 'Задачи', 'url' => ['/tasks'], 'icon' => 'thumbtack', 'active'=>\Yii::$app->controller->id
                 == 'tasks',  'badge' => $badgeCount,];
-
             $menuItems[] =['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest];
             $menuItems[] =['label' => 'Филиалы', 'url' => ['/branch'], 'iconStyle' => 'fa fa-city',
                 'active'=>\Yii::$app->controller->id == 'branch', ];
@@ -115,13 +112,13 @@ $tracking = new \app\models\Tracking();
 </aside>
 <?php
 //$js = <<< JS
-
-
+//
+//
 // function updateList() {
 //         $.pjax.reload({container: "#badge", async: false});
 //        }
 //        setInterval(updateList, 1000);
 //
 //JS;
-
+//
 //$this->registerJs($js);

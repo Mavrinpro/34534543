@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /** @var frontend\models\SearchTracking $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Пользователи';
+$this->title = 'Учет рабочего времени';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
