@@ -63,8 +63,8 @@ class Tracking extends \yii\db\ActiveRecord
 
     }
 
-    public function getUser()
+    public function countActiveUser()
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']); // Связь
+        return $this::find()->where(['work' => 1])->count();
     }
 }

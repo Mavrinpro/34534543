@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 $taskCount  = new \app\models\Tasks();
+$tracking = new \app\models\Tracking();
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -85,7 +86,8 @@ $taskCount  = new \app\models\Tasks();
             $menuItems[] = ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
                 'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                     ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
-                    ['superadmin']->name == 'superadmin', ];
+                    ['superadmin']->name == 'superadmin', 'badge' => '<span class="right badge badge-success">'
+                    .$tracking->countActive().'</span>'];
             $menuItems[] = ['label' => 'Учет времени', 'url' => ['/tracking'], 'iconStyle' => 'fa fa-history',
                 'active'=>\Yii::$app->controller->id == 'tracking', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                     ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
