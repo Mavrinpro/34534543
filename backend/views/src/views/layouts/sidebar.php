@@ -83,11 +83,19 @@ $tracking = new \app\models\Tracking();
                 'active'=>\Yii::$app->controller->id == 'tags', ];
             $menuItems[] = ['label' => 'Шаблоны писем', 'url' => ['/layouts-mail/index'], 'iconStyle' => 'fa fa-envelope',
                 'active'=>\Yii::$app->controller->id == 'layouts-mail', ];
-            $menuItems[] = ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
-                'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
-                    ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
-                    ['superadmin']->name == 'superadmin', 'badge' => '<span class="right badge badge-success">'
-                    .$tracking->countActive().'</span>'];
+            if ($tracking->countActive() > 0){
+                $menuItems[] = ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
+                    'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['superadmin']->name == 'superadmin', 'badge' => '<span class="right badge badge-success">'
+                        .$tracking->countActive().'</span>'];
+            }else{
+                $menuItems[] = ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
+                    'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+                        ['superadmin']->name == 'superadmin'];
+            }
+
             $menuItems[] = ['label' => 'Учет времени', 'url' => ['/tracking'], 'iconStyle' => 'fa fa-history',
                 'active'=>\Yii::$app->controller->id == 'tracking', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                     ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
