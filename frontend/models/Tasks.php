@@ -17,6 +17,7 @@ use Yii;
  * @property string|null $date_update
  * @property int|null $status
  * @property int|null $deals_id
+ * @property string|null $date_end
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -107,6 +108,35 @@ class Tasks extends \yii\db\ActiveRecord
     ]
 ]);
         }
+    }
+// Вывод активных задач
+    public function taskActive($id = null)
+    {
+        $today = date('Y-m-d');
+        if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+            ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+            ['superadmin']->name == 'superadmin'){
+            return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])
+                ->count();
+        }else{
+            return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])->andWhere(['=', 'user_id', $id])
+                ->count();
+        }
+
+    }
+// Вывод просроченных задач
+    public function taskOverdue($id = null)
+    {
+        $today = date('Y-m-d');
+        if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+            ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
+            ['superadmin']->name == 'superadmin'){
+            return $this::find()->where(['=', 'status', 2])->count();
+        }else{
+            return $this::find()->where(['=', 'status', 2])->andWhere(['=', 'user_id', $id])
+                ->count();
+        }
+
     }
 
 }

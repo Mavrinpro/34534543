@@ -16,9 +16,14 @@ use kartik\date\DatePicker;
 
 $this->title = 'Задачи';
 $this->params['breadcrumbs'][] = $this->title;
-
+$taskCount  = new \app\models\Tasks();
 
 ?>
+<div class="mb-3"><b>Активных задач: <span class="badge badge-success"><?php echo $taskCount->taskActive(Yii::$app->user->getId
+        ());
+?></span> Просроченных: <span class="badge badge-danger"><?php echo $taskCount->taskOverdue(Yii::$app->user->getId
+            ()) ?></span> Задач на
+        сегодня</b> <?php  ?> </div>
 <div class="tasks-index">
 
     <p>
