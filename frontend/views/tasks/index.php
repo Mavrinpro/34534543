@@ -147,7 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['tasks/updater', 'id' => $model->id],[
                             //'title' => Yii::t('app', 'Закрыть задачу'),
                             'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
-                            'data-method' => 'post', 'data-pjax' => '1',
+                            'data-method' => 'post', 'data-pjax' => '0',
                         ]);
                     },
 

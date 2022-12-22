@@ -3,6 +3,7 @@
 namespace app\models;
 
 use common\models\User;
+use common\widgets\Alert;
 use Illuminate\Support\Facades\Auth;
 use Yii;
 
@@ -78,6 +79,33 @@ class Tasks extends \yii\db\ActiveRecord
        return $this::find()->where(['status' => 2])->count();
         }else{
             return $this::find()->where(['status' => 2, 'user_id' => Yii::$app->user->getId()])->count();
+        }
+    }
+
+    public function Notyfication($count, $num)
+    {
+        if ($count > 0){
+            \Yii::$app->session->setFlash('error', 'Есть просроченные задачи '. $num);
+            echo \lavrentiev\widgets\toastr\NotificationFlash::widget([
+    'options' => [
+        'escapeHtml' => false,
+        "closeButton" => true,
+        "debug" => false,
+        "newestOnTop" => false,
+        "progressBar" => false,
+        "positionClass" => \lavrentiev\widgets\toastr\NotificationFlash::POSITION_TOP_RIGHT,
+        "preventDuplicates" => false,
+        "onclick" => null,
+        "showDuration" => "300",
+        "hideDuration" => "1000",
+        "timeOut" => "5000",
+        "extendedTimeOut" => "1000",
+        "showEasing" => "swing",
+        "hideEasing" => "linear",
+        "showMethod" => "fadeIn",
+        "hideMethod" => "fadeOut"
+    ]
+]);
         }
     }
 

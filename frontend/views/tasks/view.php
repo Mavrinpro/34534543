@@ -40,7 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->date_end;
                 }
             ],
-            'status',
+            [
+                    'attribute' => 'status',
+                'format' => 'html',
+                'value' => function($model){
+                    if(date('Y-m-d H:i:s', strtotime($model->date_end)) > date('Y-m-d H:i:s')){
+                        return '<span class="text-success"><span class="badge badge-success">Активная</span></span>';
+                    }else if(date('Y-m-d H:i:s', strtotime($model->date_end)) < date('Y-m-d H:i:s')){
+                        return '<span class="text-danger"><span class="badge badge-danger">Просроченная</span></span>';
+                    }else{
+                        return '<span class="text-gray">Не определена</span>';
+                    }
+                },
+            ]
         ],
     ]) ?>
 

@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 $taskCount  = new \app\models\Tasks();
 ?>
+<?php Pjax::begin(['id' => 'alert']); ?>
+    <?php $taskCount->Notyfication($taskCount->overdueTransactions(), $taskCount->overdueTransactions() ) ?>
+<?php Pjax::end(); ?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -176,10 +179,11 @@ $taskCount  = new \app\models\Tasks();
                 <span class="badge badge-warning navbar-badge">15</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-header">15 Notifications</span>
+                <span class="dropdown-header"> Уведомлений: <?php echo $taskCount->overdueTransactions
+                    (); ?></span>
                 <div class="dropdown-divider"></div>
                 <a href="/tasks" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> Просроченные задачи <span class="badge badge-danger"><?php \yii\widgets\Pjax::begin(['id' => 'badge']); echo $taskCount->overdueTransactions
+                    <i class="fas fa-thumbtack mr-2"></i> Просроченные задачи <span class="badge badge-danger"><?php \yii\widgets\Pjax::begin(['id' => 'badge']); echo $taskCount->overdueTransactions
                     (); \yii\widgets\Pjax::end();?></span>
 
                 </a>
@@ -226,9 +230,16 @@ $this->registerJs($js);
 <?php
 $js = <<< JS
 
-
+function soundClick() {
+  var audio = new Audio(); // Создаём новый элемент Audio
+  audio.src = '/audio/notify.mp3'; // Указываем путь к звуку "клика"
+  audio.autoplay = true; // Автоматически запускаем
+  console.log(100)
+}
  function updateList() {
          $.pjax.reload({container: "#badge", async: false});
+         $.pjax.reload({container: "#alert", async: false});
+        soundClick();
         }
         setInterval(updateList, 300000);
 
