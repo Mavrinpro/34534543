@@ -45,7 +45,10 @@ HTML;
 
                 'format' => 'text',
 
-                'filter'=>User::find()->where(['!=','status', '8'])->select(['username', 'id'])->indexBy('id')->column(),
+                'filter'=>User::find()->where(['!=','status', '8'])->andWhere(['!=', 'id', 1])->select(['username', 'id'])
+                    ->indexBy
+                ('id')
+                        ->column(),
 
             ],
 
