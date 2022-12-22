@@ -73,4 +73,9 @@ class Tracking extends \yii\db\ActiveRecord
     {
         return $this::find()->where(['work' => true, 'user_id' => $id])->one();
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 }

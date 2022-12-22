@@ -97,13 +97,14 @@ HTML;
             [
                     'label' => 'Расчет',
                 'attribute' => 'yutyuyt',
+                'format' => 'html',
                 'value' => function($model)
                 {
                     $sum = $model->session_end - $model->session_start;
                     if (isset($model->session_end)){
                         return  secToStr($sum);
                     }else{
-                        return 'Сотрудник в работе';
+                        return '<span class="badge badge-success badge-pill d-inline-block">Онлайн</span>';
                     }
 
                     //return date('d.m.Y H:i:s', $model->session_start);

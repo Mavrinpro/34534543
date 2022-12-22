@@ -56,7 +56,7 @@ class SearchTracking extends Tracking
      */
     public function search($params)
     {
-        $query = Tracking::find();
+        $query = Tracking::find()->where(['!=', 'user_id', 1]);
 
         // add conditions that should always apply here
 
