@@ -3,6 +3,7 @@
 namespace common\models;
 
 use app\models\Deals;
+use app\models\Tracking;
 use Illuminate\Support\Facades\Auth;
 use Yii;
 use yii\base\NotSupportedException;
@@ -218,7 +219,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function attributeLabels()
     {
-        return ['id' => 'ID', 'username' => 'Логин', 'full_name' => 'ФИО', 'password' => 'Пароль', 'status' => 'Статус', 'created_at' => 'Дата создания', 'updated_at' => 'Дата обновления', 'role' => 'Роль'];
+        return ['id' => 'ID', 'username' => 'Логин', 'full_name' => 'ФИО', 'password' => 'Пароль', 'status' => 'Статус', 'created_at' => 'Дата создания', 'updated_at' => 'Дата обновления', 'role' => 'Роль',];
     }
 
     public static function getEntity()

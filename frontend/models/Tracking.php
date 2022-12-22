@@ -48,7 +48,6 @@ class Tracking extends \yii\db\ActiveRecord
             'date_end' => 'Дата окончания',
             'session_start' => 'Начало работы',
             'session_end' => 'Окончание',
-            'work' => 'В работе'
         ];
     }
 
@@ -63,8 +62,15 @@ class Tracking extends \yii\db\ActiveRecord
 
     }
 
-    public function countActiveUser()
+    // Количество пользователей нажавных кнопку "Начать работу"
+    public function countActive()
     {
-        return $this::find()->where(['work' => 1])->count();
+        return $this::find()->where(['work' => true])->andWhere(['!=', 'user_id', 1])->count();
+    }
+
+    //Вывод пользователей онлайн или нет в index.php view user
+    public function userOnline($id)
+    {
+        return $this::find()->where(['work' => true, 'user_id' => $id])->one();
     }
 }

@@ -73,6 +73,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
+            [
+              'attribute' => 'active',
+              'value' => function($model){
+                  $tracking = new \app\models\Tracking();
+                  if ($tracking->userOnline($model->id)->work == true){
+                      return '<span class="badge badge-success badge-pill d-inline-block">Онлайн</span>';
+                  }else{
+                      return '<span class="badge badge-secondary badge-pill d-inline-block">Не в сети</span>';
+                  }
+              },
+                'format' => 'html',
+                'filter'=>array(true =>"Активный", false => "Не активный"),
+                'label' => 'Работа'
+            ],
             //'created_at',
             //'updated_at',
             //'verification_token',

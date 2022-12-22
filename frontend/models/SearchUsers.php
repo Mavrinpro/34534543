@@ -57,13 +57,14 @@ class SearchUsers extends User
         }
         $query->where(['!=','status', '8']); // не выводить пользователей со статусом 8
         $query->andWhere(['!=','status', '0']); // не выводить пользователей со статусом 8
-        $query->andWhere(['!=','id', '1']); // не выводить пользователей со статусом 8
+        $query->andWhere(['!=','id', '1']); // не выводить пользователя с id 1
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            //'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
