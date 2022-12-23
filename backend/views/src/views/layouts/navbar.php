@@ -239,7 +239,9 @@ JS;
 $this->registerJs($js);
         ?>
 <?php
-$js = <<< JS
+if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
+
+    $js = <<< JS
 
 function soundClick() {
   var audio = new Audio(); // Создаём новый элемент Audio
@@ -257,5 +259,7 @@ function soundClick() {
 
 JS;
 
-$this->registerJs($js);
-$this->registerJs($js);
+    $this->registerJs($js);
+    $this->registerJs($js);
+}
+
