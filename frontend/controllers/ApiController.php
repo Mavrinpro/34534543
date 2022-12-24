@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use app\models\Tasks;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use Workerman\Worker;
 
 class ApiController extends Controller
 {
