@@ -48,7 +48,7 @@ use yii\widgets\MaskedInput;
 
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(\app\models\Statuses::find()->all(), 'id', 'name'),
-                ['prompt'=>'Статус...']); ?>
+                ['prompt'=>'Статус...', 'value' => 3]); ?>
     <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false); ?>
         </div></div>
     <div class="row">
@@ -57,7 +57,7 @@ use yii\widgets\MaskedInput;
 
     <?= $form->field($model, 'id_operator')->dropDownList(ArrayHelper::map
     (\common\models\User::find()->all(), 'id', 'username'),
-        ['prompt'=>'Ответственный...']); ?>
+        ['prompt'=>'Ответственный...', 'value' => Yii::$app->user->getId()]); ?>
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'id_filial')->dropDownList(ArrayHelper::map(\app\models\Branch::find()->all(), 'id', 'name'),
