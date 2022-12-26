@@ -55,7 +55,7 @@ $tracking = new \app\models\Tracking();
             $menuItems   = [];
             $menuItems[] = [
                 'label' => 'Аналитика',
-                'icon' => 'tachometer-alt',
+                'icon' => 'chart-line',
                 'badge' => '<span class="right badge badge-info">2</span>',
                 'url' => ['site/index'],
 //                        'items' => [
@@ -68,6 +68,7 @@ $tracking = new \app\models\Tracking();
                     ['superadmin']->name == 'superadmin',
 
             ];
+            $menuItems[] = ['label' => 'Рабочий стол', 'url' => ['/deals/dashboard'], 'icon' => 'tachometer-alt', 'active'=>$this->context->route == 'deals/dashboard'];
             $menuItems[] = ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'];
             $menuItems[] = ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
                 'active'=>$this->context->route == 'deals/search-deals'];

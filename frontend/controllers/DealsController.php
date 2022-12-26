@@ -29,12 +29,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater'],
+                            'actions' => ['delete', 'updater', 'dashboard'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -244,5 +244,11 @@ class DealsController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    // Рабочий стол оператора
+    public function actionDashboard()
+    {
+        return $this->render('dashboard');
     }
 }
