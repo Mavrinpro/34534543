@@ -249,6 +249,9 @@ class DealsController extends Controller
     // Рабочий стол оператора
     public function actionDashboard()
     {
-        return $this->render('dashboard');
+        $model = new Deals();
+        return $this->render('dashboard', [
+            'model' => $model
+        ]);
     }
 }

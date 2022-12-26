@@ -129,4 +129,10 @@ class Deals extends \yii\db\ActiveRecord
             echo "Send";
         }
     }
+
+    // Получение количества сделок пользователя
+    public function dealsCount($user_id=null)
+    {
+        return $this::find()->where(['del' => 0, 'id_operator' => $user_id])->andWhere('id_operator' != 1)->count();
+    }
 }
