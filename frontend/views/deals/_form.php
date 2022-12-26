@@ -48,7 +48,7 @@ use yii\widgets\MaskedInput;
 
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(\app\models\Statuses::find()->all(), 'id', 'name'),
-                ['prompt'=>'Статус...', 'value' => 3]); ?>
+                ['prompt'=>'Статус...', 'value' => 3]); // при создании статус Записан на прием по умолчанию ?>
     <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false); ?>
         </div></div>
     <div class="row">

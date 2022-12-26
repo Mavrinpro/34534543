@@ -262,6 +262,7 @@ echo ExportMenu::widget([
                             //'title' => Yii::t('app', 'Закрыть задачу'),
                             'data-confirm' => Yii::t('yii', 'Удалить запись № '.$key.'?'),
                             'data-method' => 'post', 'data-pjax' => '0',
+                                'title' => 'Закрыть сделку'
                         ]);
                     },
 
