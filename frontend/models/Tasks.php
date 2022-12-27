@@ -124,6 +124,15 @@ class Tasks extends \yii\db\ActiveRecord
         }
 
     }
+
+    // Вывод активных задач для пользователя
+    public function activeTask($id = null)
+    {
+        $today = date('Y-m-d');
+            return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])->andWhere(['=', 'user_id', $id])
+                ->count();
+    }
+
 // Вывод просроченных задач
     public function taskOverdue($id = null)
     {
@@ -137,6 +146,16 @@ class Tasks extends \yii\db\ActiveRecord
                 ->count();
         }
 
+    }
+
+    // Вывод задач на сегодня
+    public function todayTask($id = null)
+    {
+        $today = date('Y-m-d 23:59:59');
+        $today2 = date('Y-m-d 00:00:00');
+        return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])->andWhere(['=', 'user_id',
+                $id])->andWhere(['>=', 'date_end', $today2])->andWhere(['<=', 'date_end', $today])
+            ->count();
     }
 
 }
