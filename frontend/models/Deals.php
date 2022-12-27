@@ -108,6 +108,13 @@ class Deals extends \yii\db\ActiveRecord
         return Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
     }
 
+    // Данные по сделкам за последние 30 дней
+    public function getDay30()
+    {
+        return Deals::find()->where(['del' => 0])->orderBy(['date_create' =>
+            SORT_DESC])->all();
+    }
+
     public function getTegi()
     {
         return $this->hasOne(Tags::class, ['id' => 'tag']);

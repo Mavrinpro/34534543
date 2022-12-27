@@ -44,4 +44,21 @@ function secToStr($secs)
     $res .= num_word($secs, array('секунда', 'секунды', 'секунд'));
 
     return $res;
+
 }
+
+// Массив из последниз 30 дней (использовать foreach)
+function lastDay30(){
+
+    $today = new DateTime(); // today
+    $begin = $today->sub(new DateInterval('P30D')); //created 30 days interval back
+    $end = new DateTime();
+    $end = $end->modify('+1 day'); // interval generates upto last day
+    $interval = new DateInterval('P1D'); // 1d interval range
+    $daterange = new DatePeriod($begin, $interval, $end); // it always runs forwards in date
+    foreach ($daterange as $date) { // date object
+        $d[] = $date->format("Y-m-d"); // your date
+    }
+    return $d;
+}
+
