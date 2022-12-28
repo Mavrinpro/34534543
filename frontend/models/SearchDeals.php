@@ -101,13 +101,7 @@ class SearchDeals extends Deals
                 'name' => $this->name,
             ]);
         }
-
-        // фильтр по Номеру телефона
-//        if($this->phone > 0) {
-//            $query->andFilterWhere([
-//                'phone' => $this->phone,
-//            ]);
-//        }
+        
 
         // фильтр по городам
         if($this->id_filial > 0) {
