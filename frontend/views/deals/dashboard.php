@@ -15,14 +15,74 @@ $this->params['breadcrumbs'][] = $this->title;
 $user_id = Yii::$app->user->getId();
 $taskCount  = new \app\models\Tasks();
 $deals = new \app\models\Deals();
-$today = date('Y-m-d 23:59:50');
-$d = \app\models\Deals::find()->where('date_create' <= '2022-10-11 23:59:59')
-    ->select('date_create')
-    ->addSelect('count(id) as data')
-    ->groupBy('date_create')
-    ->createCommand();
+//$today = date('Y-m-d 23:59:50');
+
+$period = 30;
+
+
+$DATA_ALL = [];
+
+// массив дат
+function array_date($period)
+{
+    $result = [];
+    $startday = date('Y-m-d', strtotime('+1 DAYS'));
+    for($i=$period;$i>0;$i--)
+    {
+        $result[] = array(
+                'days'=> date('Y-m-d', strtotime($startday.' -'.$i.' DAYS')),
+            //'name'=>rusdate_month(strtotime(date('Y-m', strtotime($startday.' -'.$i.' DAYS'))), '%MONTH% Y' )
+        );
+    }
+    return $result;
+}
+function rusdate_month($d, $format = 'j %MONTH% Y', $offset = 0)
+{
+    $montharr = array('январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь');
+    $dayarr = array('понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье');
+
+    $d += 3600 * $offset;
+
+    $sarr = array('/%MONTH%/i', '/%DAYWEEK%/i');
+    $rarr = array( $montharr[date("m", $d) - 1], $dayarr[date("N", $d) - 1] );
+
+    $format = preg_replace($sarr, $rarr, $format);
+    return date($format, $d);
+}
+
+
+foreach(array_date($period) as $dates) {
+    $DATA_ALL[$dates['days']]= 0;
+}
+
+
+$days30 = date('Y-m-d', strtotime('-30 DAYS'));
+$d = $deals::find()
+    ->select('DATE(date_create) as date, COUNT(id) as count')
+    ->where(['del' => 0])
+    ->andWhere(['id_operator' => $user_id])
+    ->andWhere('DATE(date_create) >= "'.$days30.'"')
+    ->groupBy('DATE(date_create)')
+    ->asArray()->all();
+if(isset($d) && sizeof($d) > 0) {
+    foreach($d as $ss) {
+        $DATA_ALL[$ss['date']] = $ss['count'];
+    }
+}
+
+//var_dump($d->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);
+
+
+$mass = [];
+$dateArr = [];
+foreach ($d as $k => $item) {
+
+    $dateArr[] = date('Y-m-d', strtotime($item->date_create));
+
+
+}
 //echo '<pre>';
-//print_r($d);
+//print_r($dateArr);
 ?>
 <div class="row">
     <div class="col-lg-3 col-6">
@@ -100,23 +160,19 @@ $d = \app\models\Deals::find()->where('date_create' <= '2022-10-11 23:59:59')
         $arrDate = $num;
         $sfsed =[];
         //$sfsed[] = $arrDate[$key] = $num;
-        var_dump($arrDate);
+        //var_dump($arrDate);
         echo Chart::widget([
             'type' => Chart::TYPE_BAR,
-            'labels' => $arrDate,
+            //'labels' => $mass,
             'datasets' => [
                 [
-                    'data' => [
-                        $arrDate
-
-                    ]
+                    'data' => $DATA_ALL
                 ]
             ]
 
 
         ]);
         ?>
-        <?php $countDeals = \app\models\Deals::find()->where('date_create' > $today + 10)->count(); ?>
 
     </div>
 

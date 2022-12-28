@@ -231,7 +231,7 @@ $taskCount  = new \app\models\Tasks();
 <?php
 $js = <<<JS
    $(".main-header .navbar-nav [href]").each(function () {
-    if (this.href == window.location.href) {
+    if (this.href === window.location.href) {
         $(this).addClass("active");
     }
 });     

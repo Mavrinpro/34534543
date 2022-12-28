@@ -99,7 +99,9 @@ $tracking = new \app\models\Tracking();
                     ['admin']->name == 'admin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())
                     ['superadmin']->name == 'superadmin', ];
             $menuItems[] = ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'];
-            $menuItems[] = ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin'];
+            $menuItems[] = ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank', 'visible'
+            => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name ==
+                'superadmin'];
 
 
             echo \hail812\adminlte\widgets\Menu::widget([
@@ -112,14 +114,14 @@ $tracking = new \app\models\Tracking();
     <!-- /.sidebar -->
 </aside>
 <?php
-//$js = <<< JS
-//
-//
-// function updateList() {
-//         $.pjax.reload({container: "#badge", async: false});
-//        }
-//        setInterval(updateList, 1000);
-//
-//JS;
-//
-//$this->registerJs($js);
+
+$js = <<< JS
+
+ function updateList() {
+         $.pjax.reload({container: "#reloadajax", async: false});
+        }
+        setInterval(updateList, 9000000);
+
+JS;
+
+$this->registerJs($js);
