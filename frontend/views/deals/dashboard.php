@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $user_id = Yii::$app->user->getId();
 $taskCount  = new \app\models\Tasks();
 $deals = new \app\models\Deals();
-//$today = date('Y-m-d 23:59:50');
+
 
 $period = 30;
 
@@ -70,7 +70,7 @@ if(isset($d) && sizeof($d) > 0) {
     }
 }
 
-//var_dump($d->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);
+//var_dump($d->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql); // Вывод sql запроса на экран
 
 
 $mass = [];
@@ -81,12 +81,9 @@ foreach ($d as $k => $item) {
 
 
 }
-//echo '<pre>';
-//print_r($dateArr);
 ?>
 <div class="row">
     <div class="col-lg-3 col-6">
-
         <div class="small-box bg-info">
             <div class="inner">
 
@@ -96,7 +93,7 @@ foreach ($d as $k => $item) {
             <div class="icon">
                 <i class="fas fa-th"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="/deals" class="small-box-footer">
                 Перейти <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
@@ -111,7 +108,7 @@ foreach ($d as $k => $item) {
             <div class="icon">
                 <i class="fas fa-thumbtack"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="/tasks" class="small-box-footer">
                 Перейти <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
@@ -126,7 +123,7 @@ foreach ($d as $k => $item) {
             <div class="icon">
                 <i class="fas fa-calendar-day"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="/tasks" class="small-box-footer">
                 Перейти <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
@@ -141,26 +138,14 @@ foreach ($d as $k => $item) {
             <div class="icon">
                 <i class="fas fa-thumbtack"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="/tasks" class="small-box-footer">
                 Перейти <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
     <div class="col-md-12">
         <?php
-        $num = [65, 59, 90, 81, 56, 55, 40, 65, 59, 90, 81, 56, 55, 40, 65, 59, 90, 81, 56, 55, 40, 65, 59, 90, 81,
-            56,];
-        //$users = $deals->getDay30($today);
-        foreach (lastDay30() as $key => $Date)
-        {
-            $ARRKEY = [];
-            $ARRKEY[] = $key;
-            $arrDate[$key] = $Date; // Список дат для графика (по филиалам)
-        }
-        $arrDate = $num;
-        $sfsed =[];
-        //$sfsed[] = $arrDate[$key] = $num;
-        //var_dump($arrDate);
+
         echo Chart::widget([
             'type' => Chart::TYPE_BAR,
             //'labels' => $mass,
@@ -168,8 +153,10 @@ foreach ($d as $k => $item) {
                 [
                     'data' => $DATA_ALL
                 ]
+            ],
+            'options' => [
+                'height' => 100
             ]
-
 
         ]);
         ?>
