@@ -115,13 +115,13 @@ $tracking = new \app\models\Tracking();
 </aside>
 <?php
 
-$js = <<< JS
-
- function updateList() {
-         $.pjax.reload({container: "#reloadajax", async: false});
-        }
-        setInterval(updateList, 9000000);
-
-JS;
-
-$this->registerJs($js);
+//$js = <<< JS
+//
+// function updateList() {
+//         $.pjax.reload({container: "#reloadajax", async: false});
+//        }
+//        setInterval(updateList, 9000000);
+//
+//JS;
+//
+//$this->registerJs($js);

@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
@@ -75,7 +76,12 @@ class DealsController extends Controller
         //$dataProvider = $searchModel->search($this->request->queryParams);
         //$dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
         //$dataProvider->pagination = ['pageSize' => 150];
-
+        $dataProvider = new ActiveDataProvider([
+            'query' => Deals::find()->with('user', 'tasks')->where(['del' =>  0])->orderBy('date_create DESC'),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
 
         if ($_POST['action'] === 'dragged'){
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
@@ -92,6 +98,7 @@ class DealsController extends Controller
         return $this->render('index', [
             'model' => $model,
             'pages' => $pages,
+            'dataProvider' => $dataProvider
             //'searchModel' => $searchModel,
             //'dataProvider' => $dataProvider,
             //$dataProvider->pagination->pageSize=1

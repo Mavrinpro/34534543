@@ -12,6 +12,7 @@ use yii\jui\DatePicker;
 use yii\jui\Sortable;
 use yii\bootstrap4\Modal;
 use kop\y2sp\ScrollPager;
+use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\SearchDeals $searchModel */
@@ -22,7 +23,15 @@ $this->title = 'Сделки';
 $this->params['breadcrumbs'][] = $this->title;
 //$model = new Deals();
 //Yii::$app->user->setFlash('error');
+echo ListView::widget([
+    'dataProvider' => $dataProvider,
+    'itemView' => '_list',
+    'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'rounded shadow-sm p-2 border position-relative bg-white'
+    ]
 
+]);
 ?>
 <div class="deals-index">
     <?php //if (\Yii::$app->session->getFlash('success')) {
@@ -41,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php //echo $this->render('', ['model' => $searchModel]); ?>
     <?php //$user = \common\models\User::findOne($id) ?>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'deals-container']); ?>
 
     <!--    --><? //= DatePicker::widget(['model' => $p, 'attribute' => 'from_date', 'language' => 'ru', 'dateFormat' => 'php:Y-m-d',]) ?>
     <?php $blockStatus = [1 => 'Звонки', 2 => 'Думает', 3 => 'Записан на прием', 4 => 'Отказ', 5 => 'Информ звонок', 6 => 'Без тегов'
@@ -595,4 +604,16 @@ JS
 <?php $this->registerJs(<<<JS
      
 JS
-); ?>
+);
+
+//    $js = <<< JS
+//// обновление контейнера сделок
+// function updateList() {
+//         $.pjax.reload({container: "#deals-container", async: false});
+//        }
+//        setInterval(updateList, 10000);
+//
+//JS;
+//
+//$this->registerJs($js);
+ ?>
