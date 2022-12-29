@@ -23,15 +23,16 @@ $this->title = 'Сделки';
 $this->params['breadcrumbs'][] = $this->title;
 //$model = new Deals();
 //Yii::$app->user->setFlash('error');
-echo ListView::widget([
-    'dataProvider' => $dataProvider,
-    'itemView' => '_list',
-    'itemOptions' => [
-            'tag' => 'div',
-            'class' => 'rounded shadow-sm p-2 border position-relative bg-white'
-    ]
-
-]);
+//echo ListView::widget([
+//    'dataProvider' => $dataProvider,
+//    'itemView' => '_list',
+//
+//    'itemOptions' => [
+//            'tag' => 'div',
+//            'class' => 'rounded shadow-sm p-2 border position-relative bg-white'
+//    ]
+//
+//]);
 ?>
 <div class="deals-index">
     <?php //if (\Yii::$app->session->getFlash('success')) {
