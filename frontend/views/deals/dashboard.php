@@ -16,9 +16,7 @@ $user_id = Yii::$app->user->getId();
 $taskCount  = new \app\models\Tasks();
 $deals = new \app\models\Deals();
 
-
 $period = 30;
-
 
 $DATA_ALL = [];
 
@@ -50,11 +48,9 @@ function rusdate_month($d, $format = 'j %MONTH% Y', $offset = 0)
     return date($format, $d);
 }
 
-
 foreach(array_date($period) as $dates) {
     $DATA_ALL[$dates['days']]= 0;
 }
-
 
 $days30 = date('Y-m-d', strtotime('-30 DAYS'));
 $d = $deals::find()
@@ -145,7 +141,6 @@ foreach ($d as $k => $item) {
     </div>
     <div class="col-md-12">
         <?php
-
         echo Chart::widget([
             'type' => Chart::TYPE_BAR,
             //'labels' => $mass,
@@ -162,5 +157,4 @@ foreach ($d as $k => $item) {
         ?>
 
     </div>
-
 </div>
