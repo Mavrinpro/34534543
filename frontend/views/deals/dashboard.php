@@ -74,8 +74,6 @@ $dateArr = [];
 foreach ($d as $k => $item) {
 
     $dateArr[] = date('Y-m-d', strtotime($item->date_create));
-
-
 }
 ?>
 <div class="row">
