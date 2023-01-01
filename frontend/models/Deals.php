@@ -7,6 +7,7 @@ use app\models\Tasks;
 use Yii;
 use app\models\Statuses;
 use kartik\select2\Select2;
+use yii\web\Response;
 
 /**
  * This is the model class for table "deals".
@@ -105,7 +106,9 @@ class Deals extends \yii\db\ActiveRecord
 
     public function getData()
     {
-        return Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
+        $deals =  Deals::find()->where(['del' => 0])->orderBy(['date_create' => SORT_DESC])->all();
+
+        return $deals;
     }
 
     // Данные по сделкам за последние 30 дней

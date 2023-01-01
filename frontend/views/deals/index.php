@@ -45,9 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
     //     }?>
     <p>
         <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Обновить', ['deals/'], ['class' => 'btn btn-warning']) ?>
     </p>
 
-    <?php //$p = Deals::getData(); ?>
+    <?php //$p = Deals::getData(); var_dump($p);?>
     <?php //echo $this->render('', ['model' => $searchModel]); ?>
     <?php //$user = \common\models\User::findOne($id) ?>
 
@@ -558,7 +559,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $('.dr').sortable({
 
     receive: function( event, ui ) {
-
+updateList = false;
        let block_id = $(this).find('.ui-sortable-handle .ui-sortable-helper').children('.dgdfdg').data('id');
        //var statusID = ($('.ui-sortable-handle.ui-sortable-helper').find('.rounded').data('status'));
         arr['statusID'] =  $(this).data('id');
@@ -573,10 +574,11 @@ $('.dr').sortable({
                 //console.log(JSON.parse( arr['statusID'] + data.id));
                 $(document).Toasts('create', {title: 'У сделки изменился статус!', icon: 'fa fa-check-circle', autohide: true, class: 'bg-success'})
             }
-        })
+        });
 
     },
     change  : function end(){
+        updateList = false;
         let ID = $('.ui-sortable-handle .ui-sortable-helper').find('.dgdfdg').data('id');
         $('.ui-sortable-handle.ui-sortable-helper').find('.rounded').attr('data-status', arr['statusID']);
         return arr['id'] = ID;
@@ -606,15 +608,6 @@ JS
      
 JS
 );
+// обновление контейнера сделок
 
-//    $js = <<< JS
-//// обновление контейнера сделок
-// function updateList() {
-//         $.pjax.reload({container: "#deals-container", async: false});
-//        }
-//        setInterval(updateList, 10000);
-//
-//JS;
-//
-//$this->registerJs($js);
  ?>
