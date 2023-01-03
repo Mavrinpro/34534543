@@ -253,7 +253,7 @@ function soundClick() {
          $.pjax.reload({container: "#badge", async: false});
          $.pjax.reload({container: "#alert", async: false});
          $.pjax.reload({container: "#noty", async: false});
-        soundClick();
+        //soundClick();
         }
         setInterval(updateList, 300000);
 
