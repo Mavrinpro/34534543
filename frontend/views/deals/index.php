@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(['id' => 'deals-container']); ?>
 
     <!--    --><? //= DatePicker::widget(['model' => $p, 'attribute' => 'from_date', 'language' => 'ru', 'dateFormat' => 'php:Y-m-d',]) ?>
-    <?php $blockStatus = [1 => 'Звонки', 2 => 'Думает', 3 => 'Записан на прием', 4 => 'Отказ', 5 => 'Информ звонок', 6 => 'Без тегов'
+    <?php $blockStatus = [1 => 'Звонки', 2 => 'Думает', 3 => 'Записан на прием', 4 => 'Отказ', 5 => 'Информ звонок', 6 => 'Неразобранные'
 
     ];
     foreach ($blockStatus as $key => $stat) {
