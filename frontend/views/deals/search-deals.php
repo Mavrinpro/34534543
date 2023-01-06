@@ -217,10 +217,10 @@ echo ExportMenu::widget([
                         return '<span class="text-danger"><span class="badge badge-danger bg-success">Информ звонок</span></span>';
                     }
                     else if($model->status == '6'){
-                        return '<span class="text-danger"><span class="badge badge-danger bg-gray">Без тегов</span></span>';
+                        return '<span class="text-danger"><span class="badge badge-danger bg-gray">Неразобранные</span></span>';
                     }
                 },
-                'filter'=>array("1"=>"Звонки","2"=>"Думает", "3" => "Записан на прием", "4" => "Отказ", "5" => "Информ звонок", "6" => "Без тегов" ),
+                'filter'=>array("1"=>"Звонки","2"=>"Думает", "3" => "Записан на прием", "4" => "Отказ", "5" => "Информ звонок", "6" => "Неразобранные" ),
             ],
 
             [

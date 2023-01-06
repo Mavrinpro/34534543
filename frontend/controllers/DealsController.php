@@ -261,4 +261,18 @@ class DealsController extends Controller
             'model' => $model
         ]);
     }
+
+    // Удаленные сделки
+    public function actionDeleteDeals()
+    {
+        //$deals = Deals::find()->orderBy('date_create DESC')->all();
+        $searchModel = new SearchDeals();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = 35;
+
+        return $this->render('search-deals', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
