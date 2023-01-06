@@ -41,6 +41,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'phone',
                     [
+                         'attribute' => 'del',
+                        'format' => 'html',
+                        'value' => function($model){
+                            if ($model->del == 0){
+                                return '<i class="fas fa-unlock text-success" title="Активная"></i>';
+                            }else{
+                                return '<i class="fas fa-ban text-danger" title="Удалена"></i>';
+                            }
+                        }
+                    ],
+                    [
                         'attribute' => 'tag',
                         'format' => 'html',
                         'value' => function($model)

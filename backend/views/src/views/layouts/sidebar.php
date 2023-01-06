@@ -72,6 +72,10 @@ $tracking = new \app\models\Tracking();
             $menuItems[] = ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'];
             $menuItems[] = ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
                 'active'=>$this->context->route == 'deals/search-deals'];
+            $menuItems[] = ['label' => 'Удаленные сделки', 'url' => ['/deals/delete-deals'], 'icon' => 'ban',
+                'active'=>$this->context->route == 'deals/delete-deals'];
+            $menuItems[] = ['label' => 'Звонки', 'url' => ['/deals/delete-deals'], 'icon' => 'headset',
+                'active'=>$this->context->route == 'deals/delete-deals'];
              $menuItems[] =['label' => 'Задачи', 'url' => ['/tasks'], 'icon' => 'thumbtack', 'active'=>\Yii::$app->controller->id
                 == 'tasks',  'badge' => $badgeCount,];
             $menuItems[] =['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest];

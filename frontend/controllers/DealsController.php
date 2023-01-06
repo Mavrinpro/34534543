@@ -7,6 +7,7 @@ use app\models\LayoutsMail;
 use app\models\Mail;
 use common\models\User;
 use frontend\models\SearchDeals;
+use frontend\models\DeleteDeals;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,7 +31,7 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
@@ -266,11 +267,11 @@ class DealsController extends Controller
     public function actionDeleteDeals()
     {
         //$deals = Deals::find()->orderBy('date_create DESC')->all();
-        $searchModel = new SearchDeals();
+        $searchModel = new DeleteDeals();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->pagination->pageSize = 35;
 
-        return $this->render('search-deals', [
+        return $this->render('delete-deals', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

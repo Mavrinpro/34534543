@@ -12,7 +12,7 @@ use kartik\daterange\DateRangeBehavior;
 /**
  * SearchDeals represents the model behind the search form of `app\models\Deals`.
  */
-class SearchDeals extends Deals
+class DeleteDeals extends Deals
 {
     public $createTimeRange;
     public $createTimeStart;
@@ -60,13 +60,9 @@ class SearchDeals extends Deals
     public function search($params)
     {
         //$query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]); - для конкретного пользователя
-        if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
-            $query = Deals::find();
-            $query->andWhere(['del' => 0]);
-        }else{
-            $query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]);
-            $query->andWhere(['del' => 0]);
-        }
+
+            $query = Deals::find()->where(['del' =>  1]);
+
         $query->with(['us', 'branch']);
         $query->with('tegi');
         // add conditions that should always apply here
