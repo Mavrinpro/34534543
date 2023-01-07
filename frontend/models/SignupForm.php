@@ -16,6 +16,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $status;
+    public $last_called;
 
 
     /**
@@ -42,6 +43,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['status', 'safe'],
+            ['last_called', 'integer'],
 
             ['full_name', 'trim'],
             ['full_name', 'required'],
@@ -65,6 +67,7 @@ class SignupForm extends Model
         $user->username = $this->username;
         $user->full_name = $this->full_name;
         $user->email = $this->email;
+        $user->last_called = $this->last_called;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
@@ -106,7 +109,8 @@ class SignupForm extends Model
             'status' => 'Статус',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',
-            'role' => 'Роль'
+            'role' => 'Роль',
+            'last_called' => 'Номер сотрудника в телефонии'
         ];
     }
 }

@@ -40,6 +40,7 @@ use yii\bootstrap4\Html;
 
             <div class="form-group">
                 <?= $form->field($model, 'status')->dropdownList([10 => 'Активный', 9 => 'Неактивный']); ?>
+                <?= $form->field($model, 'last_called')->textInput() ?>
             </div>
             <?php } ?>
             <div class="form-group">
@@ -48,11 +49,16 @@ use yii\bootstrap4\Html;
             <?php if (Yii::$app->controller->action->id == 'create') { ?>
                 <div class="form-group">
                     <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'last_called')->textInput() ?>
+
                 </div>
-            <?php } ?>
+            <?php }else{
+
+            } ?>
         </div>
         <div class=" col-md-6">
             <div class="form-group">
+
                 <?php if (Yii::$app->controller->action->id == 'create') { ?>
                     <?= Html::submitButton('Зарегистрировать', ['class' => 'btn btn-success', 'name' => 'signup-button']); ?>
                 <?php } else {

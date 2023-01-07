@@ -63,9 +63,11 @@ class SearchDeals extends Deals
         if(\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
             $query = Deals::find();
             $query->andWhere(['del' => 0]);
+            $query->orderBy('date_create DESC');
         }else{
             $query = Deals::find()->where(['id_operator' =>  \Yii::$app->user->id]);
             $query->andWhere(['del' => 0]);
+            $query->orderBy('date_create DESC');
         }
         $query->with(['us', 'branch']);
         $query->with('tegi');

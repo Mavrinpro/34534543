@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'grid']); ?>
     <?php $datestart = 1671096781;
     $dateend = 1671096886;
     $sundate = $dateend - $datestart;
@@ -300,3 +300,14 @@ echo ExportMenu::widget([
     <?php Pjax::end(); ?>
 
 </div>
+<?php
+$js = <<< JS
+
+ function updateList() {
+         $.pjax.reload({container: "#grid", async: false});
+        }
+        setInterval(updateList, 1000);
+
+JS;
+
+$this->registerJs($js);

@@ -128,6 +128,7 @@ class UserController extends Controller
             $model->username = $this->request->Post('User')['username'];
             $model->full_name = $this->request->Post('User')['full_name'];
             $model->email = $this->request->Post('User')['email'];
+            $model->last_called = $this->request->Post('User')['last_called'];
             //echo '<pre>';
             //print_r($model); die;
             $model->update();

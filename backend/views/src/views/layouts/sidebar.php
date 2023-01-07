@@ -72,7 +72,7 @@ $tracking = new \app\models\Tracking();
             $menuItems[] = ['label' => 'Сделки', 'url' => ['/deals'], 'icon' => 'th', 'badge' => '<span class="right badge badge-warning">New</span>','active'=>$this->context->route == 'deals/index'];
             $menuItems[] = ['label' => 'Поиск', 'url' => ['/deals/search-deals'], 'icon' => 'search',
                 'active'=>$this->context->route == 'deals/search-deals'];
-            $menuItems[] = ['label' => 'Удаленные сделки', 'url' => ['/deals/delete-deals'], 'icon' => 'ban',
+            $menuItems[] = ['activeCssClass' => 'text-danger', 'label' => 'Удаленные сделки', 'url' => ['/deals/delete-deals'], 'icon' => 'ban',
                 'active'=>$this->context->route == 'deals/delete-deals'];
             $menuItems[] = ['label' => 'Звонки', 'url' => ['/deals/delete-deals'], 'icon' => 'headset',
                 'active'=>$this->context->route == 'deals/delete-deals'];
