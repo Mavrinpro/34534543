@@ -32,7 +32,8 @@
         "practically/yii2-chartjs": "^1.1",
         "kartik-v/yii2-export": "dev-master",
         "kartik-v/yii2-bootstrap4-dropdown": "@dev",
-        "workerman/workerman": "^4.1"
+        "workerman/workerman": "^4.1",
+        "xj/yii2-jplayer-widget": "*"
 
     },
     "require-dev": {

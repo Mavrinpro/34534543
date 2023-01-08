@@ -40,7 +40,7 @@ return [
     // Доступ только авторизованным пользователям
     'as beforeRequest' => [
         'class' => 'yii\filters\AccessControl',
-        'except' => ['api/get-calls', 'api/get-orders',  'api/status-task'], // Разрешить доступ неавторизованным для экшена (API)
+        'except' => ['api/get-calls', 'api/get-orders',  'api/status-task', 'api/cron-task'], // Разрешить доступ неавторизованным для экшена (API)
         'rules' => [
             [
                 'actions' => ['login'],

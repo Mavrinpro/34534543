@@ -2,7 +2,9 @@
 
 namespace frontend\controllers;
 
+use app\models\Deals;
 use app\models\Tasks;
+use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use Workerman\Worker;
@@ -15,6 +17,7 @@ class ApiController extends Controller
      */
     public function actionGetCalls()
     {
+
 
         // Вызываем модель в которое делаем запись в базу, отправку в телегу и т.д и т.п
         if (!isset(\Yii::$app->request->cookies['test'])) {
@@ -33,10 +36,7 @@ class ApiController extends Controller
      */
     public function actionGetOrders()
     {
-
-
-
-
+        $operator = User::find()->where(['last_called' => $last_called[0]])->andWhere(['!=', 'id', 1])->one();
         return 'ssrhsrthr';
     }
 // Меняем статус задачи по крону, если дата истекла
@@ -60,6 +60,28 @@ class ApiController extends Controller
 
         }
 
+    }
+
+    public function actionCronTask()
+    {
+
+        if ($this->request->get('cron') == 'createtask'){
+            $model = Deals::find()->where(['answer' => 0])->all();
+            $answer = [];
+            $userId = [];
+            foreach ($model as $taskAnswer) {
+                $answer[] = $taskAnswer->id;
+                $userId[] = $taskAnswer->id_operator;
+
+                $task = new Tasks();
+                $task->status = 1;
+                $task->date_create = date('Y-m-d H:i:s');
+                $task->date_end = date('Y-m-d 23:59:59', strtotime("+1 day"));
+                $task->user_id = $taskAnswer->id_operator;
+                $task->deals_id = $taskAnswer->id;
+            }
+
+        }
     }
 
 }

@@ -66,6 +66,7 @@ return [
                 'api/getcalls'   => 'api/get-calls',
                 'api/getorders'  => 'api/get-orders',
                 'api/statustask'  => 'api/status-task',
+                'api/crontask'  => 'api/cron-task',
                 //'restApi/users'  => 'rest-api/index',
                 /*
                 [

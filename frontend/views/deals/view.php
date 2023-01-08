@@ -15,6 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="row">
+    <audio controls muted>
+        <source src="https://sipuni.com/api/crm/record?id=1673105413.778577&hash=20695eb6be6d359dd4a58bfef0e7830d&user=060863" type="audio/ogg">
+        <source src="https://sipuni.com/api/crm/record?id=1673105413.778577&hash=20695eb6be6d359dd4a58bfef0e7830d&user=060863" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <div class="col-md-6">
         <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], [
@@ -101,29 +106,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'id_comment',
 
                     ],
-                    [
-                      'attribute' => 'call_recording',
-                        'format' => 'html',
-                        'value' => function($model)
-                        {
-                            if (isset($model->call_recording))
-                            {
-                                return '<audio controls="">
-                        <source src="'.$model->call_recording.'" type="audio/ogg; codecs=vorbis">
-                        <source src="'.$model->call_recording.'" type="audio/mpeg">
-                        Тег audio не поддерживается вашим браузером.
-                        <a href="'.$model->call_recording.'" target="_blank">Скачайте музыку</a>.
-                    </audio>';
-                            }else{
-                                return 'Записи нет';
-                            }
 
-                        }
-
-                    ],
                     'deal_email'
-
-
 
                 ],
             ]) ?>
@@ -143,6 +127,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php ActiveForm::end(); ?>
 <!--            --><?php //Pjax::end(); ?>
+
+        </div>
+        <div class="shadow p-3 rounded-lg mt-5">
+            <b>Запись звонка</b>
+            <audio controls>
+                <source src="<?= $model->call_recording ?>" type="audio/ogg">
+                <source src="<?= $model->call_recording ?>" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
 
     </div>
