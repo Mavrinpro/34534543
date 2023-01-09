@@ -18,6 +18,7 @@ use yii\web\Response;
  * @property string|null $tag
  * @property string|null $date_create
  * @property string|null $status
+ * @property int|null $company_id
  * @property int|null $id_operator
  * @property int|null $id_filial
  * @property int|null $id_comment
@@ -43,7 +44,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['name', 'phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create'], 'safe'],
-            [['call_recording', 'deal_email'], 'safe'],
+            [['call_recording', 'deal_email', 'company_id'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
@@ -71,7 +72,7 @@ class Deals extends \yii\db\ActiveRecord
             'status' => 'Статус',
             'id_operator' => 'Ответственный',
             'id_filial' => 'Филиал',
-            'id_comment' => 'Сомментарий (id)',
+            'id_comment' => 'Комментарий (id)',
             'deal_sum' => 'Сумма сделки',
             'del' => 'Видимость',
             'call_recording' => 'Запись звонка',
@@ -80,6 +81,10 @@ class Deals extends \yii\db\ActiveRecord
     }
     public function getTasks(){
         return $this->hasMany(Tasks::className(), ['deals_id' => 'id']);
+    }
+
+    public function getCompany(){
+        return $this->hasMany(Company::class, ['company_id' => 'id']);
     }
 
     public function getTags($id)

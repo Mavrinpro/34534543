@@ -36,7 +36,7 @@ class ApiController extends Controller
      */
     public function actionGetOrders()
     {
-        $operator = User::find()->where(['last_called' => $last_called[0]])->andWhere(['!=', 'id', 1])->one();
+        //$operator = User::find()->where(['last_called' => $last_called[0]])->andWhere(['!=', 'id', 1])->one();
         return 'ssrhsrthr';
     }
 // Меняем статус задачи по крону, если дата истекла
@@ -45,7 +45,7 @@ class ApiController extends Controller
         $now = date('Y-m-d H:i:s');
         $text = 'Cron отработал '. $now.' ';
         if ($this->request->get('cron') == 'status'){
-            file_put_contents('text.txt', $text, FILE_APPEND);
+            //file_put_contents('text.txt', $text, FILE_APPEND);
 
 
             $models = Tasks::find()->all();
@@ -65,23 +65,35 @@ class ApiController extends Controller
     public function actionCronTask()
     {
 
-        if ($this->request->get('cron') == 'createtask'){
+
             $model = Deals::find()->where(['answer' => 0])->all();
-            $answer = [];
-            $userId = [];
+
             foreach ($model as $taskAnswer) {
-                $answer[] = $taskAnswer->id;
-                $userId[] = $taskAnswer->id_operator;
-
+                $id =[];
                 $task = new Tasks();
-                $task->status = 1;
-                $task->date_create = date('Y-m-d H:i:s');
-                $task->date_end = date('Y-m-d 23:59:59', strtotime("+1 day"));
-                $task->user_id = $taskAnswer->id_operator;
-                $task->deals_id = $taskAnswer->id;
-            }
+                $id[]= $taskAnswer->id;
+                $tasker = Tasks::find()->where(['status' => 1])->andWhere(['in', 'deals_id', $id])->count();
+                //var_dump($tasker);
+                if ($tasker > 0){
+                    $task->date_create = date('Y-m-d H:i:s');
+                    $task->update();
+                }else {
 
-        }
+
+                    $task->name = 'Задача-' . strtotime(date('Y-m-d H:i:s'));
+                    $task->status = 1;
+                    $task->date_create = date('Y-m-d H:i:s');
+                    $task->date_end = date('Y-m-d 23:59:59', strtotime("+1 day"));
+                    $task->user_id = $taskAnswer->id_operator;
+                    $task->deals_id = $taskAnswer->id;
+                    $task->save();
+                }
+            }
+            $text = 'Cron отработал по задачам'. date('Y-m-d H:i:s').' ';
+            file_put_contents('text.txt', $text, FILE_APPEND);
+
+
+
     }
 
 }

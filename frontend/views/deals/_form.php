@@ -16,6 +16,9 @@ use yii\widgets\MaskedInput;
     <div class="row">
     <div class="col-md-6">
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map(\app\models\Company::find()->all(), 'id', 'name'),
+        ['prompt'=>'Компания...']); ?>
 </div>
 
     <div class="col-md-6">
