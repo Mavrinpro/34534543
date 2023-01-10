@@ -5,12 +5,24 @@ namespace frontend\controllers;
 use app\models\Deals;
 use app\models\Tasks;
 use common\models\User;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use Workerman\Worker;
+use yii\web\Response;
 
-class ApiController extends Controller
+class ApiController extends \yii\rest\ActiveController
 {
+    protected function verbs() {
+        $verbs = parent::verbs();
+        $verbs =  [
+            'api/get-envybox' => ['POST'],
+        ];
+        return $verbs;
+    }
+
+    public function init() {
+    }
 
     /**
      * Получаем звонки по API
@@ -94,6 +106,12 @@ class ApiController extends Controller
 
 
 
+    }
+
+    public function actionGetEnvybox()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return 100;
     }
 
 }

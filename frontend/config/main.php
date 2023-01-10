@@ -67,6 +67,7 @@ return [
                 'api/getorders'  => 'api/get-orders',
                 'api/statustask'  => 'api/status-task',
                 'api/crontask'  => 'api/cron-task',
+                'api/getenvibox'  => 'api/get-enxybox',
                 //'restApi/users'  => 'rest-api/index',
                 /*
                 [
