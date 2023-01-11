@@ -110,8 +110,8 @@ class ApiController extends \yii\rest\ActiveController
 
     public function actionGetEnvybox()
     {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-        return 100;
+        //\Yii::$app->response->format = Response::FORMAT_JSON;
+        //return 100;
     }
 
 }
