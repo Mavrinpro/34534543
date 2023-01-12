@@ -33,5 +33,36 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
         ],
     ]) ?>
+<?php $url = 'https://clinic-abc.ru/services/';
 
+$newUrl = explode('/', $url);
+
+$newDomen = explode('.', $newUrl[2]);
+echo '<pre>';
+print_r($newDomen);
+
+
+
+// Отправка данный через Rest Api
+//$url = 'http://clinic.loc/sup/get-glazcentre';
+//$array = [
+//    'name' => 'Иван',
+//    'full_name' => 'Иванов',
+//    'company' => 'Glazcentre-TRASH',
+//    'age' => 35,
+//    'phone' => '79032343238'
+//];
+//
+//// use key 'http' even if you send the request to https://...
+//$options = array('http' => array(
+//    'method'  => 'POST',
+//    'content' => http_build_query($array)
+//));
+//
+//$context  = stream_context_create($options);
+//$result = file_get_contents($url, false, $context);
+
+//file_put_contents('http://clinic.loc/sup/get-glazcentre', true);
+
+?>
 </div>
