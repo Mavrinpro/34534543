@@ -6,8 +6,10 @@ use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use common\widgets\Alert;
+use app\models\DealsRepeat;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
+/** @var app\models\DealsRepeat $repeat */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Детально', 'url' => ['index']];
@@ -137,68 +139,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 Your browser does not support the audio element.
             </audio>
         </div>
+        <?php
 
+
+        ?>
     </div>
 </div>
-<!--<div class="deals-view">-->
-<!---->
-<!--    <p>-->
-<!--        --><?//= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary
-//        btn-sm']) ?>
-<!--        --><?//= Html::a('<i class="fa fa-trash"></i>', ['delete', 'id' => $model->id], [
-//            'class' => 'btn btn-danger btn-sm',
-//            'data' => [
-//                'confirm' => 'Are you sure you want to delete this item?',
-//                'method' => 'post',
-//            ],
-//        ]) ?>
-<!--        --><?//= Html::a('Все', '/deals/', ['class' => 'btn btn-warning btn-sm']) ?>
-<!--    </p>-->
-<!--    --><?php
-//    echo '<pre>';
-//   // print_r($model);
-//    ?>
-<!---->
-<!--    --><?php //$adress = \app\models\Branch::findOne(['id' => $model->id_filial])?>
-<!--    --><?php //$status = \app\models\Statuses::findOne(['id' => $model->status])?>
-<!--Название: --><?//= $model->name ?><!--<br>-->
-<!--ID: --><?//= $model->id ?><!--<br>-->
-<!--Телефон: --><?//= $model->phone ?><!--<br>-->
-<!--Теги: --><?//= $model->getTags($model)->name ?><!--<br>-->
-<!--Филиал: --><?//= $adress->name ?><!--<br>-->
-<!--Дата: --><?//= date('d.m.Y' ,strtotime($model->date_create)) ?><!--<br>-->
-<?//= $status->name ?><!--<br>-->
-<!---->
-<!--    <div class="col-md-4 col-sm-6 col-12">-->
-<!--        --><?//= \hail812\adminlte\widgets\InfoBox::widget([
-//            'text' => $model->name ,
-//            'number' => $model->phone,
-//            //'icon' => 'far fa-bookmark',
-//            'progress' => [
-//                'width' => '70%',
-//                'description' => '70% Increase in 30 Days',
-//                'egerger' => 'aergaer'
-//            ]
-//        ]) ?>
-<!--    </div>-->
-<!---->
-<!---->
-<!--    --><?//= DetailView::widget([
-//        'model' => $model,
-//        'attributes' => [
-//            'id',
-//            'name',
-//            'phone',
-//            'tag',
-//            'date_create',
-//            [
-//                'attribute' => 'status',
-//                'value' => $status->name
-//            ],
-//            'id_operator',
-//            'id_filial',
-//            'id_comment',
-//        ],
-//    ]) ?>
-<!---->
-<!--</div>-->
+

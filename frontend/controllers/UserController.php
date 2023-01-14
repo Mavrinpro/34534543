@@ -29,12 +29,12 @@ class UserController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'index', 'update', 'view', 'change-password', 'session-start', 'session-end'],
+                            'actions' => ['delete', 'index', 'update', 'view', 'change-password', 'session-start', 'session-end', 'switch-user'],
                             'allow' => true,
                             'roles' => ['superadmin', 'admin'],
                         ],
                         [
-                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals', 'change-password', 'session-start', 'session-end'],
+                            'actions' => ['view', 'logout', 'create', 'update', 'search-deals', 'change-password', 'session-start', 'session-end', 'switch-user'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -253,5 +253,20 @@ class UserController extends Controller
             return $this->redirect('/deals/index');
         }
 
+    }
+
+    public function actionSwitchUser($id)
+    {
+        $user = $this->findModel($id);
+        $initialId = \Yii::$app->user->getId(); //here is the current ID, so you can go back after that.
+        if ($id == $initialId) {
+            return $this->redirect(['view', 'id' => $user->id]);
+        } else {
+
+            $duration = 0;
+            \Yii::$app->user->switchIdentity($user, $duration); //Change the current user.
+            \Yii::$app->session->set('user.idbeforeswitch',$initialId); //Save in the session the id of your admin user.
+            return $this->redirect(['view', 'id' => $user->id]);
+        }
     }
 }

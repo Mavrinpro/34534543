@@ -2,7 +2,9 @@
 
 namespace frontend\controllers;
 
+use app\models\Api;
 use app\models\Deals;
+use app\models\DealsRepeat;
 use app\models\LayoutsMail;
 use app\models\Mail;
 use common\models\User;
@@ -115,6 +117,10 @@ class DealsController extends Controller
     public function actionView($id)
     {
         $mail = new Mail();
+        $api = new Api();
+        $repeat = new DealsRepeat();
+        //$api->DealsRepeat($repeat, 4, '89099999999', '89099999999', null, date('Y-m-d H:i:s'), null, 7, null, 1, 'ghfhfgfghfghg');
+
 
         if ($this->request->isPost) {
             if ($this->request->Post('Deals')['id'] != '') {
@@ -130,6 +136,7 @@ class DealsController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'mail' => $mail,
+            'repeat' => $repeat
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Deals;
 
 /**
  * This is the model class for table "deals".
@@ -70,5 +71,24 @@ class Api extends \yii\db\ActiveRecord
             'call_recording' => 'Call Recording',
             'deal_email' => 'Deal Email',
         ];
+    }
+
+    // Добавление в таблицу deals_repeat
+    public function DealsRepeat($model, $deal_id, $name, $phone, $tag=null, $date_create, $status=null, $id_operator, $date_update=null, $answer, $call_record)
+    {
+        $deals = Deals::find()->where(['phone' => $phone, 'del' => 0])->one();
+        if ($deals->phone == $phone){
+            $model->deal_id = $deal_id;
+            $model->name = $name;
+            $model->phone = $phone;
+            $model->date_create = $date_create;
+            $model->id_operator = $id_operator;
+            $model->answer = $answer;
+            $model->call_recording = $call_record;
+            $model->save();
+        }
+
+
+
     }
 }
