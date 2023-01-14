@@ -33,12 +33,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
         ],
     ]) ?>
-<?php
-$hex = '060863234';
-// получаем 6 символов с конца строки (отсчёт с конца =- потому и минус)
-$hex = substr($hex, -3);
-//ECHO Yii::$app->user->switchIdentity($user);
-echo Yii::$app->getUser()->getId();
 
-?>
 </div>
