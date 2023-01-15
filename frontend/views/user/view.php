@@ -70,5 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'verification_token',
         ],
-    ]) ?>
+    ]) ;
+    // сгенерировать пароль
+        $password = 'rEL2bpVR2hVdSc9b8R2L0hwjb';
+    $hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+    echo $hash;
+
+    ?>
 </div>
