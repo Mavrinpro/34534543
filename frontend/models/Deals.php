@@ -4,6 +4,7 @@ namespace app\models;
 
 use common\models\User;
 use app\models\Tasks;
+use app\models\Company;
 use Yii;
 use app\models\Statuses;
 use kartik\select2\Select2;
@@ -42,9 +43,9 @@ class Deals extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
+            [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create'], 'safe'],
-            [['call_recording', 'deal_email', 'company_id'], 'safe'],
+            [['name','call_recording', 'deal_email', 'company_id'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
@@ -67,6 +68,7 @@ class Deals extends \yii\db\ActiveRecord
             'name' => 'Название',
             'phone' => 'Телефон',
             'tag' => 'Тег',
+            'company_id' => 'Компания',
             'date_create' => 'Дата создания',
             'date_update' => 'Дата обновления',
             'status' => 'Статус',
@@ -84,7 +86,7 @@ class Deals extends \yii\db\ActiveRecord
     }
 
     public function getCompany(){
-        return $this->hasMany(Company::class, ['company_id' => 'id']);
+        return $this->hasOne(Company::class, ['company_id' => 'id']);
     }
 
     public function getTags($id)
