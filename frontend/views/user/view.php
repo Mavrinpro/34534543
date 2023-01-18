@@ -72,9 +72,21 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ;
     // сгенерировать пароль
-        $password = 'rEL2bpVR2hVdSc9b8R2L0hwjb';
-    $hash = Yii::$app->getSecurity()->generatePasswordHash($password);
-    echo $hash;
-
+//        $password = 'rEL2bpVR2hVdSc9b8R2L0hwjb';
+//    $hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+//    echo $hash;
+//$called = '8422271131';
+//    function formatPhone($num) {
+//        $num = preg_replace('/[^0-9]/', '', $num);
+//        $len = strlen($num);
+//
+//        if($len == 11) $num = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})/', '7$2$3', $num);
+//        //elseif($len == 8) $num = preg_replace('/([0-9]{3})([0-9]{2})([0-9]{3})/', '$1 - $2 $3', $num);
+//        //elseif($len == 9) $num = preg_replace('/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{2})/', '$1 - $2 $3 $4', $num);
+//        elseif($len == 10) $num = preg_replace('/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{3})/', '7$1$2$3$4', $num);
+//
+//        return $num;
+//    }
+//    echo formatPhone($called);
     ?>
 </div>
