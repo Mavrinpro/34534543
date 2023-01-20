@@ -87,21 +87,14 @@ $called = '8423521461';
 
         return $num;
     }
-    echo formatPhone($called);
+    //echo formatPhone($called);
 
-    $br = 'Входящая COPY1';
 
-    switch ($br){
-        case 'Входящая':
-            $tagName = '25';
-            break;
-        case 'Входящая COPY1':
-            $tagName = '26';
-            break;
-        case 'ЧС':
-            $tagName = '27';
-            break;
-    }
-    echo $tagName;
+
+//    $user_id = \Yii::$app->request->get('id');
+//    echo $user_id;
+    $user_id = \Yii::$app->request->get('id');
+    $trackingId = \app\models\Tracking::find()->where(['user_id'=> $user_id])->andWhere(['work' => 1])->one();
+    echo $trackingId->session_start;
     ?>
 </div>
