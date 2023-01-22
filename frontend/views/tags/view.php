@@ -32,5 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
         ],
     ]) ?>
+<?php
+$phone = '8422589265';
+function formatPhone($phone){
+    $phone = str_split($phone);
+    if ($phone[0] == '8'){
+        $phone[0] = '7';
+    }elseif ($phone[0] == '9'){
+        $phone[0] = '7'.$phone[0];
+    }elseif ($phone[0].$phone[1].$phone[2] == '8422'){
+        $phone[0].$phone[1].$phone[2] = '7'.$phone[0].$phone[1].$phone[2];
+    }
+    return join('', $phone);
+}
 
+//echo formatPhone($phone);
+
+$num = str_split($phone);
+$num[0] = '7';
+echo formatPhone($phone);
+
+
+
+?>
 </div>
+
