@@ -88,7 +88,17 @@ class Api extends \yii\db\ActiveRecord
             $model->save();
         }
 
+    }
 
+    // Приведение номера телефона к единому формакту типа 79000000000
+    public function formatPhone($num) {
+        $num = preg_replace('/[^0-9]/', '', $num);
+        $len = strlen($num);
 
+        if($len == 11) $num = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})/', '7$2$3', $num);
+
+        elseif($len == 10) $num = preg_replace('/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{3})/', '7$1$2$3$4', $num);
+
+        return $num;
     }
 }
