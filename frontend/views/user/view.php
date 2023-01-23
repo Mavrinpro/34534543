@@ -95,6 +95,19 @@ $called = '8423521461';
 //    echo $user_id;
     $user_id = \Yii::$app->request->get('id');
     $trackingId = \app\models\Tracking::find()->where(['user_id'=> $user_id])->andWhere(['work' => 1])->one();
-    echo $trackingId->session_start;
+    echo $trackingId->session_start. PHP_EOL;
+
+
+    $text = '4,14';
+
+    $arr = explode(',', $text);
+
+    function array_replace_value(&$ar, $value, $replacement)
+    {
+        if (($key = array_search($ar, $value)) !== FALSE) {
+            $ar[$key] = $replacement;
+        }
+    }
+
     ?>
 </div>
