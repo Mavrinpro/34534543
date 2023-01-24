@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use app\models\Deals;
+use Yii;
 
 /**
  * This is the model class for table "deals".
@@ -100,5 +100,15 @@ class Api extends \yii\db\ActiveRecord
         elseif($len == 10) $num = preg_replace('/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{3})/', '7$1$2$3$4', $num);
 
         return $num;
+    }
+
+
+    public function fromInterraAbc( $model, $id = null, $name, $phone = null, $company_id=null)
+    {
+        $deals = Deals::find()->where( [ 'phone' => $phone, 'del' => 0, 'company_id' => $company_id ] )->one();
+        if ( $deals->id == $id || $deals->phone == $phone ) {
+            $deals->name = $name;
+            $deals->update();
+        }
     }
 }
