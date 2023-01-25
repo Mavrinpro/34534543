@@ -10,6 +10,7 @@ use app\models\DealsRepeat;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 /** @var app\models\DealsRepeat $repeat */
+/** @var app\models\History $history */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Детально', 'url' => ['index']];
@@ -47,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'name',
                     'phone',
+                    'company.name',
                     [
                          'attribute' => 'del',
                         'format' => 'html',
@@ -114,6 +116,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
 
+        </div>
+        <div class="shadow rounded-lg mt-3 p-2">
+            <small>r8or67u eu e5u6</small>
         </div>
     </div>
     <div class="col-md-6 mb-5 mt-3">
