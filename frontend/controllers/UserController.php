@@ -29,7 +29,7 @@ class UserController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'index', 'update', 'view', 'change-password', 'session-start', 'session-end', 'switch-user'],
+                            'actions' => ['delete', 'index', 'update', 'view', 'change-password', 'session-start', 'session-end', 'switch-user', 'number-format'],
                             'allow' => true,
                             'roles' => ['superadmin', 'admin'],
                         ],
@@ -269,4 +269,51 @@ class UserController extends Controller
             return $this->redirect(['view', 'id' => $user->id]);
         }
     }
+
+
+
+    public function actionNumberFormat()
+    {
+        $user = new User;
+        $number = 56380.356;
+        return $user->numberFormat($number);
+        //return number_format($number, 2, ',', ' ');
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

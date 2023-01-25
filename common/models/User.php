@@ -228,4 +228,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $id;
 
     }
+
+    public function numberFormat($sum)
+    {
+            $sum = number_format($sum, 2, ',', ' ');
+            return $sum;
+
+    }
 }

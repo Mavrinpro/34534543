@@ -10,7 +10,7 @@ use yii\base\Model;
  *
  * @property int $id
  */
-class History extends Model
+class History extends \yii\db\ActiveRecord
 {
 
     /**
