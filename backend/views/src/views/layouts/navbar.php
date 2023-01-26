@@ -14,9 +14,9 @@ $taskCount  = new \app\models\Tasks();
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
         <!-- SEARCH FORM -->
-    <form class="form-inline ml-3 ">
+    <form class=" ml-3" id="search_form_header">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"
+            <input class="form-control form-control-navbar" type="search" placeholder="Поиск" aria-label="Search"
                    id="input_search" name="input_search">
             <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
@@ -24,6 +24,7 @@ $taskCount  = new \app\models\Tasks();
                 </button>
             </div>
         </div>
+        <div class="result_search"></div>
     </form>
 
 
@@ -202,23 +203,44 @@ function soundClick() {
         //soundClick();
         }
         //setInterval(updateList, 300000);
-
+var search_form_header = $('#search_form_header');
 $('#input_search').on('keyup', function (){
     //console.log(400);
     var data = $(this).serialize();
+    
+    search_form_header.find('.result_search').html('').css('display', 'none');
+    if ($(this).val().length >=3){
+    
         $.ajax({
             url: '/deals/search-ajax',
             type: 'GET',
             data: data,
             success: function(res){
-                console.log(res.phone);
+                if (res){
+                     console.log(res[0].phone);
+                     search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/view/'+res[0].id+'">'+res[0].phone+'</a></span>');
+                }else{
+                    search_form_header.find('.result_search').css('display', 'block').html('Не найдено');
+                   console.log('Не найдено'); 
+                }
+                
             },
             error: function(){
+                search_form_header.find('.result_search').html('').css('display', 'none');
                 alert('Error!');
             }
         });
+        }
         return false;
-})
+});
+
+$(document).mouseup( function(e){ // событие клика по веб-документу
+		var div = search_form_header.find('.result_search'); // тут указываем ID элемента
+		if ( !div.is(e.target) // если клик был не по нашему блоку
+		    && div.has(e.target).length === 0 ) { // и не по его дочерним элементам
+			div.hide(); // скрываем его
+		}
+	});
 
 JS;
 

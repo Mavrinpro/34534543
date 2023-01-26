@@ -294,7 +294,12 @@ class DealsController extends Controller
              $input_search = \Yii::$app->request->get('input_search');
              $model = Deals::find()->where(['like', 'phone', $input_search])->all();
              \Yii::$app->response->format = Response::FORMAT_JSON;
-             return $model;
+             if (sizeof($model) > 0){
+                 return $model;
+             }else{
+                 return false;
+             }
+
 
     }
 

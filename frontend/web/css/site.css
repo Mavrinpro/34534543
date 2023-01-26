@@ -155,5 +155,19 @@ audio
     background: -webkit-linear-gradient(270deg, #5461ac, #3f51b5ed);
     color: #8a9cff;
 }
+form#search_form_header {
+    width: 50% !important;
+}
+.result_search {
+    display: none;
+    width: 90%;
+    position: absolute;
+    padding: 10px;
+    background: #f7f7f7;
+    z-index: 999;
+    box-shadow: 0 6px 13px -9px #333;
+    bottom: -32px;
+
+}
 
 
