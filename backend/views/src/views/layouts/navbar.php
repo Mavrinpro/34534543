@@ -13,66 +13,11 @@ $taskCount  = new \app\models\Tasks();
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="<?=\yii\helpers\Url::home()?>" class="nav-link">Главная</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="<?=\yii\helpers\Url::to('/deals')?>" class="nav-link">Сделки</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="/tasks" class="nav-link">Задачи</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="/doctors" class="nav-link">Врачи</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="/review" class="nav-link">Отзывы</a>
-        </li>
-
-        <li class="nav-item dropdown">
-            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
-            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="#" class="dropdown-item">Some action </a></li>
-                <li><a href="#" class="dropdown-item">Some other action</a></li>
-                <li><?= Html::a('Sign out', ['site/logout'], ['data-method' => 'post', 'class' => 'dropdown-item']) ?></li>
-
-                <li class="dropdown-divider"></li>
-
-                <!-- Level two dropdown-->
-                <li class="dropdown-submenu dropdown-hover">
-                    <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>
-                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                        <li>
-                            <a tabindex="-1" href="#" class="dropdown-item">level 2</a>
-                        </li>
-
-                        <!-- Level three dropdown-->
-                        <li class="dropdown-submenu">
-                            <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">level 2</a>
-                            <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">3rd level</a></li>
-                                <li><a href="#" class="dropdown-item">3rd level</a></li>
-                            </ul>
-                        </li>
-                        <!-- End Level three -->
-
-                        <li><a href="#" class="dropdown-item">level 2</a></li>
-                        <li><a href="#" class="dropdown-item">level 2</a></li>
-                    </ul>
-                </li>
-                <!-- End Level two -->
-            </ul>
-        </li>
-    </ul>
-
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+        <!-- SEARCH FORM -->
+    <form class="form-inline ml-3 ">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"
+                   id="input_search" name="input_search">
             <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                     <i class="fas fa-search"></i>
@@ -81,20 +26,21 @@ $taskCount  = new \app\models\Tasks();
         </div>
     </form>
 
-    <div class="ml-2">
-        <?php
-        $session_start =  \Yii::$app->request->cookies['session_start'];
-        if (!empty($session_start)) { ?>
-            <?= Html::a('Завершить', ['user/session-end?sessionend=yes'],['class' => 'btn btn-sm btn-success']) ?>
-        <?php }else{ ?>
-            <?= Html::a('Начать работу', ['user/session-start?sessionstart=yes'], ['class' => 'btn btn-sm btn-danger 
-        mr-3 ']) ?>
-        <?php } ?>
 
-    </div>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+        <div class="ml-2">
+            <?php
+            $session_start =  \Yii::$app->request->cookies['session_start'];
+            if (!empty($session_start)) { ?>
+                <?= Html::a('Завершить', ['user/session-end?sessionend=yes'],['class' => 'btn btn-sm btn-success']) ?>
+            <?php }else{ ?>
+                <?= Html::a('Начать работу', ['user/session-start?sessionstart=yes'], ['class' => 'btn btn-sm btn-danger 
+        mr-3 ']) ?>
+            <?php } ?>
+
+        </div>
         <!-- Navbar Search -->
         <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -250,12 +196,29 @@ function soundClick() {
   console.log(100)
 }
  function updateList() {
-         $.pjax.reload({container: "#badge", async: false});
-         $.pjax.reload({container: "#alert", async: false});
-         $.pjax.reload({container: "#noty", async: false});
+         //$.pjax.reload({container: "#badge", async: false});
+         //$.pjax.reload({container: "#alert", async: false});
+         //$.pjax.reload({container: "#noty", async: false});
         //soundClick();
         }
-        setInterval(updateList, 300000);
+        //setInterval(updateList, 300000);
+
+$('#input_search').on('keyup', function (){
+    //console.log(400);
+    var data = $(this).serialize();
+        $.ajax({
+            url: '/deals/search-ajax',
+            type: 'GET',
+            data: data,
+            success: function(res){
+                console.log(res.phone);
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
+        return false;
+})
 
 JS;
 

@@ -15,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\web\Response;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
@@ -33,12 +34,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -283,4 +284,19 @@ class DealsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+    // Ajax search
+     public function actionSearchAjax()
+     {
+         if (\Yii::$app->request->isAjax) {
+
+             $input_search = \Yii::$app->request->get('input_search');
+             $model = Deals::find()->where(['like', 'phone', $input_search])->all();
+             \Yii::$app->response->format = Response::FORMAT_JSON;
+             return $model;
+
+    }
+
+     }
 }

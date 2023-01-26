@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $gridColumns = [
       'name',
     'phone',
+
     'deal_sum',
     [
         //label' => 'Полное имя',
@@ -109,12 +110,22 @@ echo ExportMenu::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'showFooter' => true,
+        'options' => [
+            'id' => 'search_deals'
+        ],
         'footerRowOptions'=>['class'=>'bg-dark'],
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
             //'id',
             'name',
-            'phone',
+            [
+                'attribute' => 'phone',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::a(
+                        $model->phone,['deals/view', 'id' => $model->id]);
+                },
+            ],
             //'deal_sum',
             [
                 'attribute' => 'deal_sum',
@@ -304,9 +315,10 @@ echo ExportMenu::widget([
 $js = <<< JS
 
  function updateList() {
-         $.pjax.reload({container: "#grid", async: false});
+         $.pjax.reload({container: "#search_deals", async: false});
         }
-        setInterval(updateList, 1000);
+        setInterval(updateList, 5000);
+
 
 JS;
 
