@@ -226,7 +226,8 @@ class UserController extends Controller
     {
         $model = new Tracking();
         $sessId = \Yii::$app->request->cookies['session_start'];
-
+        $user_id = \Yii::$app->response->get('id');
+        $trackingId = Tracking::find()->where(['user_id'=> $user_id])->andWhere(['work' => 1])->one();
         $date = date('U');
 
         if (\Yii::$app->request->get('sessionend') == 'yes') {

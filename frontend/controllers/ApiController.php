@@ -127,10 +127,10 @@ class ApiController extends \yii\rest\ActiveController
             'sertsertsertaer', 'ytjesyjetyjedtyj'
         ];
         $ARR = [
-            'PHONE' => '79176095733',
+            'PHONE' => '79176095777',
             'USER_ID' => '158454',
             'TALON_ID' => '1514013395',
-            'NAME' => 'Егор',
+            'NAME' => 'Петр',
             'SECOND_NAME' => 'Александрович',
             'LAST_NAME' => 'Гаврилов',
             'GENDER' => 'M',
@@ -184,9 +184,9 @@ class ApiController extends \yii\rest\ActiveController
 
         $age = (int)$ARR['AGE'];
         $gender = (int)$ARR['GENDER'];
-//        foreach ($serv as $item) {
-//            $services .= $item.', ';
-//        }
+        foreach ($serv as $item) {
+            $services .= $item.', ';
+        }
 
         switch ($ARR['GENDER']){
             case 'M':
@@ -204,7 +204,7 @@ class ApiController extends \yii\rest\ActiveController
         foreach ($ARR  as $key => $item ) {
             $txt .= '<b>' . $key . '</b>: ' . $item ."\r\n";
         }
-        //$deals = Deals::find()->where( [ 'phone' => $phone, 'del' => 0, 'company_id' => $company_id ] )->one();
+        $deals = Deals::find()->where( [ 'phone' => $phone, 'del' => 0, 'company_id' => $company_id ] )->one();
 
         //$api->fromInterraAbc($model, $ARR['USER_ID'], $ARR['NAME'], $ARR['PHONE'], 2);
         $date_create = date('Y-m-d H:i:s');
@@ -232,24 +232,24 @@ class ApiController extends \yii\rest\ActiveController
 
         file_get_contents('https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $chat_id .
          '&parse_mode=html&text=' . urlencode($txt));
-//        $api->historyDeals(
-//            $history,
-//            $phone,
-//            $deals->id,
-//            $user_id_interra,
-//            $date,
-//            $date_service,
-//            $time_service,
-//            $doc_service,
-//            $talon_id,
-//            $birtday,
-//            $age,
-//            $gender,
-//            $services,
-//            $status,
-//            $responsible,
-//            $company_id
-//        );
+        $api->historyDeals(
+            $history,
+            $phone,
+            $deals->id,
+            $user_id_interra,
+            $date,
+            $date_service,
+            $time_service,
+            $doc_service,
+            $talon_id,
+            $birtday,
+            $age,
+            $gender,
+            $services,
+            $status,
+            $responsible,
+            $company_id
+        );
         } catch (\Exception $e) {
             $tlg_text = 'ОШИБКА Exception';
             $tlg_text .= PHP_EOL.'getFile: '.$e->getFile();

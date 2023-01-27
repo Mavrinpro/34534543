@@ -34,12 +34,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -300,8 +300,24 @@ class DealsController extends Controller
                  return false;
              }
 
-
     }
 
      }
+
+
+     // Смена статуса Ajax на страанице view deals
+
+    public function actionStatusAjax()
+    {
+        $status = \Yii::$app->request->post();
+        $model = Deals::find()->where(['id' => $status["Deals"]["id"]])->one();
+        if (\Yii::$app->request->isAjax) {
+        $model->status = $status['Deals']['status'];
+        $model->update();
+
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+           return $status['Deals']['id'].'='.$status['Deals']['status'];
+
+        }
+    }
 }

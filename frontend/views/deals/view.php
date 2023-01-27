@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use common\widgets\Alert;
 use app\models\DealsRepeat;
+use app\models\History;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 /** @var app\models\DealsRepeat $repeat */
@@ -117,9 +118,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
         </div>
+        <?php $h = History::find()->where(['deal_id' => $model->id])->all(); ?>
+        <?php if (sizeof($h) > 0){ ?>
+
         <div class="shadow rounded-lg mt-3 p-2">
-            <small>r8or67u eu e5u6</small>
+            <?php
+            foreach ($h as $histor) { ?>
+                <small class="d-block"><?= date('d.m.Y H:i:s',$histor->date) ?> - <?= $histor->status ?>.
+                    <b>Услуги:</b> <?=
+                    $histor->services
+                    ?>. <b>Дата: </b><?= date('d.m.Y',$histor->date_service) ?>. <b>Время:</b> <?=
+                    $histor->time_service ?>. <b>Врач:</b> <?= $histor->doc_service ?>. <b>Сотрудник:</b> <?= $histor->responsible ?>
+                </small>
+                <hr>
+            <?php } ?>
         </div>
+        <?php } ?>
     </div>
     <div class="col-md-6 mb-5 mt-3">
         <div class="shadow p-3 rounded-lg">
@@ -136,6 +150,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--            --><?php //Pjax::end(); ?>
 
         </div>
+
+        <div class="shadow p-3 rounded-lg mt-3">
+
+            <?php $form = ActiveForm::begin(['id' => 'status_id']); ?>
+            <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(\app\models\Statuses::find()->all(), 'id',
+               'name'),
+                ['prompt'=>'Сменить статус...'])->label(false); ?>
+            <?= $form->field($model, 'id')->hiddenInput([value($model->id), 'id' => 'hidden_ids'])->label(false) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
         <div class="shadow p-3 rounded-lg mt-5">
             <b>Запись звонка</b>
             <audio controls>
@@ -144,10 +168,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 Your browser does not support the audio element.
             </audio>
         </div>
-        <?php
-
-
-        ?>
     </div>
 </div>
+<?php
+
+$js = <<< JS
+$(document).on("change", "#status_id", function () {
+    var data = $(this).serialize();
+    var hidden_ids = $('#hidden_ids').val(); // id сделки
+    //alert(data);
+    $.ajax({
+            url: '/deals/status-ajax',
+            type: 'POST',
+            data: data+'&'+hidden_ids,
+            success: function(res){
+                console.log(res);
+                toastr.success('Статус сделки изменен!')
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
+    return false; // Cancel form submitting.
+});
+JS;
+
+$this->registerJs($js);
+
 

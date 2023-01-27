@@ -21,10 +21,8 @@ class History extends \yii\db\ActiveRecord
         return 'history_deals';
     }
 
-    public function rules()
+    public function getHistory($id)
     {
-        return [
-            [['deal_id', 'user_id_interra', 'date', 'date_service', 'time_service', 'doc_service', 'talon_id', 'birtday', 'age', 'gender', 'services', 'status', 'responsible', 'company_id'], 'safe'],
-        ];
+        return History::find()->where(['id' => $id])->one();
     }
 }
