@@ -16,7 +16,7 @@ $taskCount  = new \app\models\Tasks();
         <!-- SEARCH FORM -->
     <form class=" ml-3" id="search_form_header">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Поиск" aria-label="Search"
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"
                    id="input_search" name="input_search">
             <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
@@ -203,8 +203,10 @@ function soundClick() {
         //soundClick();
         }
         //setInterval(updateList, 300000);
+
 var search_form_header = $('#search_form_header');
-$('#input_search').on('keyup', function (){
+var input = $('#input_search');
+input.on('keyup', function (){
     //console.log(400);
     var data = $(this).serialize();
     
@@ -216,9 +218,10 @@ $('#input_search').on('keyup', function (){
             type: 'GET',
             data: data,
             success: function(res){
+                console.log(res); 
                 if (res){
                      console.log(res[0].phone);
-                     search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/view/'+res[0].id+'">'+res[0].phone+'</a></span>');
+                     search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/update/'+res[0].id+'">'+res[0].phone+'</a></span>');
                 }else{
                     search_form_header.find('.result_search').css('display', 'block').html('Не найдено');
                    console.log('Не найдено'); 
@@ -233,7 +236,7 @@ $('#input_search').on('keyup', function (){
         }
         return false;
 });
-
+//=======================
 $(document).mouseup( function(e){ // событие клика по веб-документу
 		var div = search_form_header.find('.result_search'); // тут указываем ID элемента
 		if ( !div.is(e.target) // если клик был не по нашему блоку

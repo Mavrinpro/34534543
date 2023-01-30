@@ -123,7 +123,7 @@ echo ExportMenu::widget([
                 'format' => 'html',
                 'value' => function ($model) {
                     return Html::a(
-                        $model->phone,['deals/view', 'id' => $model->id]);
+                        $model->phone,['deals/update', 'id' => $model->id]);
                 },
             ],
             //'deal_sum',
