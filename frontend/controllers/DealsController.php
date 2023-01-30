@@ -205,7 +205,7 @@ class DealsController extends Controller
         $model->id_comment = strip_tags($model->id_comment);
         $model->save();
         \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
-        return $this->redirect(['deals/']);
+        return $this->refresh();
     }
 //        if (\Yii::$app->request->isAjax){
 //            $model->tag = explode(',', $model->tag);
