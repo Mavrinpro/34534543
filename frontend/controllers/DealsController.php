@@ -154,6 +154,7 @@ class DealsController extends Controller
             if ($model->load($this->request->post())) {
                 $model->tag = implode(",",$model->tag);
                 $model->id_comment = strip_tags($model->id_comment);
+                $model->phone = '7'.$model->phone;
                 $model->save();
                 \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
                 return $this->redirect(['deals/index']);
