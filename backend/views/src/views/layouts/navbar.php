@@ -212,13 +212,14 @@ input.on('keyup', function (){
     
     search_form_header.find('.result_search').html('').css('display', 'none');
     if ($(this).val().length >=3){
-    
+    search_form_header.addClass('searching');
         $.ajax({
             url: '/deals/search-ajax',
             type: 'GET',
             data: data,
             success: function(res){
                 console.log(res); 
+                search_form_header.removeClass('searching');
                 if (res){
                      console.log(res[0].phone);
                      search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/update/'+res[0].id+'">'+res[0].phone+'</a></span>');

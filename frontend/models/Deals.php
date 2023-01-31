@@ -26,6 +26,8 @@ use yii\web\Response;
  * @property string|null $call_recording
  * @property string|null $deal_email
  * @property int|null $region_id
+ * @property int|null $age
+ * @property bool|null $gender
  */
 
 class Deals extends \yii\db\ActiveRecord
@@ -46,7 +48,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create'], 'safe'],
-            [['name','call_recording', 'deal_email', 'company_id', 'region_id'], 'safe'],
+            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
@@ -69,6 +71,8 @@ class Deals extends \yii\db\ActiveRecord
             'name' => 'ФИО',
             'phone' => 'Телефон',
             'tag' => 'Тег',
+            'age' => 'Возраст',
+            'gender' => 'Пол',
             'company_id' => 'Компания',
             'date_create' => 'Дата создания',
             'date_update' => 'Дата обновления',

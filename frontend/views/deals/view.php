@@ -171,6 +171,21 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php
+$_REQUEST['RESPONSIBLE'] = 'gaergaer aergaerg aergaerg';
+
+$RESPONSIBLE = [
+    62 => 'Бакеева Ольга Владимировна',
+    63 => 'Солаева Виктория Петровна',
+    64 => 'Цветкова Дарья Дмитриевна'
+];
+
+// id сотрудника
+$key_responsible = array_search($_REQUEST['RESPONSIBLE'], $RESPONSIBLE);
+echo gettype($key_responsible);
+
+$k = array_rand($RESPONSIBLE);
+
+echo $k;
 
 $js = <<< JS
 $(document).on("change", "#status_id", function () {
