@@ -15,11 +15,11 @@ $config = [
         $config['bootstrap'][] = 'debug';
         $config['modules']['debug'] = [
             'class' => 'yii\debug\Module',
-            'on beforeAction'=>function($event) {
-                //суть
-                $event->isValid = \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId
-                    ())['superadmin']->name == 'superadmin';
-            },
+//            'on beforeAction'=>function($event) {
+//                //суть
+//                $event->isValid = \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId
+//                    ())['superadmin']->name == 'superadmin';
+//            },
             ];
 
         $config['bootstrap'][] = 'gii';

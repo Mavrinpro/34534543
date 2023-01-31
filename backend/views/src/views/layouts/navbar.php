@@ -186,7 +186,7 @@ JS;
 $this->registerJs($js);
         ?>
 <?php
-if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
+//if (Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['superadmin']->name == 'superadmin' || Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())['admin']->name == 'admin'){
 
     $js = <<< JS
 
@@ -249,5 +249,5 @@ JS;
 
     $this->registerJs($js);
     $this->registerJs($js);
-}
+
 
