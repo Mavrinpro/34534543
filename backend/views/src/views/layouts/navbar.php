@@ -190,6 +190,9 @@ $this->registerJs($js);
 
     $js = <<< JS
 
+
+  
+
 function soundClick() {
   var audio = new Audio(); // Создаём новый элемент Audio
   audio.src = '/audio/notify.mp3'; // Указываем путь к звуку "клика"
@@ -206,9 +209,11 @@ function soundClick() {
 
 var search_form_header = $('#search_form_header');
 var input = $('#input_search');
+
 input.on('keyup', function (){
     //console.log(400);
-    var data = $(this).serialize();
+    var data = $(this);
+    
     
     search_form_header.find('.result_search').html('').css('display', 'none');
     if ($(this).val().length >=3){
@@ -217,12 +222,39 @@ input.on('keyup', function (){
             url: '/deals/search-ajax',
             type: 'GET',
             data: data,
+            dataType: 'json',
             success: function(res){
                 console.log(res); 
                 search_form_header.removeClass('searching');
                 if (res){
-                     console.log(res[0].phone);
-                     search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/update/'+res[0].id+'">'+res[0].phone+'</a></span>');
+                    
+                    //console.log(2000);
+                    
+                 $.each(res, function(i, item) {
+                    console.log(res[i].name);
+                });
+     
+                 var head = search_form_header.find('.result_search').css('display', 'block');
+                 let html = '';
+                 $.each(res, function(i, item) {
+                        html += '<span class="d-block p-2"><a href="/deals/update/'+res[i].id+'">'+res[i]
+                        .phone+'</a> - '+res[i].name+' - '+res[i].date_create+'</span>';
+                        var javascript_date = new Date(res[i].date_create);
+                        console.log(javascript_date.toLocaleString());
+                 });
+                 head.html(html);
+                 
+
+                
+                
+                    // '$.each(res, function(i, item) {
+                    //     console.log(res[i].name);
+                    //     search_form_header.find('.result_search').css('display', 'block').append('<span class="d-block"><a href="/deals/update/'+res[i].id+'">'+res[i].name+'</a></span>');
+                    // });'
+                         //console.log(res[0])
+                    
+                     //console.log(res[0].phone+'-'+res[0].name+'='+res[1].phone+'-'+res[1].name);
+                     
                 }else{
                     search_form_header.find('.result_search').css('display', 'block').html('Не найдено');
                    console.log('Не найдено'); 
@@ -249,6 +281,6 @@ $(document).mouseup( function(e){ // событие клика по веб-до�
 JS;
 
     $this->registerJs($js);
-    $this->registerJs($js);
+    //$this->registerJs($js);
 
 

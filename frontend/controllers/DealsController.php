@@ -288,8 +288,8 @@ class DealsController extends Controller
 
 
     // Ajax search
-     public function actionSearchAjax()
-     {
+     public function actionSearchAjax() {
+
          if (\Yii::$app->request->isAjax) {
 
              $input_search = \Yii::$app->request->get('input_search');
@@ -301,9 +301,8 @@ class DealsController extends Controller
                  return false;
              }
 
-    }
-
-     }
+        }
+   }
 
 
      // Смена статуса Ajax на страанице view deals
