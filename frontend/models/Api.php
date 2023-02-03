@@ -193,7 +193,7 @@ class Api extends \yii\db\ActiveRecord
     public function changeStatus($model, $talon_id, $status, $company_id)
     {
         $history = History::find()->where(['talon_id' => $talon_id, 'company_id' => $company_id])->one();
-        
+
         if ($model->talon_id == $talon_id){
             $model->status = $status;
         }
