@@ -157,7 +157,9 @@ class DealsController extends Controller
                 $model->phone = '7'.$model->phone;
                 $model->save();
                 \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
-                return $this->redirect(['deals/index']);
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
 
             }
             \Yii::$app->session->setFlash('error', 'Что-то пошло не так!');
@@ -199,6 +201,7 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
+        //\Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
 
     if ($this->request->isPost && $model->load($this->request->post())) {

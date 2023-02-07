@@ -57,3 +57,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?php
+// Собираем ID пользователей, которые в работе (нажали кнопку)
+
+
+echo $id = \Yii::$app->getUser()->getId();
+
+
+
