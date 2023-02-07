@@ -5,6 +5,7 @@ use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use yii\bootstrap4\Modal;
+use app\models\History;
 //use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
@@ -122,7 +123,71 @@ Modal::end();
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
         </div>
+        <div class="col-md-12 mt-3">
+            <?php $h = History::find()->where(['deal_id' => $model->id])->all(); ?>
+            <?php if (sizeof($h) > 0){ ?>
+                <div class="shadow rounded-lg p-2">
+                    <?php
+                    foreach ($h as $histor) { ?>
+                        <small class="d-block"><?= date('d.m.Y H:i:s',$histor->date) ?> |
+                            <b>Талон:</b>
+                            <?= $histor->talon_id ?>
+                            <?php if ($histor->name != null){ ?>
+                                (<?= $histor->name ?>)
+                            <?php } ?>
+                            -
+                            <?= $histor->status ?>.
+                            <?php if (strlen($histor->services) > 0){ ?>
+                                <b>Услуги:</b> <?=
+                                $histor->services
+                                ?>.<?php } ?>
+                            <?php if ($histor->date_service != 0){ ?>
+                                <b>Дата: </b><?= date('d.m.Y',$histor->date_service) ?>.
+                            <?php } ?>
+                            <?php if (strlen($histor->time_service) > 0){ ?>
+                                <b>Время:</b> <?=
+                                $histor->time_service ?>.
+                            <?php } ?>
+                            <?php if (strlen($histor->doc_service) > 0){ ?>
+                                <b>Врач:</b> <?= $histor->doc_service ?>.
+                            <?php } ?>
+                            <?php if (strlen($histor->responsible) > 0){ ?>
+                                <b>Сотрудник:</b> <?= $histor->responsible ?>
+                            <?php } ?>
+                            <?php if (strlen($histor->message) > 0){ ?>
+                                <b>Сообщ:</b> <?= $histor->message ?>
+                            <?php } ?>
+                        </small>
+                        <hr>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+        </div>
     </div>
+    <?php ActiveForm::end(); ?>
+    <?php $form2 = ActiveForm::begin(); ?>
+<!--    --><?//= $form->field($task, 'date_end')->textInput(); ?>
+    <?php echo $form2->field($taska, 'name')->textInput()->label('erger') ?>
+    <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::className(),[
+
+        'options' => [
+            'autocomplete' => 'off',
+            'placeholder' => 'Выберите дату',
+            'data' => [
+                'picker' => 'datepicker'
+            ]
+        ],
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'startDate' => 'today',
+            'todayHighlight' => true,
+            'format' => 'yyyy-mm-dd 23:59:59',
+
+        ]
+    ]) ?>
+    <?= $form2->field($taska, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
+        ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
+    <?= Html::submitButton('Создать задачу', ['class' => 'btn btn-success']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 

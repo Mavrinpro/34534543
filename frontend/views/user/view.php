@@ -109,5 +109,13 @@ $called = '8423521461';
         }
     }
 
+    $user = \common\models\User::find()->select(['id', 'username'])->where(['status' => 10])->limit(10)->all();
+
+    $RESPONSIBLE = array_column($user, 'username', 'id');
+
+    echo '<pre>';
+    print_r($RESPONSIBLE);
+
+
     ?>
 </div>

@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\models\Deals;
-use app\models\History;
 use Yii;
 
 /**
@@ -188,29 +187,4 @@ class Api extends \yii\db\ActiveRecord
             $model->save();
         }
     }
-
-    // Смена статуса
-    public function changeStatus($model, $date, $talon_id, $status, $company_id, $message = null)
-    {
-        $history = Deals::find()->where(['talon_id' => $talon_id, 'company_id' => $company_id])->one();
-
-        if ($history->talon_id == $talon_id){
-            $model->date = $date;
-            $model->status = $status;
-            $model->deal_id = $history->id;
-            $model->talon_id = $talon_id;
-            $model->company_id = $company_id;
-            $model->message = $message;
-            $model->save();
-        }
-    }
-
-    // Назначить ответственного по крону
-    public function cronUser($id)
-    {
-        $deals = Deals::find()->where(['id_operator' => null, 'del' => 0] )->one();
-            $deals->id_operator = $id;
-            $deals->update();
-    }
-
 }

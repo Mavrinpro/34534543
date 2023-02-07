@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Deals;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap4\ActiveForm;
@@ -181,12 +182,15 @@ $RESPONSIBLE = [
 
 // id сотрудника
 $key_responsible = array_search($_REQUEST['RESPONSIBLE'], $RESPONSIBLE);
-echo gettype($key_responsible);
+//echo gettype($key_responsible);
 
 $k = array_rand($RESPONSIBLE);
 
-echo $k;
-
+//echo $k;
+$history = Deals::find()->where(['talon_id' => 2723028352, 'company_id' => 2])->one();
+//echo '<pre>';
+//print_r($history);
+echo $history->id;
 $js = <<< JS
 $(document).on("change", "#status_id", function () {
     var data = $(this).serialize();

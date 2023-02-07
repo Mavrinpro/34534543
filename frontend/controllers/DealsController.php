@@ -7,6 +7,7 @@ use app\models\Deals;
 use app\models\DealsRepeat;
 use app\models\LayoutsMail;
 use app\models\Mail;
+use app\models\Tasks;
 use common\models\User;
 use frontend\models\SearchDeals;
 use frontend\models\DeleteDeals;
@@ -203,20 +204,27 @@ class DealsController extends Controller
     {
         //\Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
-
+        $taska = new Tasks();
     if ($this->request->isPost && $model->load($this->request->post())) {
         $model->tag = implode(",",$model->tag);
         $model->id_comment = strip_tags($model->id_comment);
         $model->save();
+
         \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
         return $this->refresh();
     }
+        if ($this->request->isPost && $taska->load($this->request->post())) {
+            $taska->save();
+
+            \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
+            return $this->refresh();
+        }
 //        if (\Yii::$app->request->isAjax){
 //            $model->tag = explode(',', $model->tag);
 //            return $this->renderAjax('update_form', ['model' => $model]);
 //        }
         $model->tag = explode(',', $model->tag);
-        return $this->render('update', ['model' => $model,]);
+        return $this->render('update', ['model' => $model, 'taska' => $taska]);
 
 
     }

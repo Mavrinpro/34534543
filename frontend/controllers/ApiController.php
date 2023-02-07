@@ -6,7 +6,6 @@ use app\models\Api;
 use app\models\Deals;
 use app\models\History;
 use app\models\Tasks;
-use app\models\Tracking;
 use common\models\User;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -114,7 +113,6 @@ class ApiController extends \yii\rest\ActiveController
 
     public function actionGetEnvybox()
     {
-
         $token   = "bot621887368:AAGadjDhXjO3bEs_ILHiJ6_4j1OCZ6jUO6M";
         $chat_id = "-1001676306442";
         $text    = 'Интерра '. date('Y-m-d H:i:s').' ';
@@ -214,26 +212,44 @@ class ApiController extends \yii\rest\ActiveController
         $id_filial = 1;
         //\Yii::$app->db->schema->refresh(); // Сбросить кэш (пр создании новых полей стаботает)
         try {
-            $_SUBREQUEST = [
-                'ACTION'        => 'UPDATE_STATUS',
-                'TALON_ID'      => '1514013009',
-                'STATUS'        => 'Отказ',
-                'OTKAZ_MESSAGE' => 'отложил запись'
-            ];
 
-            if ($_SUBREQUEST['ACTION'] == 'UPDATE_STATUS'){
-                $api->changeStatus($history, (int)$date, (int)$_SUBREQUEST['TALON_ID'], $_SUBREQUEST['STATUS'],
-                $company_id,
-                $_SUBREQUEST['OTKAZ_MESSAGE']);
-            }else {
+        $api->fromInterraAbc(
+            $model,
+            $ARR['NAME'],
+            $ARR['PHONE'],
+            '11',
+            $date_create,
+            $company_id,
+            $id_filial,
+            (int)$ARR['PRICE'],
+            3,
+            $key_responsible,
+            0,
+            $answer,
+            $ARR['EMAIL']
+        );
 
 
-                $api->fromInterraAbc($model, $ARR['NAME'], $ARR['PHONE'], '11', $date_create, $company_id, $id_filial, (int)$ARR['PRICE'], 3, $key_responsible, 0, $answer, $ARR['EMAIL']);
-
-
-                file_get_contents('https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $chat_id . '&parse_mode=html&text=' . urlencode($txt));
-                $api->historyDeals($history, $phone, $deals->id, $user_id_interra, $date, $date_service, $time_service, $doc_service, $talon_id, $birtday, $age, $gender, $services, $status, $responsible, $company_id);
-            }
+        file_get_contents('https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $chat_id .
+         '&parse_mode=html&text=' . urlencode($txt));
+        $api->historyDeals(
+            $history,
+            $phone,
+            $deals->id,
+            $user_id_interra,
+            $date,
+            $date_service,
+            $time_service,
+            $doc_service,
+            $talon_id,
+            $birtday,
+            $age,
+            $gender,
+            $services,
+            $status,
+            $responsible,
+            $company_id
+        );
         } catch (\Exception $e) {
             $tlg_text = 'ОШИБКА Exception';
             $tlg_text .= PHP_EOL.'getFile: '.$e->getFile();
@@ -244,28 +260,6 @@ class ApiController extends \yii\rest\ActiveController
         }
     }
 
-// Назначить ответственного, если у сделки user_id = null
-    public function actionCronUser()
-    {
-        $api = new Api();
-        \Yii::$app->response->format = Response::FORMAT_JSON;
 
-        // Собираем ID пользователей, которые в работе (нажали кнопку)
-        $tracking = Tracking::find()->where(['work' => 1])->all();
-        $user_id = [];
-
-        foreach ($tracking as $key => $oper) {
-            $user_id[] = $oper->user_id;
-        }
-
-        $userIsRandom = array_rand($user_id);
-        $userValue = $user_id[$userIsRandom]; // id user random
-        if(isset($userValue)){
-        $api->cronUser($userValue);
-        }else{
-            return false;
-        }
-
-    }
 
 }

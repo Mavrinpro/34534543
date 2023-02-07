@@ -27,6 +27,7 @@ use yii\web\Response;
  * @property string|null $deal_email
  * @property int|null $region_id
  * @property int|null $age
+ * @property int|null $talon_id
  * @property bool|null $gender
  */
 
@@ -47,7 +48,7 @@ class Deals extends \yii\db\ActiveRecord
     {
         return [
             [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
-            [['date_create'], 'safe'],
+            [['date_create', 'talon_id'], 'safe'],
             [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
@@ -80,7 +81,7 @@ class Deals extends \yii\db\ActiveRecord
             'region_id' => 'Город пациента',
             'id_operator' => 'Ответственный',
             'id_filial' => 'Филиал клиники',
-            'id_comment' => 'Комментарий (id)',
+            'id_comment' => 'Комментарий',
             'deal_sum' => 'Сумма сделки',
             'del' => 'Видимость',
             'call_recording' => 'Запись звонка',
