@@ -35,7 +35,7 @@ use yii\jui\DatePicker;
                     'autoclose'=>true,
                     'startDate' => 'today',
                     'todayHighlight' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'yyyy-mm-dd 23:59:59',
 
                 ]
             ]) ?>

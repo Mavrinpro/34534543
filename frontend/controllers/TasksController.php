@@ -136,7 +136,7 @@ class TasksController extends Controller
             return $this->redirect(['tasks/index', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update_form', [
             'model' => $model,
         ]);
     }

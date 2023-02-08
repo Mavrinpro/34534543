@@ -25,12 +25,13 @@ echo "<div id='modalContent'></div>";
 
 Modal::end();
 $taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+$taskIdDeal = Tasks::findOne(['deals_id' => $model->id, 'status' => 1]);
 if ($taskCount == 0){ ?>
 
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
 <?php }else{
     ?>
-    <?= Html::a('Изменить задачу', ['tasks/update', 'id' => 24], ['class' => 'modalButton  btn btn-success', 'data-id' =>
+    <?= Html::a('Изменить задачу', ['tasks/update', 'id' => $taskIdDeal->id], ['class' => 'modalButton  btn btn-success', 'data-id' =>
         Yii::$app->request->get('id')]) ?>
 
 <?php } ?>
@@ -227,7 +228,9 @@ if ($taskCount == 0){ ?>
                         <?php foreach ($model->taskForDeal($model->id) as $task) { ?>
                     <div class="shadow rounded-lg d-flex mb-3 p-2 <?= $bg_task ?>">
                         <div class="d-inline">
-                            <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
+                            <?= Html::a('<b>Дата окончания: </b>'.date('d.m.Y', strtotime($task->date_end)), ['tasks/update', 'id' => $task->id], ['class' => 'modalButton  btn', 'data-id' =>
+                                Yii::$app->request->get('id')]) ?>
+
                             <?= $task->message ?>
                         </div>
                         <div class="ml-auto d-inline"><?= Html::a(
@@ -247,7 +250,7 @@ if ($taskCount == 0){ ?>
 
 <?php
 $m = Tasks::findOne(['deals_id' => $model->id, 'status' => 1]);
-echo $m->id;
+
 $this->registerJs(<<<JS
     $(function(){
         console.log($('#tasks-deals_id').attr('name'));
