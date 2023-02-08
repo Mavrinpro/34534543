@@ -54,7 +54,6 @@ use yii\jui\DatePicker;
         <div class="form-group col-12">
             <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
         </div>
-
     </div>
     <?php ActiveForm::end(); ?>
 

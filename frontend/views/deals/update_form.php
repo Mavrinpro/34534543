@@ -30,7 +30,7 @@ if ($taskCount == 0){ ?>
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
 <?php }else{
     ?>
-    <?= Html::a('Изменить задачу', ['tasks/forma', 'id' => 22], ['class' => 'modalButton  btn btn-success', 'data-id' =>
+    <?= Html::a('Изменить задачу', ['tasks/update', 'id' => 24], ['class' => 'modalButton  btn btn-success', 'data-id' =>
         Yii::$app->request->get('id')]) ?>
 
 <?php } ?>

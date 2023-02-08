@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="tasks-update">
 
-    <?= $this->render('_form', [
+    <?= $this->render('_modal_form', [
         'model' => $model,
     ]) ?>
 
