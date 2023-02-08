@@ -29,6 +29,7 @@ use yii\web\Response;
  * @property int|null $age
  * @property int|null $talon_id
  * @property bool|null $gender
+ * @property int|null $talon_id
  */
 
 class Deals extends \yii\db\ActiveRecord
@@ -49,7 +50,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create', 'talon_id'], 'safe'],
-            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender'], 'safe'],
+            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender', 'talon_id'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
@@ -158,5 +159,10 @@ class Deals extends \yii\db\ActiveRecord
     public function dealsCount($user_id=null)
     {
         return $this::find()->where(['del' => 0, 'id_operator' => $user_id])->andWhere('id_operator' != 1)->count();
+    }
+
+    public function taskForDeal($id)
+    {
+        return Tasks::find()->where(['deals_id' => $id])->all();
     }
 }

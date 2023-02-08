@@ -8,6 +8,7 @@ use app\models\TasksSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * TasksController implements the CRUD actions for Tasks model.
@@ -39,15 +40,27 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
-        $tasks = Tasks::find()->orderBy('date_create ASC')->all();
-        $searchModel = new TasksSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $tasks);
-        $dataProvider->query->with('user', 'deals');
-        $date = date('Y-m-d H:i:s');
-        //Tasks::updateAll(['status' => 1], ['>', 'date_end', $date ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Tasks::find(),
+
+            'pagination' => [
+                'pageSize' => 20,
+                'pageSizeParam' =>
+                    false,
+                'forcePageParam' => false
+            ],
+
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+
+        ]);
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            $dataProvider->pagination->pageSize = 5
         ]);
     }
 

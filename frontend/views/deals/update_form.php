@@ -6,9 +6,10 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use yii\bootstrap4\Modal;
 use app\models\History;
-//use kartik\date\DatePicker;
+use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
+/** @var app\models\Tasks $tasker */
 /** @var yii\widgets\ActiveForm $form */
 
 ?>
@@ -120,7 +121,7 @@ Modal::end();
     </div>
     <div class="row">
         <div class="col-md-12 d-flex">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Сохранить', ['name' => 'send_deals', 'class' => 'btn btn-success']) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
         </div>
         <div class="col-md-12 mt-3">
@@ -164,31 +165,61 @@ Modal::end();
             <?php } ?>
         </div>
     </div>
+    <hr>
     <?php ActiveForm::end(); ?>
-    <?php $form2 = ActiveForm::begin(); ?>
-<!--    --><?//= $form->field($task, 'date_end')->textInput(); ?>
-    <?php echo $form2->field($taska, 'name')->textInput()->label('erger') ?>
-    <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::className(),[
 
-        'options' => [
-            'autocomplete' => 'off',
-            'placeholder' => 'Выберите дату',
-            'data' => [
-                'picker' => 'datepicker'
+    <?php $taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+    $taskID = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->one();
+    $time = time();
+    //echo $time;
+    $d = strtotime($taskID->date_end);
+    //echo $d;
+    if($time > $d){
+        $bg_task = 'bg-danger';
+    }else{
+        $bg_task = 'bg-success';
+    }
+    if ($taskCount == 0){ ?>
+        <div class="col-md-6">
+        <?php $form2 = ActiveForm::begin(); ?>
+        <?= $form2->field($taska, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label
+        (false) ?>
+        <?= $form2->field($taska, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
+        <?= $form2->field($taska, 'status')->hiddenInput(['value' => true])->label(false) ?>
+        <?= $form2->field($taska, 'deals_id')->hiddenInput(['value' => $model->id])->label(false) ?>
+        <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::className(),[
+
+            'options' => [
+                'autocomplete' => 'off',
+                'placeholder' => 'Выберите дату',
+                'data' => [
+                    'picker' => 'datepicker'
+                ]
+            ],
+            'pluginOptions' => [
+                'autoclose'=>true,
+                'startDate' => 'today',
+                'todayHighlight' => true,
+                'format' => 'yyyy-mm-dd 23:59:59',
+
             ]
-        ],
-        'pluginOptions' => [
-            'autoclose'=>true,
-            'startDate' => 'today',
-            'todayHighlight' => true,
-            'format' => 'yyyy-mm-dd 23:59:59',
+        ]) ?>
 
-        ]
-    ]) ?>
-    <?= $form2->field($taska, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
-        ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
-    <?= Html::submitButton('Создать задачу', ['class' => 'btn btn-success']) ?>
-    <?php ActiveForm::end(); ?>
+        <?= Html::submitButton('Создать задачу', ['name' => 'send_task', 'class' => 'btn btn-success']) ?>
+        <?php ActiveForm::end(); ?>
+        </div>
+    <?php }else{ ?>
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                        <?php foreach ($model->taskForDeal($model->id) as $task) { ?>
+                    <div class="shadow rounded-lg mb-3 p-2 <?= $bg_task ?>">
+                            <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
+                    </div>
+                        <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
 </div>
 
 <?php

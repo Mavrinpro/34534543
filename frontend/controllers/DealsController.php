@@ -7,8 +7,8 @@ use app\models\Deals;
 use app\models\DealsRepeat;
 use app\models\LayoutsMail;
 use app\models\Mail;
-use app\models\Tasks;
 use common\models\User;
+use app\models\Tasks;
 use frontend\models\SearchDeals;
 use frontend\models\DeleteDeals;
 use yii\filters\AccessControl;
@@ -205,20 +205,38 @@ class DealsController extends Controller
         //\Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
-    if ($this->request->isPost && $model->load($this->request->post())) {
-        $model->tag = implode(",",$model->tag);
-        $model->id_comment = strip_tags($model->id_comment);
-        $model->save();
 
-        \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
-        return $this->refresh();
-    }
-        if ($this->request->isPost && $taska->load($this->request->post())) {
-            $taska->save();
+        $send_deals = \Yii::$app->request->post('send_deals');
+        $send_task = \Yii::$app->request->post('send_task');
 
+
+    if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
+
+            $model->tag = implode(",", (array)$model->tag);
+            $model->id_comment = strip_tags($model->id_comment);
+            $model->save();
             \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
             return $this->refresh();
+
+
+
+
+    }
+
+        if ($this->request->isPost && $taska->load($this->request->post()) && isset($send_task)) {
+            $taska->save();
+            \Yii::$app->session->setFlash('success', 'Задача создана!');
+            return $this->refresh();
         }
+
+//        if ($this->request->isPost && $taska->load($this->request->post('send_task'))) {
+//            echo '<pre>';
+//            print_r($taska); die;
+//            $taska->save();
+//
+//            \Yii::$app->session->setFlash('success', 'Задача создана!');
+//            return $this->refresh();
+//        }
 //        if (\Yii::$app->request->isAjax){
 //            $model->tag = explode(',', $model->tag);
 //            return $this->renderAjax('update_form', ['model' => $model]);
