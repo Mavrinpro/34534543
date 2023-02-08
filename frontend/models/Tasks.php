@@ -18,6 +18,7 @@ use Yii;
  * @property int|null $status
  * @property int|null $deals_id
  * @property string|null $date_end
+ * @property string|null $message
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -35,7 +36,7 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'deals_id', 'date_end'], 'safe'],
+            [['user_id', 'deals_id', 'date_end', 'message'], 'safe'],
             [['date_end'], 'required'],
             [['date_create', 'date_update', 'name', 'status'], 'safe'],
            //[['date_end'], 'datetime'],
@@ -55,7 +56,8 @@ class Tasks extends \yii\db\ActiveRecord
             'date_update' => 'Дата обновления',
             'status' => 'Статус',
             'deals_id' => 'Телефон',
-            'date_end' => 'Дата окончания'
+            'date_end' => 'Дата окончания',
+            'message' => 'Комментарий'
         ];
     }
 
@@ -153,8 +155,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         $today = date('Y-m-d 23:59:59');
         $today2 = date('Y-m-d 00:00:00');
-        return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])->andWhere(['=', 'user_id',
-                $id])->andWhere(['>=', 'date_end', $today2])->andWhere(['<=', 'date_end', $today])
+        return $this::find()->where(['status' => '1'])->andWhere(['=', 'user_id', $id])->andWhere(['>=', 'date_end', $today2])->andWhere(['<=', 'date_end', $today])
             ->count();
     }
 

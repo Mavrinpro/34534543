@@ -171,13 +171,6 @@ class TasksController extends Controller
             return $this->redirect('/tasks/index');
 
         return $this->redirect('index');
-
-
-
-
-
-
-
     }
 
     /**

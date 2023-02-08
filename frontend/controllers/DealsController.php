@@ -35,12 +35,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -278,6 +278,15 @@ class DealsController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    protected function findTask($id)
+    {
+        if (($model = Tasks::findOne(['id' => $id, 'status' => 1])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     // Страница поиска всех сделок
     public function actionSearchDeals()
     {
@@ -348,5 +357,22 @@ class DealsController extends Controller
            return $status['Deals']['id'].'='.$status['Deals']['status'];
 
         }
+    }
+    // Закрыть задачу из сделки
+    public function actionUpdateTask($id)
+    {
+        $model = $this->findTask($id);
+        $id_deals = $model->deals_id;
+        //var_dump($id_deals); die;
+        $model->status = 0;
+
+
+            \Yii::$app->session->setFlash('success', 'Задача закрыта!');
+            $model->update();
+            return $this->redirect(['deals/update', 'id' => $id_deals]);
+
+
+
+        return $this->redirect('deals/update');
     }
 }

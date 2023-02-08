@@ -133,6 +133,7 @@ use yii\jui\DatePicker;
             <?php if (Yii::$app->controller->action->id == 'create'){ ?>
             <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
             <?php }else{ ?>
+                <?= $form->field($model, 'message')->widget(\yii\redactor\widgets\Redactor::className()) ?>
                 <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
             <?php } ?>
         </div>

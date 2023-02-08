@@ -163,6 +163,6 @@ class Deals extends \yii\db\ActiveRecord
 
     public function taskForDeal($id)
     {
-        return Tasks::find()->where(['deals_id' => $id])->all();
+        return Tasks::find()->where(['deals_id' => $id, 'status' => 1])->all();
     }
 }

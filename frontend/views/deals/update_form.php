@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Tasks;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -170,6 +171,7 @@ Modal::end();
 
     <?php $taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
     $taskID = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->one();
+    $userID = \Yii::$app->getUser()->getId();
     $time = time();
     //echo $time;
     $d = strtotime($taskID->date_end);
@@ -187,6 +189,7 @@ Modal::end();
         <?= $form2->field($taska, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
         <?= $form2->field($taska, 'status')->hiddenInput(['value' => true])->label(false) ?>
         <?= $form2->field($taska, 'deals_id')->hiddenInput(['value' => $model->id])->label(false) ?>
+        <?= $form2->field($taska, 'user_id')->hiddenInput(['value' => $userID])->label(false) ?>
         <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::className(),[
 
             'options' => [
@@ -204,7 +207,7 @@ Modal::end();
 
             ]
         ]) ?>
-
+        <?= $form2->field($taska, 'message')->widget(\yii\redactor\widgets\Redactor::className()) ?>
         <?= Html::submitButton('Создать задачу', ['name' => 'send_task', 'class' => 'btn btn-success']) ?>
         <?php ActiveForm::end(); ?>
         </div>
@@ -213,9 +216,20 @@ Modal::end();
             <div class="row mt-3">
                 <div class="col-md-12">
                         <?php foreach ($model->taskForDeal($model->id) as $task) { ?>
-                    <div class="shadow rounded-lg mb-3 p-2 <?= $bg_task ?>">
+                    <div class="shadow rounded-lg d-flex mb-3 p-2 <?= $bg_task ?>">
+                        <div class="d-inline">
                             <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
+                            <?= $task->message ?>
+                        </div>
+                        <div class="ml-auto d-inline"><?= Html::a(
+                                '<i class="fas fa-times-circle btn btn-sm btn-dark"></i>',
+                                ['/deals/update-task', 'id' => $task->id],[
+                                //'title' => Yii::t('app', 'Закрыть задачу'),
+                                'data-confirm' => Yii::t('yii', 'Удалить запись № '.$task->id.'?'),
+                                'data-method' => 'post', 'data-pjax' => '0', 'name' => 'gfdgd'
+                            ]); ?></div>
                     </div>
+
                         <?php } ?>
                 </div>
             </div>
@@ -223,6 +237,8 @@ Modal::end();
 </div>
 
 <?php
+$m = Tasks::findOne(['deals_id' => $model->id, 'status' => 1]);
+echo $m->id;
 $this->registerJs(<<<JS
     $(function(){
         console.log($('#tasks-deals_id').attr('name'));

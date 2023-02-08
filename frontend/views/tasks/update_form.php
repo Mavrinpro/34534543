@@ -50,7 +50,7 @@ use yii\jui\DatePicker;
             (false) ?>
             <?= $form->field($model, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
             <?= $form->field($model, 'status')->hiddenInput(['value' => true])->label(false) ?>
-
+        <?= $form->field($model, 'message')->widget(\yii\redactor\widgets\Redactor::className()) ?>
         <div class="form-group col-12">
             <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
         </div>
