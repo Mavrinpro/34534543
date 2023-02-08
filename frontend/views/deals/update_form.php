@@ -24,9 +24,16 @@ Modal::begin([
 echo "<div id='modalContent'></div>";
 
 Modal::end();
-?>
-<?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
+$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+if ($taskCount == 0){ ?>
 
+<?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
+<?php }else{
+    ?>
+    <?= Html::a('Изменить задачу', ['tasks/forma', 'id' => 22], ['class' => 'modalButton  btn btn-success', 'data-id' =>
+        Yii::$app->request->get('id')]) ?>
+
+<?php } ?>
 <div class="deals-form">
     <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
     <?php $date = date('Y-m-d H:i:s'); ?>
@@ -169,7 +176,7 @@ Modal::end();
     <hr>
     <?php ActiveForm::end(); ?>
 
-    <?php $taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+    <?php
     $taskID = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->one();
     $userID = \Yii::$app->getUser()->getId();
     $time = time();
@@ -182,6 +189,8 @@ Modal::end();
         $bg_task = 'bg-success';
     }
     if ($taskCount == 0){ ?>
+        <h3>Создать задачу</h3>
+
         <div class="col-md-6">
         <?php $form2 = ActiveForm::begin(); ?>
         <?= $form2->field($taska, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label

@@ -155,7 +155,8 @@ class Tasks extends \yii\db\ActiveRecord
     {
         $today = date('Y-m-d 23:59:59');
         $today2 = date('Y-m-d 00:00:00');
-        return $this::find()->where(['status' => '1'])->andWhere(['=', 'user_id', $id])->andWhere(['>=', 'date_end', $today2])->andWhere(['<=', 'date_end', $today])
+        return $this::find()->where(['!=', 'status', 2])->andWhere(['!=', 'status', 0])->andWhere(['=', 'user_id',
+                $id])->andWhere(['>=', 'date_end', $today2])->andWhere(['<=', 'date_end', $today])
             ->count();
     }
 
