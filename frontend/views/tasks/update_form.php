@@ -16,7 +16,7 @@ use yii\jui\DatePicker;
 
     <?php
 
-    $form = ActiveForm::begin(); ?>
+    $form = ActiveForm::begin(['id' => 'hdhxzxdfhzx']); ?>
 
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">

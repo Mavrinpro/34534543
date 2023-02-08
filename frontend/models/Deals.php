@@ -29,7 +29,6 @@ use yii\web\Response;
  * @property int|null $age
  * @property int|null $talon_id
  * @property bool|null $gender
- * @property int|null $talon_id
  */
 
 class Deals extends \yii\db\ActiveRecord
@@ -163,6 +162,6 @@ class Deals extends \yii\db\ActiveRecord
 
     public function taskForDeal($id)
     {
-        return Tasks::find()->where(['deals_id' => $id, 'status' => 1])->all();
+        return Tasks::find()->where(['deals_id' => $id])->andWhere(['!=', 'status', 0])->all();
     }
 }

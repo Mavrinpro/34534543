@@ -280,7 +280,7 @@ class DealsController extends Controller
 
     protected function findTask($id)
     {
-        if (($model = Tasks::findOne(['id' => $id, 'status' => 1])) !== null) {
+        if (($model = Tasks::find(['id' => $id])->andWhere(['!=', 'status', 0])->one()) !== null) {
             return $model;
         }
 
@@ -362,17 +362,21 @@ class DealsController extends Controller
     public function actionUpdateTask($id)
     {
         $model = $this->findTask($id);
-        $id_deals = $model->deals_id;
+        //$id_deals = $model->deals_id
+        $deal = Deals::find()->where(['id' => $model->deals_id])->one();
+        $getId = \Yii::$app->request->post('id');
         //var_dump($id_deals); die;
         $model->status = 0;
 
 
             \Yii::$app->session->setFlash('success', 'Задача закрыта!');
-            $model->update();
-            return $this->redirect(['deals/update', 'id' => $id_deals]);
+            $model->save();
+            return $this->redirect(['deals/update', 'id' => $deal->id]);
 
 
 
         return $this->redirect('deals/update');
     }
+
+
 }

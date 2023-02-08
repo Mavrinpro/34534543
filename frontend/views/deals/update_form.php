@@ -24,8 +24,8 @@ Modal::begin([
 echo "<div id='modalContent'></div>";
 
 Modal::end();
-$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
-$taskIdDeal = Tasks::findOne(['deals_id' => $model->id, 'status' => 1]);
+$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id])->andWhere(['!=', 'status', 0])->count();
+$taskIdDeal = Tasks::find()->where(['deals_id' => $model->id])->andWhere(['!=', 'status', 0])->one();
 if ($taskCount == 0){ ?>
 
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
@@ -260,6 +260,7 @@ $this->registerJs(<<<JS
         var id_operator = $('#deals-id_operator').val();
         console.log(id_operator);
         $.get($(this).attr('href'), function(data) {
+            console.log(50);
           $('#w0').modal('show').find('#modalContent').html(data);
           $('#w0').find('#tasks-deals_id').val(id);
           $('#w0').find('#tasks-user_id').val(id_operator);
