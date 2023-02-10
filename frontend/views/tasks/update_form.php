@@ -16,7 +16,7 @@ use yii\jui\DatePicker;
 
     <?php
 
-    $form = ActiveForm::begin(); ?>
+    $form = ActiveForm::begin(['id' => 'hdhxzxdfhzx']); ?>
 
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
@@ -35,7 +35,7 @@ use yii\jui\DatePicker;
                     'autoclose'=>true,
                     'startDate' => 'today',
                     'todayHighlight' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'yyyy-mm-dd 23:59:59',
 
                 ]
             ]) ?>

@@ -103,13 +103,14 @@ class TasksController extends Controller
 
     public function actionForma($id = null, $deals_id = null)
     {
+        $getId = $this->request->post("Tasks");
         $model = new Tasks();
-
+        $dealID = $getId['deals_id'];
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 //echo '<pre>';
-                //var_dump($model); die();
-                return $this->redirect(['view', 'id' => $model->id]);
+                //var_dump($getId['deals_id']); die();
+                return $this->redirect(['deals/update', 'id' => $dealID]);
             }
         } else {
             $model->loadDefaultValues();
@@ -130,13 +131,13 @@ class TasksController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $id_deals = $model->deals_id;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash('success', 'Задача успешно обновлена');
-            return $this->redirect(['tasks/index', 'id' => $model->id]);
+            return $this->redirect(['deals/update', 'id' => $id_deals]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update_form', [
             'model' => $model,
         ]);
     }

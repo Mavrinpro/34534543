@@ -162,7 +162,7 @@ class Deals extends \yii\db\ActiveRecord
 
     public function taskForDeal($id)
     {
-        return Tasks::find()->where(['deals_id' => $id, 'status' => 1])->all();
+        return Tasks::find()->where(['deals_id' => $id])->andWhere(['!=', 'status', 0])->all();
     }
 
     // Смена сотрудника в задаче при смене ответственного в сделке (update)
