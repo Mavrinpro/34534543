@@ -10,7 +10,7 @@ use app\models\History;
 use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
-/** @var app\models\Tasks $tasker */
+/** @var app\models\Tasks $taska */
 /** @var yii\widgets\ActiveForm $form */
 
 ?>
