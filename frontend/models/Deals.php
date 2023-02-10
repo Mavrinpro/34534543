@@ -174,9 +174,11 @@ class Deals extends \yii\db\ActiveRecord
             $model->user_id = $userId;
             $model->save();
         }
-//        else{
-//            return false;
-//        }
+    }
 
+    // Вывод сотрудника в задаче на update deals
+    public function taskUser($id)
+    {
+        return User::find()->where(['id' => $id, 'status' => 10])->andWhere(['!=', 'id', 1])->one();
     }
 }

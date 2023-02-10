@@ -25,12 +25,13 @@ echo "<div id='modalContent'></div>";
 
 Modal::end();
 $taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+$taskIdDeal = Tasks::find()->where(['deals_id' => $model->id])->andWhere(['!=', 'status', 0])->one();
 if ($taskCount == 0){ ?>
 
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
 <?php }else{
     ?>
-    <?= Html::a('Изменить задачу', ['tasks/update', 'id' => 24], ['class' => 'modalButton  btn btn-success', 'data-id' =>
+    <?= Html::a('Изменить задачу', ['tasks/update', 'id' => $taskIdDeal->id], ['class' => 'modalButton  btn btn-success', 'data-id' =>
         Yii::$app->request->get('id')]) ?>
 
 <?php } ?>
@@ -228,6 +229,7 @@ if ($taskCount == 0){ ?>
                     <div class="shadow rounded-lg d-flex mb-3 p-2 <?= $bg_task ?>">
                         <div class="d-inline">
                             <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
+                            <b>Сотрудник: </b><?= $model->taskUser($task->user_id)->full_name ?>
                             <?= $task->message ?>
                         </div>
                         <div class="ml-auto d-inline"><?= Html::a(
