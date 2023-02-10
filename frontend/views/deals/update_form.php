@@ -195,6 +195,7 @@ if ($taskCount == 0){ ?>
         <?php $form2 = ActiveForm::begin(); ?>
         <?= $form2->field($taska, 'name')->hiddenInput(['value' => 'задача-'.strtotime($date)])->label
         (false) ?>
+
         <?= $form2->field($taska, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
         <?= $form2->field($taska, 'status')->hiddenInput(['value' => true])->label(false) ?>
         <?= $form2->field($taska, 'deals_id')->hiddenInput(['value' => $model->id])->label(false) ?>
@@ -225,9 +226,11 @@ if ($taskCount == 0){ ?>
             <div class="row mt-3">
                 <div class="col-md-12">
                         <?php foreach ($model->taskForDeal($model->id) as $task) { ?>
+                                <?php $user = \common\models\User::find()->where(['id' => $model->id_operator])->one(); ?>
                     <div class="shadow rounded-lg d-flex mb-3 p-2 <?= $bg_task ?>">
                         <div class="d-inline">
-                            <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
+                            <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?> <b>Сотрудник:
+                            </b><?= $user->full_name ?>
                             <?= $task->message ?>
                         </div>
                         <div class="ml-auto d-inline"><?= Html::a(

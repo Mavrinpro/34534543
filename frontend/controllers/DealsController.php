@@ -214,12 +214,10 @@ class DealsController extends Controller
 
             $model->tag = implode(",", (array)$model->tag);
             $model->id_comment = strip_tags($model->id_comment);
+            $model->changeUserTask($id, $model->id_operator); // смена ответственного в задаче
             $model->save();
             \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
             return $this->refresh();
-
-
-
 
     }
 
@@ -229,18 +227,6 @@ class DealsController extends Controller
             return $this->refresh();
         }
 
-//        if ($this->request->isPost && $taska->load($this->request->post('send_task'))) {
-//            echo '<pre>';
-//            print_r($taska); die;
-//            $taska->save();
-//
-//            \Yii::$app->session->setFlash('success', 'Задача создана!');
-//            return $this->refresh();
-//        }
-//        if (\Yii::$app->request->isAjax){
-//            $model->tag = explode(',', $model->tag);
-//            return $this->renderAjax('update_form', ['model' => $model]);
-//        }
         $model->tag = explode(',', $model->tag);
         return $this->render('update', ['model' => $model, 'taska' => $taska]);
 
@@ -371,8 +357,9 @@ class DealsController extends Controller
             $model->update();
             return $this->redirect(['deals/update', 'id' => $id_deals]);
 
-
-
         return $this->redirect('deals/update');
     }
+
+
+
 }

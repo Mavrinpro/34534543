@@ -39,7 +39,18 @@ $user_id = Yii::$app->user->getId();
             //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'name',
+            //'message',
+            [
+                'attribute' => 'message',
+                'format' => 'html',
+                'value' => function($model){
+                    if (strlen($model->message) > 0){
+                        return $model->message;
+                    }else{
+                        return '...';
+                    }
+                }
+            ],
             //'deals.phone',
             [
                'attribute' => 'deals_id',

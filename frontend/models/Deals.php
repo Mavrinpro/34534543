@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use common\models\User;
 use app\models\Tasks;
+use common\models\User;
 use app\models\Company;
 use Yii;
 use app\models\Statuses;
@@ -29,7 +29,6 @@ use yii\web\Response;
  * @property int|null $age
  * @property int|null $talon_id
  * @property bool|null $gender
- * @property int|null $talon_id
  */
 
 class Deals extends \yii\db\ActiveRecord
@@ -164,5 +163,20 @@ class Deals extends \yii\db\ActiveRecord
     public function taskForDeal($id)
     {
         return Tasks::find()->where(['deals_id' => $id, 'status' => 1])->all();
+    }
+
+    // Смена сотрудника в задаче при смене ответственного в сделке (update)
+
+    public function changeUserTask($id, $userId)
+    {
+        $model = Tasks::find()->where(['deals_id' => $id])->andWhere(['!=', 'status', 0])->one();
+        if ($model != null){
+            $model->user_id = $userId;
+            $model->save();
+        }
+//        else{
+//            return false;
+//        }
+
     }
 }
