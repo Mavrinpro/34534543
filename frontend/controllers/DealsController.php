@@ -317,7 +317,7 @@ class DealsController extends Controller
          if (\Yii::$app->request->isAjax) {
 
              $input_search = \Yii::$app->request->get('input_search');
-             $model = Deals::find()->where(['like', 'phone', $input_search])->all();
+             $model = Deals::find()->where(['OR',['like', 'phone', $input_search], ['like', 'name', $input_search]])->all();
              \Yii::$app->response->format = Response::FORMAT_JSON;
              if (sizeof($model) > 0){
                  return $model;
