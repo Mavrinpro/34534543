@@ -205,8 +205,7 @@ function soundClick() {
         //setInterval(updateList, 300000);
 
 var search_form_header = $('#search_form_header');
-var input = $('#input_search');
-input.on('keyup', function (){
+$('#input_search').on('keyup', function (){
     //console.log(400);
     var data = $(this).serialize();
     
@@ -218,13 +217,24 @@ input.on('keyup', function (){
             type: 'GET',
             data: data,
             success: function(res){
-                console.log(res); 
-                search_form_header.removeClass('searching');
+                 search_form_header.removeClass('searching');
+                 var head = search_form_header.find('.result_search').css('display', 'block');
+                 let html = '';
                 if (res){
-                     console.log(res[0].phone);
-                     search_form_header.find('.result_search').css('display', 'block').html('<span><a href="/deals/update/'+res[0].id+'">'+res[0].phone+'</a></span>');
+                 
+                 $.each(res, function(i, item) {
+                     var javascript_date = new Date(res[i].date_create);
+                       if (res[i].talon_id == null){
+                           res[i].talon_id = 'Нет'
+                       }
+                        html += '<span class="d-block p-2"><a href="/deals/update/'+res[i].id+'">'+res[i]
+                        .phone+'</a> - '+res[i].name+ ' <span class="text-muted">'+javascript_date.toLocaleString()
+                        +' | Талон: '+res[i].talon_id+'</span></span>';
+                 });
+                 head.html(html);
                 }else{
-                    search_form_header.find('.result_search').css('display', 'block').html('Не найдено');
+                    html += '<span class="d-block p-2">Не найдено</span>';
+                     head.html(html);
                    console.log('Не найдено'); 
                 }
                 
