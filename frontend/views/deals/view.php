@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h3>Отправить письмо</h3>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-6 mb-5 mt-3">
         <div class="shadow p-3 rounded-lg">
@@ -51,17 +52,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'phone',
                     'company.name',
-                    [
-                         'attribute' => 'del',
-                        'format' => 'html',
-                        'value' => function($model){
-                            if ($model->del == 0){
-                                return '<i class="fas fa-unlock text-success" title="Активная"></i>';
-                            }else{
-                                return '<i class="fas fa-ban text-danger" title="Удалена"></i>';
-                            }
-                        }
-                    ],
+//                    [
+//                         'attribute' => 'del',
+//                        'format' => 'html',
+//                        'value' => function($model){
+//                            if ($model->del == 0){
+//                                return '<i class="fas fa-unlock text-success" title="Активная"></i>';
+//                            }else{
+//                                return '<i class="fas fa-ban text-danger" title="Удалена"></i>';
+//                            }
+//                        }
+//                    ],
                     [
                         'attribute' => 'tag',
                         'format' => 'html',
@@ -179,6 +180,12 @@ $RESPONSIBLE = [
     63 => 'Солаева Виктория Петровна',
     64 => 'Цветкова Дарья Дмитриевна'
 ];
+$TH = [];
+foreach ($RESPONSIBLE as $k => $item) {
+    $TH[] = $item;
+}
+
+print_r($TH);
 
 // id сотрудника
 $key_responsible = array_search($_REQUEST['RESPONSIBLE'], $RESPONSIBLE);
@@ -190,7 +197,7 @@ $k = array_rand($RESPONSIBLE);
 $history = Deals::find()->where(['talon_id' => 2723028352, 'company_id' => 2])->one();
 //echo '<pre>';
 //print_r($history);
-echo $history->id;
+//echo $history->id;
 $js = <<< JS
 $(document).on("change", "#status_id", function () {
     var data = $(this).serialize();

@@ -74,7 +74,7 @@ class Api extends \yii\db\ActiveRecord
     }
 
     // Добавление в таблицу deals_repeat
-    public function DealsRepeat($model, $deal_id, $name, $phone, $tag=null, $date_create, $status=null, $id_operator, $date_update=null, $answer, $call_record)
+    public function DealsRepeat($model, $deal_id, $name, $phone, $tag=null, $date_create, $status=null, $id_operator, $date_update=null, $answer, $call_record, $src_type = null)
     {
         $deals = Deals::find()->where(['phone' => $phone, 'del' => 0])->one();
         if ($deals->phone == $phone){
@@ -85,6 +85,7 @@ class Api extends \yii\db\ActiveRecord
             $model->id_operator = $id_operator;
             $model->answer = $answer;
             $model->call_recording = $call_record;
+            $model->src_type     = $src_type;
             $model->save();
         }
 

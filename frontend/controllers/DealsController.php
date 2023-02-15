@@ -202,7 +202,7 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
-        //\Yii::$app->db->schema->refresh();
+        \Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
 

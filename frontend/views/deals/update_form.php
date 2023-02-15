@@ -1,5 +1,5 @@
 <?php
-
+use dosamigos\ckeditor\CKEditor;
 use app\models\Tasks;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -132,6 +132,7 @@ if ($taskCount == 0){ ?>
                         'placeholder' => 'Услуга ...',
                         //'multiple' => true
                     ],
+                    'pluginOptions' => ['allowClear' => true]
                 ]);
 
                 ?>
@@ -140,7 +141,18 @@ if ($taskCount == 0){ ?>
 
     <div class="row">
         <div class="col-md-12">
-            <?= $form->field($model, 'id_comment')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+<!--            --><?//= $form->field($model, 'id_comment')->widget(CKEditor::className(), [
+//                'options'=>['style'=>'resize: vertical;'],
+//                'preset'=>'custom',
+//                'clientOptions'=>[
+//                    'toolbarGroups'=>[
+//                        ['name'=>'basicstyles', 'groups'=>['basicstyles', 'cleanup' ]],
+//                        ['name'=>'paragraph', 'groups'=>['list', 'indent', 'blocks', 'align', 'bidi' ]],
+//                        ['name'=>'links']
+//                    ]
+//                ]
+//            ]) ?>
+            <?= $form->field($model, 'id_comment')->textarea(['rows' => '4']); ?>
         </div>
 
 

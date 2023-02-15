@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Api;
 use app\models\Deals;
+use app\models\DealsRepeat;
 use app\models\History;
 use app\models\Tasks;
 use common\models\User;
@@ -32,6 +33,88 @@ class ApiController extends \yii\rest\ActiveController
      */
     public function actionGetCalls()
     {
+        $model = new DealsRepeat();
+        $api = new Api();
+        $request = [
+            'event' => '2',
+            'src_type' => '2',
+            'dst_num' => '79603748154',
+            'timestamp' => '1676107150',
+            'last_called' => '205',
+            'status' => 'NOANSWER',
+            'call_record_link' => 'https://sipuni.com/api/crm/record?id=1676107122.1384946&hash=4a220a5a9e1d943accfcb38965105863&user=060863',
+            'treeName' => 'Исходящая',
+            'treeNumber' => '00037432'
+        ];
+
+        $filial = [
+            'ulsk'      => 1,
+            'krd'       => 4,
+            'spb'       => 5,
+            'ekb'       => 6,
+            'ptg'       => 7,
+            'simf'      => 8,
+            'tyumen'    => 9
+        ];
+
+        // Проверка на город
+        if ($request['treeNumber'] == '000-252658'){
+            $branch = $filial['ekb']; // Телефония ЕКБ
+        }else if($request['treeNumber'] == '00037158'){
+            $branch = $filial['spb']; // Телефония СПБ
+        }else if($request['treeNumber'] == '00037160'){
+            $branch = $filial['krd']; // Телефония Краснодар
+        }else{
+            $branch = $filial['ulsk']; // Телефония Ульяновск
+        }
+
+        switch ($request['treeName']){
+            case '50745':
+                $tagName = '13';
+                break;
+            case '58-04-04':
+                $tagName = '14';
+                break;
+            case '58-04-04 Распределитель':
+                $tagName = '15';
+                break;
+            case '8800 Новотел':
+                $tagName = '16';
+                break;
+            case '8800 Распределитель':
+                $tagName = '17';
+                break;
+            case 'Коллтрекинг':
+                $tagName = '18';
+                break;
+            case 'Коллтрекинг Распределитель':
+                $tagName = '19';
+                break;
+            case 'Телефония Екб':
+                $tagName = '20';
+                break;
+            case 'Телефония Краснодар':
+                $tagName = '21';
+                break;
+            case 'Телефония Крым':
+                $tagName = '22';
+                break;
+            case 'Телефония Пятигорск':
+                $tagName = '23';
+                break;
+            case 'Телефония СПБ':
+                $tagName = '24';
+                break;
+            case 'Исходящая':
+                $tagName = '10';
+                break;
+            default:
+                $tagName = '16';
+        }
+
+
+
+
 
 
         // Вызываем модель в которое делаем запись в базу, отправку в телегу и т.д и т.п
@@ -42,6 +125,24 @@ class ApiController extends \yii\rest\ActiveController
                 'value' => '600'
             ]));
         }
+
+        // Установка статуса
+        if ($request['status'] == 'ANSWER'){
+            $answer = 1;
+        }else if($request['status'] == 'NOANSWER'){
+            $answer = 0;
+        }else{
+            $answer = 1;
+        }
+
+
+        if  ($request['event'] == '2'){
+//            $api->finishCall($model, $api->formatPhone($request['dst_num']), $tagName, 3, $_REQUEST['call_record_link'], $answer, $branch, $src_type);
+            $src_type = 2;
+            $api->DealsRepeat($model, 6, $api->formatPhone($request['dst_num']), $api->formatPhone($_REQUEST['dst_num']), null, date('Y-m-d H:i:s', $request['timestamp']), null, 3, null, $answer, $request['call_record_link'], $src_type);
+        }
+
+
         //return  /Yii::$app->request->cookies['test'];
         return '111111111111'. \Yii::$app->request->cookies['test']; // получаем значение куки
     }
