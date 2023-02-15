@@ -116,6 +116,26 @@ if ($taskCount == 0){ ?>
             <div class="col-md-4">
                 <?= $form->field($model, 'age')->textInput(); ?>
             </div>
+            <div class="col-md-12">
+                <?php echo '<label>Причина обращения</label>'; ?>
+               <?=
+                Select2::widget([
+                    'model' => $model,
+                    'name' => 'services_id',
+                    'attribute' => 'services_id',
+
+
+                    'data' => ArrayHelper::map(\app\models\Services::find()->orderBy('id')->where(['company_id' =>
+                        $model->company_id])->all(),'id','name'),
+                    //['1'=>'1','2'=>2],
+                    'options' => [
+                        'placeholder' => 'Услуга ...',
+                        //'multiple' => true
+                    ],
+                ]);
+
+                ?>
+            </div>
         </div>
 
     <div class="row">

@@ -28,6 +28,7 @@ use yii\web\Response;
  * @property int|null $region_id
  * @property int|null $age
  * @property int|null $talon_id
+ * @property int|null $services_id
  * @property bool|null $gender
  */
 
@@ -49,7 +50,7 @@ class Deals extends \yii\db\ActiveRecord
         return [
             [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
             [['date_create', 'talon_id'], 'safe'],
-            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender', 'talon_id'], 'safe'],
+            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender', 'talon_id', 'services_id'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],
