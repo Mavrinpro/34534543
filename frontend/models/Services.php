@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "statuses".
  *
  * @property int $id
+ * @property int $company_id
  * @property string|null $name
  */
 class Services extends \yii\db\ActiveRecord

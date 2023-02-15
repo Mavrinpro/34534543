@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = 'Изменить';
 <div class="deals-update">
     <?= $this->render('update_form', [
         'model' => $model,
-        'taska' => $taska
+        'taska' => $taska,
+        'service' => $service
     ]) ?>
 
 </div>

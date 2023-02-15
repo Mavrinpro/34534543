@@ -7,6 +7,7 @@ use app\models\Deals;
 use app\models\DealsRepeat;
 use app\models\LayoutsMail;
 use app\models\Mail;
+use app\models\Services;
 use common\models\User;
 use app\models\Tasks;
 use frontend\models\SearchDeals;
@@ -202,20 +203,30 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
-        \Yii::$app->db->schema->refresh();
+        //\Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
+        $service = new Services();
 
         $send_deals = \Yii::$app->request->post('send_deals');
         $send_task = \Yii::$app->request->post('send_task');
 
 
     if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
+        //if ($model->company_id == ""){
+            $service->name = \Yii::$app->request->post('Services')['name'];
+            $service->company_id = $model->company_id;
+            //echo '<pre>';
+            //print_r($service); die();
+            $service->save();
+       // }
+
 
             $model->tag = implode(",", (array)$model->tag);
             $model->id_comment = strip_tags($model->id_comment);
             $model->changeUserTask($id, $model->id_operator); // смена ответственного в задаче
             $model->update();
+
             \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
             return $this->refresh();
 
@@ -228,7 +239,7 @@ class DealsController extends Controller
         }
 
         $model->tag = explode(',', $model->tag);
-        return $this->render('update', ['model' => $model, 'taska' => $taska]);
+        return $this->render('update', ['model' => $model, 'taska' => $taska, 'service' => $service]);
 
 
     }

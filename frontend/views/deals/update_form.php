@@ -116,7 +116,7 @@ if ($taskCount == 0){ ?>
             <div class="col-md-4">
                 <?= $form->field($model, 'age')->textInput(); ?>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <?php echo '<label>Причина обращения</label>'; ?>
                <?=
                 Select2::widget([
@@ -136,6 +136,9 @@ if ($taskCount == 0){ ?>
                 ]);
 
                 ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($service, 'name')->textInput()->label('Если услуги нет в списке'); ?>
             </div>
         </div>
 
