@@ -51,13 +51,45 @@ class SupController extends ActiveController
         \Yii::$app->response->format = Response::FORMAT_JSON;
 
         return json_encode($_REQUEST);
-
-
     }
 
+
     // Интеграция с Интеррой для ГлазЦентра
-    public function actionGla()
+    public function actionGetGlazcentre()
     {
+
+        $token   = "bot621887368:AAGadjDhXjO3bEs_ILHiJ6_4j1OCZ6jUO6M";
+        $chat_id = "-1001676306442";
+        $text    = 'Интерра '. date('Y-m-d H:i:s').' ';
+
+        try {
+
+            file_put_contents('text.txt', $text, FILE_APPEND);
+            $array = [
+              'name' => 'Иван',
+              'full_name' => 'Иванов',
+                'company' => 'Glazcentre',
+                'age' => 35,
+                'phone' => '79032343238'
+            ];
+            foreach ($_REQUEST  as $key => $item ) {
+
+
+                $txt .= '<b>' . $key . '</b>: ' . $item ."\r\n";
+
+            }
+
+            // отправляем в телегу
+            file_get_contents('https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $chat_id . '&parse_mode=html&text=' . urlencode($txt));
+
+        } catch (\Exception $e) {
+            // отправляем в телегу
+            $tlg_text = 'ОШИБКА Exception';
+            $tlg_text .= PHP_EOL.'getFile: '.$e->getFile();
+            $tlg_text .= PHP_EOL.'getLine: '.$e->getLine();
+            $tlg_text .= PHP_EOL.'getMessage: '.$e->getMessage();
+            @file_get_contents('https://api.telegram.org/' . $token . '/sendMessage?chat_id=' . $chat_id . '&parse_mode=html&text=' . urlencode($tlg_text));
+        }
         return 'Glazcentre';
     }
 
