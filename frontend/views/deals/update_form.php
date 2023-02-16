@@ -33,6 +33,7 @@ if ($taskCount == 0){ ?>
     ?>
     <?= Html::a('Изменить задачу', ['tasks/update', 'id' => $taskIdDeal->id], ['class' => 'modalButton  btn btn-success', 'data-id' =>
         Yii::$app->request->get('id')]) ?>
+    <?= $model->id ?>
 
 <?php } ?>
 <div class="deals-form">
@@ -47,7 +48,7 @@ if ($taskCount == 0){ ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map(\app\models\Company::find()->all(),
-                'id', 'name'), ['prompt' => 'Статус...']); ?>
+                'id', 'name'), ['prompt' => 'Статус...', 'disabled' => true]); ?>
         </div>
     </div>
     <div class="row">
