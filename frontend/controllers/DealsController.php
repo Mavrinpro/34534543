@@ -190,9 +190,9 @@ class DealsController extends Controller
 
 
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+//        return $this->render('update', [
+//            'model' => $model,
+//        ]);
     }
     /**
      * Updates an existing Deals model.
@@ -215,7 +215,7 @@ class DealsController extends Controller
 
 
     if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
-        if (\Yii::$app->request->post('Deals')['services_id'] == ""){
+        if (strlen(\Yii::$app->request->post('Deals')['services_id']) < 1 &&  strlen(\Yii::$app->request->post('Services')['name']) > 0){
 
             $service->name = \Yii::$app->request->post('Services')['name'];
             $service->company_id = $model->company_id;
