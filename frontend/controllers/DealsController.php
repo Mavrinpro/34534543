@@ -153,18 +153,21 @@ class DealsController extends Controller
         $model = new Deals();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                //print_r($model->tag); die;
                 $model->tag = implode(",",$model->tag);
                 $model->id_comment = strip_tags($model->id_comment);
                 $model->phone = '7'.$model->phone;
-                $model->save();
-                \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+
+                    $model->save();
+                    \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
+                    if ($model->save()){
+                        $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
+                        return $this->redirect(['update', 'id' => $serID]);
+                    }
 
             }
-            \Yii::$app->session->setFlash('error', 'Что-то пошло не так!');
+            \Yii::$app->session->setFlash('error', 'Необходимо установить тег!');
         } else {
 
             $model->loadDefaultValues();
