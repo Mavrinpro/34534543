@@ -227,7 +227,6 @@ class DealsController extends Controller
             }
         }
 
-
             $model->tag = implode(",", (array)$model->tag);
             $model->id_comment = strip_tags($model->id_comment);
             $model->changeUserTask($id, $model->id_operator); // смена ответственного в задаче
