@@ -207,19 +207,25 @@ class DealsController extends Controller
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
+        $serviceId = Services::find()->select('id')->orderBy('id DESC')->one();
+
 
         $send_deals = \Yii::$app->request->post('send_deals');
         $send_task = \Yii::$app->request->post('send_task');
 
 
     if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
-        //if ($model->company_id == ""){
+        if (\Yii::$app->request->post('Deals')['services_id'] == ""){
+
             $service->name = \Yii::$app->request->post('Services')['name'];
             $service->company_id = $model->company_id;
-            //echo '<pre>';
-            //print_r($service); die();
+
             $service->save();
-       // }
+            if ($service->save()){
+                $serID = \Yii::$app->db->getLastInsertID();
+                $model->services_id = $serID;
+            }
+        }
 
 
             $model->tag = implode(",", (array)$model->tag);
