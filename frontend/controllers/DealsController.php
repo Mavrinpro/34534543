@@ -150,10 +150,30 @@ class DealsController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Deals();
+        $service = new Services();
+
+        $postDeals = \Yii::$app->request->post('Deals')['services_id'];
+        $postService = \Yii::$app->request->post('Services')['name'];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
+
+                if (strlen($postDeals) < 1 &&  strlen($postService) > 0){
+                    // Если пустое полеуслуги и не пустое услуги, которой нет в списке (добавляем новую)
+                    $service->name = $postService;
+                    $service->company_id = $model->company_id;
+
+                    $service->save();
+                    if ($service->save() && strlen($postService) > 0){
+                        $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
+                        $model->services_id = $serID;
+                    }
+                }
+
+
+
                 //print_r($model->tag); die;
                 $model->tag = implode(",",$model->tag);
                 $model->id_comment = strip_tags($model->id_comment);
@@ -175,6 +195,7 @@ class DealsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'service' => $service
         ]);
     }
 

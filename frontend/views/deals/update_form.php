@@ -72,6 +72,9 @@ if ($taskCount == 0){ ?>
                     'placeholder' => 'Выбрать теги ...',
                     'multiple' => true
                 ],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
             ]);
             ?>
         </div>
@@ -231,7 +234,7 @@ if ($taskCount == 0){ ?>
         <?= $form2->field($taska, 'status')->hiddenInput(['value' => true])->label(false) ?>
         <?= $form2->field($taska, 'deals_id')->hiddenInput(['value' => $model->id])->label(false) ?>
         <?= $form2->field($taska, 'user_id')->hiddenInput(['value' => $userID])->label(false) ?>
-        <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::className(),[
+        <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::class,[
 
             'options' => [
                 'autocomplete' => 'off',
@@ -248,7 +251,7 @@ if ($taskCount == 0){ ?>
 
             ]
         ]) ?>
-        <?= $form2->field($taska, 'message')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+        <?= $form2->field($taska, 'message')->widget(\yii\redactor\widgets\Redactor::class) ?>
         <?= Html::submitButton('Создать задачу', ['name' => 'send_task', 'class' => 'btn btn-success']) ?>
         <?php ActiveForm::end(); ?>
         </div>
@@ -257,8 +260,14 @@ if ($taskCount == 0){ ?>
             <div class="row mt-3">
                 <div class="col-md-12">
                         <?php foreach ($model->taskForDeal($model->id) as $task) { ?>
+                                <?php $taskname = explode('-',$task->name);
+                                if ($taskname[0] == 'Авто'){
+                                    $robot = '<small><i class="fas fa-robot text-warning mr-1"></i></small>';
+                                }
+                                ?>
                     <div class="shadow rounded-lg d-flex mb-3 p-2 <?= $bg_task ?>">
                         <div class="d-inline">
+                            <?= $robot; ?>
                             <b>Дата окончания: </b><?= date('d.m.Y', strtotime($task->date_end)) ?>
                             <b>Сотрудник: </b><?= $model->taskUser($task->user_id)->full_name ?>
                             <?= $task->message ?>

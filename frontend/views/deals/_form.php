@@ -7,7 +7,11 @@ use kartik\select2\Select2;
 use yii\widgets\MaskedInput;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
+/** @var app\models\Deals $service */
 /** @var yii\widgets\ActiveForm $form */
+
+$userID = \common\models\User::find()->where(['id' => Yii::$app->getUser()->id])->one();
+//echo $userID->id;
 ?>
 
 <div class="deals-form">
@@ -24,7 +28,7 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-md-4">
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map(\app\models\Company::find()->all(), 'id', 'name'),
-        ['prompt'=>'Компания...']); ?>
+        ['prompt'=>'Компания...', 'value' => $userID->company_id,]); ?>
         </div>
     </div>
 
@@ -87,11 +91,11 @@ use yii\widgets\MaskedInput;
                     'model' => $model,
                     'name' => 'region_id',
                     'attribute' => 'region_id',
-
                     'data' => ArrayHelper::map(\app\models\Region::find()->orderBy('id')->all(),'id','name'),
                     //['1'=>'1','2'=>2],
                     'options' => [
                         'placeholder' => 'Выбрать город ...',
+
                         //'multiple' => true
                     ],
                 ]);
@@ -100,6 +104,31 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'age')->textInput(); ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo '<label>Причина обращения</label>'; ?>
+            <?=
+            Select2::widget([
+                'model' => $model,
+                'name' => 'services_id',
+                'attribute' => 'services_id',
+
+
+                'data' => ArrayHelper::map(\app\models\Services::find()->where(['company_id' => $userID->company_id])->orderBy('id')
+                    ->all(),
+                    'id','name'),
+                //['1'=>'1','2'=>2],
+                'options' => [
+                    'placeholder' => 'Услуга ...',
+                    //'multiple' => true
+                ],
+                'pluginOptions' => ['allowClear' => true]
+            ]);
+
+            ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($service, 'name')->textInput()->label('Если услуги нет в списке'); ?>
         </div>
         <div class="col-md-12">
     <?= $form->field($model, 'id_comment')->widget(\yii\redactor\widgets\Redactor::className()) ?>
