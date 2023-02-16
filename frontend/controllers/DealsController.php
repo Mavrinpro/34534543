@@ -207,22 +207,24 @@ class DealsController extends Controller
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
-        $serviceId = Services::find()->select('id')->orderBy('id DESC')->one();
+        $serviceId = Services::find()->select('id')->orderBy('id DESC')->one(); // ID последней записи
 
 
         $send_deals = \Yii::$app->request->post('send_deals');
         $send_task = \Yii::$app->request->post('send_task');
+        $postDeals = \Yii::$app->request->post('Deals')['services_id'];
+        $postService = \Yii::$app->request->post('Services')['name'];
 
 
     if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
-        if (strlen(\Yii::$app->request->post('Deals')['services_id']) < 1 &&  strlen(\Yii::$app->request->post('Services')['name']) > 0){
-
-            $service->name = \Yii::$app->request->post('Services')['name'];
+        if (strlen($postDeals) < 1 &&  strlen($postService) > 0){
+        // Если пустое полеуслуги и не пустое услуги, которой нет в списке (добавляем новую)
+            $service->name = $postService;
             $service->company_id = $model->company_id;
 
             $service->save();
-            if ($service->save() && \Yii::$app->request->post('Services')['name'] != ""){
-                $serID = \Yii::$app->db->getLastInsertID();
+            if ($service->save() && strlen($postService) > 0){
+                $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
                 $model->services_id = $serID;
             }
         }
