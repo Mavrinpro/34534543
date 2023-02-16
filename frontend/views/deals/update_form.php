@@ -298,11 +298,12 @@ $this->registerJs(<<<JS
     $('.modalButton').on('click', function (){
         var id = $(this).data('id');
         var id_operator = $('#deals-id_operator').val();
+        var v0 =$('#w0');
         console.log(id_operator);
         $.get($(this).attr('href'), function(data) {
-          $('#w0').modal('show').find('#modalContent').html(data);
-          $('#w0').find('#tasks-deals_id').val(id);
-          $('#w0').find('#tasks-user_id').val(id_operator);
+            v0.modal('show').find('#modalContent').html(data);
+            v0.find('#tasks-deals_id').val(id);
+            v0.find('#tasks-user_id').val(id_operator);
           
        });
         //console.log($(this).data('id'));
