@@ -13,6 +13,8 @@ use kartik\date\DatePicker;
 /** @var app\models\Deals $model */
 /** @var app\models\Tasks $taska */
 /** @var yii\widgets\ActiveForm $form */
+
+
 VarDumper::dump($model, $dept = 10, $highlight = true);
 
 ?>
