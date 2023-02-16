@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
+/** @var app\models\Deals $taska */
+/** @var app\models\Deals $service */
 
 $this->title = 'Изменить сделку: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Сделки', 'url' => ['index']];

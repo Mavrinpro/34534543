@@ -11,11 +11,12 @@ use app\models\History;
 use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
-/** @var app\models\Tasks $taska */
+/** @var app\models\Deals $service */
+/** @var app\models\Deals $taska */
 /** @var yii\widgets\ActiveForm $form */
 
 
-VarDumper::dump($model, $dept = 10, $highlight = true);
+//VarDumper::dump($model, $dept = 10, $highlight = true);
 
 ?>
 <?php
