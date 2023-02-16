@@ -140,6 +140,7 @@ if ($taskCount == 0){ ?>
                         'placeholder' => 'Услуга ...',
                         //'multiple' => true
                     ],
+                    'pluginOptions' => ['allowClear' => true]
                 ]);
 
                 ?>

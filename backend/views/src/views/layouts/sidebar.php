@@ -85,6 +85,8 @@ $tracking = new \app\models\Tracking();
                 'active'=>\Yii::$app->controller->id == 'tags', ];
             $menuItems[] = ['label' => 'Шаблоны писем', 'url' => ['/layouts-mail/index'], 'iconStyle' => 'fa fa-envelope',
                 'active'=>\Yii::$app->controller->id == 'layouts-mail', ];
+            $menuItems[] = ['label' => 'Услуги', 'url' => ['/services/'], 'iconStyle' => 'fa fa-folder-open',
+                'active'=>\Yii::$app->controller->id == 'services', ];
             if ($tracking->countActive() > 0){
                 $menuItems[] = ['label' => 'Пользователи', 'url' => ['/user'], 'iconStyle' => 'fa fa-user',
                     'active'=>\Yii::$app->controller->id == 'user', 'visible' => Yii::$app->authManager->getRolesByUser(Yii::$app->getUser()->identity->getId())

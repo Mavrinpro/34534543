@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Api;
+use app\models\Comments;
 use app\models\Deals;
 use app\models\DealsRepeat;
 use app\models\LayoutsMail;
@@ -150,12 +151,16 @@ class DealsController extends Controller
      */
     public function actionCreate()
     {
-
+        //\Yii::$app->db->schema->refresh();
         $model = new Deals();
         $service = new Services();
+        $comment = new Comments();
+
+        $serviceId = Deals::find()->select('id')->orderBy('id DESC')->one(); // ID последней записи
 
         $postDeals = \Yii::$app->request->post('Deals')['services_id'];
         $postService = \Yii::$app->request->post('Services')['name'];
+        $commentText = \Yii::$app->request->post('Comments')['text'];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
@@ -176,10 +181,14 @@ class DealsController extends Controller
 
                 //print_r($model->tag); die;
                 $model->tag = implode(",",$model->tag);
-                $model->id_comment = strip_tags($model->id_comment);
+                //$model->id_comment = strip_tags($model->id_comment);
                 $model->phone = '7'.$model->phone;
+                $comment->text = $commentText;
+                $comment->user_id = $model->id_operator;
+                $comment->deal_id = $serviceId->id + 1;
 
                     $model->save();
+                    $comment->save();
                     \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
                     if ($model->save()){
                         $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
@@ -195,7 +204,8 @@ class DealsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'service' => $service
+            'service' => $service,
+            'comment' => $comment
         ]);
     }
 
@@ -231,6 +241,7 @@ class DealsController extends Controller
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
+
         $serviceId = Services::find()->select('id')->orderBy('id DESC')->one(); // ID последней записи
 
 
@@ -262,6 +273,9 @@ class DealsController extends Controller
             return $this->refresh();
 
     }
+    /*
+     * ======================================= Обновление задач ================================================
+     */
 
         if ($this->request->isPost && $taska->load($this->request->post()) && isset($send_task)) {
             $taska->save();

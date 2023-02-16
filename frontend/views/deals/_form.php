@@ -8,6 +8,7 @@ use yii\widgets\MaskedInput;
 /** @var yii\web\View $this */
 /** @var app\models\Deals $model */
 /** @var app\models\Deals $service */
+/** @var app\models\Deals $comment */
 /** @var yii\widgets\ActiveForm $form */
 
 $userID = \common\models\User::find()->where(['id' => Yii::$app->getUser()->id])->one();
@@ -131,7 +132,7 @@ $userID = \common\models\User::find()->where(['id' => Yii::$app->getUser()->id])
             <?= $form->field($service, 'name')->textInput()->label('Если услуги нет в списке'); ?>
         </div>
         <div class="col-md-12">
-    <?= $form->field($model, 'id_comment')->widget(\yii\redactor\widgets\Redactor::className()) ?>
+    <?= $form->field($comment, 'text')->widget(\yii\redactor\widgets\Redactor::class) ?>
         </div>
         <div class="col-md-6">
 
