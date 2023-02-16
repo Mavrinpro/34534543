@@ -1,6 +1,7 @@
 <?php
 use dosamigos\ckeditor\CKEditor;
 use app\models\Tasks;
+use yii\helpers\VarDumper;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -12,6 +13,7 @@ use kartik\date\DatePicker;
 /** @var app\models\Deals $model */
 /** @var app\models\Tasks $taska */
 /** @var yii\widgets\ActiveForm $form */
+VarDumper::dump($model, $dept = 10, $highlight = true);
 
 ?>
 <?php
