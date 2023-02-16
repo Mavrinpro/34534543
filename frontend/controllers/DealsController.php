@@ -221,7 +221,7 @@ class DealsController extends Controller
             $service->company_id = $model->company_id;
 
             $service->save();
-            if ($service->save()){
+            if ($service->save() && \Yii::$app->request->post('Services')['name'] != ""){
                 $serID = \Yii::$app->db->getLastInsertID();
                 $model->services_id = $serID;
             }
