@@ -133,7 +133,6 @@ if ($taskCount == 0){ ?>
                     'name' => 'services_id',
                     'attribute' => 'services_id',
 
-
                     'data' => ArrayHelper::map(\app\models\Services::find()->orderBy('id')->where(['company_id' =>
                         $model->company_id])->all(),'id','name'),
                     //['1'=>'1','2'=>2],
@@ -141,7 +140,6 @@ if ($taskCount == 0){ ?>
                         'placeholder' => 'Услуга ...',
                         //'multiple' => true
                     ],
-                    'pluginOptions' => ['allowClear' => true]
                 ]);
 
                 ?>
