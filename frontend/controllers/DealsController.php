@@ -178,7 +178,6 @@ class DealsController extends Controller
                 }
 
 
-
                 //print_r($model->tag); die;
                 $model->tag = implode(",",$model->tag);
                 //$model->id_comment = strip_tags($model->id_comment);
