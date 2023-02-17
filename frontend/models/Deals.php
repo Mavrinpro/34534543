@@ -182,4 +182,10 @@ class Deals extends \yii\db\ActiveRecord
     {
         return User::find()->where(['id' => $id, 'status' => 10])->andWhere(['!=', 'id', 1])->one();
     }
+
+    // Вывод комментарев из таблицы commets
+    public function comments($deal_id)
+    {
+        return Comments::find()->where(['deal_id' => $deal_id])->all();
+    }
 }

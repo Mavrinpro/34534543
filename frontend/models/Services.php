@@ -27,8 +27,9 @@ class Services extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 100],
-            [['company_id'], 'safe'],
+            [['name'], 'unique', 'message' => 'Такое значение уже есть в списке'],
+            //['name', 'unique'],
+            [['company_id', 'user_id'], 'safe'],
         ];
     }
 

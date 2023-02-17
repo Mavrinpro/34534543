@@ -146,14 +146,14 @@ if ($taskCount == 0){ ?>
                 ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($service, 'name')->textInput()->label('Если услуги нет в списке'); ?>
+                <?= $form->field($service, 'name', ['enableAjaxValidation' => true])->textInput()->label('Если услуги нет в списке'); ?>
             </div>
         </div>
 
     <div class="row">
         <div class="col-md-12">
 
-            <?= $form->field($model, 'id_comment')->textarea(['rows' => '4']); ?>
+            <?= $form->field($comment, 'text')->widget(\yii\redactor\widgets\Redactor::class) ?>
         </div>
 
 
@@ -165,6 +165,23 @@ if ($taskCount == 0){ ?>
         <div class="col-md-12 d-flex">
             <?= Html::submitButton('Сохранить', ['name' => 'send_deals', 'class' => 'btn btn-success']) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
+        </div>
+        <div class="col-md-12">
+            <?php foreach ($model->comments($model->id) as $comment) {
+                $userComment = \common\models\User::find()->where(['id' => $comment->user_id])->one();
+                if (sizeof($model->comments($model->id)) > 0){ ?>
+                    <div class="direct-chat-msg">
+                        <div class="direct-chat-infos clearfix">
+                            <span class="direct-chat-name float-left"><?= $userComment->full_name ?></span>
+                            <span class="direct-chat-timestamp float-right"><?= date('d.m.Y | H:i:s',$comment->date) ?></span>
+                        </div>
+                        <div class="direct-chat-text">
+                            <?= $comment->text ?>
+                        </div>
+                    </div>
+                <?php } ?>
+
+            <?php } ?>
         </div>
         <div class="col-md-12 mt-3">
             <?php $h = History::find()->where(['deal_id' => $model->id])->all(); ?>

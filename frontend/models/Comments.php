@@ -11,6 +11,7 @@ use Yii;
  * @property string|null $text
  * @property int|null $user_id
  * @property int|null $deal_id
+ * @property int|null $date
  */
 class Comments extends \yii\db\ActiveRecord
 {
@@ -29,7 +30,7 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'deal_id'], 'integer'],
-            [['text'], 'safe'],
+            [['text', 'date'], 'safe'],
         ];
     }
 

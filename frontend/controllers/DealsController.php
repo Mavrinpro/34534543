@@ -19,6 +19,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\web\Response;
+use yii\db\Expression;
+use yii\bootstrap4\ActiveForm;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
@@ -160,7 +162,7 @@ class DealsController extends Controller
 
         $postDeals = \Yii::$app->request->post('Deals')['services_id'];
         $postService = \Yii::$app->request->post('Services')['name'];
-        $commentText = \Yii::$app->request->post('Comments')['text'];
+        $commentText = strip_tags(\Yii::$app->request->post('Comments')['text']);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
@@ -185,6 +187,7 @@ class DealsController extends Controller
                 $comment->text = $commentText;
                 $comment->user_id = $model->id_operator;
                 $comment->deal_id = $serviceId->id + 1;
+                $comment->date = date('U');
 
                     $model->save();
                     $comment->save();
@@ -240,9 +243,13 @@ class DealsController extends Controller
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
+        $comment = new Comments();
+
+
+        $commentText = strip_tags(\Yii::$app->request->post('Comments')['text']);
 
         $serviceId = Services::find()->select('id')->orderBy('id DESC')->one(); // ID последней записи
-
+        $userID = \Yii::$app->getUser()->id;
 
         $send_deals = \Yii::$app->request->post('send_deals');
         $send_task = \Yii::$app->request->post('send_task');
@@ -252,15 +259,31 @@ class DealsController extends Controller
 
     if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
         if (strlen($postDeals) < 1 &&  strlen($postService) > 0){
-        // Если пустое полеуслуги и не пустое услуги, которой нет в списке (добавляем новую)
-            $service->name = $postService;
-            $service->company_id = $model->company_id;
+        // Если пустое полеу слуги и не пустое услуги, которой нет в списке (добавляем новую)
+            if (\Yii::$app->request->isAjax && $service->load(\Yii::$app->request->post())) {
+                \Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($service);
 
-            $service->save();
+                //$service->save();
+            }
+            if ($service->validate()){
+                $service->name = $postService;
+                $service->company_id = $model->company_id;
+            }
+
+
+
             if ($service->save() && strlen($postService) > 0){
                 $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
                 $model->services_id = $serID;
             }
+        }
+        if (strlen($commentText) > 0){
+            $comment->text = $commentText;
+            $comment->user_id = $userID;
+            $comment->deal_id = $model->id;
+            $comment->date = date('U');
+            $comment->save();
         }
 
             $model->tag = implode(",", (array)$model->tag);
@@ -283,7 +306,12 @@ class DealsController extends Controller
         }
 
         $model->tag = explode(',', $model->tag);
-        return $this->render('update', ['model' => $model, 'taska' => $taska, 'service' => $service]);
+        return $this->render('update', [
+            'model' => $model,
+            'taska' => $taska,
+            'service' => $service,
+            'comment' => $comment
+        ]);
 
 
     }

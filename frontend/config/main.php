@@ -16,6 +16,7 @@ return [
         'redactor' => 'yii\redactor\RedactorModule',
     ],
     'components' => [
+
         'language' => 'ru',
         'view' => [
             'theme' => [
@@ -24,6 +25,7 @@ return [
                 ],
             ],
         ],
+
 
         'request' => [
             //'parsers' =>['application/json' => 'yii\web\JsonParser', ],

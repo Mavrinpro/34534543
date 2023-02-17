@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\Deals $model */
 /** @var app\models\Deals $taska */
 /** @var app\models\Deals $service */
+/** @var app\models\Deals $comment */
 
 $this->title = 'Изменить сделку: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Сделки', 'url' => ['index']];
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = 'Изменить';
     <?= $this->render('update_form', [
         'model' => $model,
         'taska' => $taska,
-        'service' => $service
+        'service' => $service,
+        'comment' => $comment
     ]) ?>
 
 </div>
