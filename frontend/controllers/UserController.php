@@ -211,14 +211,16 @@ class UserController extends Controller
                 'name' => 'session_start',
                 'value' => $date
             ]));
-        }
 
-        if ($model->save())
-        {
+            $model->save();
+
             //var_dump($model); die;
             \Yii::$app->session->setFlash('success', 'Вы начали рабочий день.' .\Yii::$app->request->cookies['session_start']);
-            return $this->redirect('/deals/index');
+            return $this->redirect(['index']);
         }
+
+
+
     }
 
     // Учет рабочего времени
@@ -226,32 +228,38 @@ class UserController extends Controller
     {
         $model = new Tracking();
         $sessId = \Yii::$app->request->cookies['session_start'];
-        $user_id = \Yii::$app->response->get('id');
+        $user_id = \Yii::$app->user->id;
+
         $trackingId = Tracking::find()->where(['user_id'=> $user_id])->andWhere(['work' => 1])->one();
         $date = date('U');
-
+        $count_time = $date - $sessId->value;
+        //print_r($count_time); die;
         if (\Yii::$app->request->get('sessionend') == 'yes') {
+           // print_r($user_id); die;
+//            \Yii::$app->db->createCommand("UPDATE time_tracking SET date_end=:column1, session_end=:column2, work=:workfalse WHERE session_start=:id")
+//                ->bindValue(':id', $sessId)
+//                ->bindValue(':column1', $date)
+//            ->bindValue(':column2', $date)
+//            ->bindValue(':workfalse', false)
+//            ->execute();
 
-            \Yii::$app->db->createCommand("UPDATE time_tracking SET date_end=:column1, session_end=:column2, work=:workfalse WHERE session_start=:id")
-                ->bindValue(':id', $sessId)
-                ->bindValue(':column1', $date)
-            ->bindValue(':column2', $date)
-            ->bindValue(':workfalse', false)
-            ->execute();
+            $trackingId->date_end = $date;
+            $trackingId->session_end = $date;
+            $trackingId->work = false;
+            $trackingId->count_time = $count_time;
+            $trackingId->update();
 
 
-            $count_time = $date - $sessId->value;
-
-            \Yii::$app->db->createCommand("UPDATE time_tracking SET count_time=:column WHERE session_start=:id")
-                ->bindValue(':id', $sessId)
-                ->bindValue(':column', $count_time)
-                ->execute();
+//            \Yii::$app->db->createCommand("UPDATE time_tracking SET count_time=:column WHERE session_start=:id")
+//                ->bindValue(':id', $sessId)
+//                ->bindValue(':column', $count_time)
+//                ->execute();
 
 
             \Yii::$app->session->setFlash('success', 'Вы закончили рабочий день.');
             \Yii::$app->response->cookies->remove('session_start');
             //$model->update();
-            return $this->redirect('/deals/index');
+            return $this->redirect(['index']);
         }
 
     }
