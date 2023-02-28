@@ -33,8 +33,12 @@ $taskCount  = new \app\models\Tasks();
     <ul class="navbar-nav ml-auto">
         <div class="ml-2">
             <?php
-            $session_start =  \Yii::$app->request->cookies['session_start'];
-            if (!empty($session_start)) { ?>
+            $tracking = \app\models\Tracking::find()->where(['user_id' =>Yii::$app->user->getId()])->orderBy('id DESC')
+                ->one();
+            echo $tracking->id;
+
+            //$session_start =  \Yii::$app->request->cookies['session_start'];
+            if ($tracking->work == true) { ?>
                 <?= Html::a('Завершить', ['user/session-end?sessionend=yes'],['class' => 'btn btn-sm btn-success']) ?>
             <?php }else{ ?>
                 <?= Html::a('Начать работу', ['user/session-start?sessionstart=yes'], ['class' => 'btn btn-sm btn-danger 
