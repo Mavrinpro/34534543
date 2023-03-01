@@ -3,6 +3,8 @@
 namespace app\models;
 
 use app\models\Deals;
+use common\models\User;
+use yii\helpers\VarDumper;
 use Yii;
 
 /**
@@ -187,5 +189,57 @@ class Api extends \yii\db\ActiveRecord
             $model->company_id = $company_id;
             $model->save();
         }
+    }
+
+    // Распределение заявок на тех, у кого меньше всех (заявки с сайтов)
+    public function minDeals($company_id)
+    {
+        $tracking = Tracking::find()->where(['work' => 1])->all();
+        $user_id = [];
+
+        foreach ($tracking as $key => $oper) {
+            $user_id[] = $oper->user_id;
+        }
+
+        $fgfg = Deals::find()
+            ->select(['id_operator', 'COUNT(*) AS cnt'])
+            ->where(['in','id_operator', $user_id])
+            ->andWhere(new \yii\db\Expression('DATE(date_create) = :current_date', [':current_date' => date('Y-m-d')]))
+            ->andWhere(new \yii\db\Expression('FIND_IN_SET(:tag,tag)'))
+            ->andWhere(['company_id' => $company_id])
+            ->addParams([':tag' => 6])
+            ->groupBy('id_operator')
+            ->orderBy('cnt ASC')
+            ->asArray()
+            ->all();
+
+
+        $usID = [];
+        foreach ( $fgfg as $item ) {
+
+
+            $user = User::find()->where(['id' => $item['id_operator'], 'company_id' => $company_id])->one();
+
+            $usID[] = $user->id;
+            //echo $user->id.' | '.$user->full_name. ' - '. $item['cnt'].'<br>';
+
+            $CNT[]= $item['cnt'];
+            if ($item['cnt'] == 0){
+                echo 100;
+            }
+
+        }
+        //VarDumper::dump($usID, $dept = 100, $highlight = true);
+        //VarDumper::dump($user_id, $dept = 100, $highlight = true);
+        $diff = array_diff($user_id, $usID);
+
+
+        //VarDumper::dump($diff, $dept = 100, $highlight = true);
+return $diff;
+//        $user2 = User::find()->where(['in', 'id', $diff])->andWhere(['company_id' => $company_id])->all();
+//        foreach ($user2 as $value) {
+//            echo $value->full_name;
+//        }
+//        echo $fgfg[0]['id_operator'];
     }
 }

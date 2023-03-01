@@ -27,15 +27,12 @@ $taskCount  = new \app\models\Tasks();
         <div class="result_search"></div>
     </form>
 
-
-
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <div class="ml-2">
             <?php
             $tracking = \app\models\Tracking::find()->where(['user_id' =>Yii::$app->user->getId()])->orderBy('id DESC')
                 ->one();
-            echo $tracking->id;
 
             //$session_start =  \Yii::$app->request->cookies['session_start'];
             if ($tracking->work == true) { ?>

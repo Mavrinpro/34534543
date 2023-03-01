@@ -232,7 +232,7 @@ class UserController extends Controller
 
         $trackingId = Tracking::find()->where(['user_id'=> $user_id])->andWhere(['work' => 1])->one();
         $date = date('U');
-        $count_time = $date - $sessId->value;
+        $count_time = $date - $trackingId->session_start;
         //print_r($count_time); die;
         if (\Yii::$app->request->get('sessionend') == 'yes') {
 

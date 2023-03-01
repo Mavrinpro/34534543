@@ -2,9 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Api;
+use yii\helpers\VarDumper;
 /** @var yii\web\View $this */
 /** @var app\models\Reviews $model */
+
+$api = new Api();
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Отзывы', 'url' => ['index']];
@@ -41,3 +44,17 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?php
+
+$words = preg_split('/\s+/', 'This is a string');
+$phoneNumber = '9021212222';
+$formattedNumber = preg_replace('/^(\d{3})(\d{3})(\d{2})(\d{2})$/', '+7 ($1) $2-$3-$4', $phoneNumber);
+echo $formattedNumber;
+
+VarDumper::dump($api->minDeals(1), $dept = 100, $highlight = true);
+
+$array1 = [2,3,4,5,6];
+$array2 = [2,3,4,5,7];
+$eewtew = array_diff($array1,$array2 );
+//VarDumper::dump($eewtew, $dept = 100, $highlight = true);
+
