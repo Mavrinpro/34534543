@@ -47,9 +47,13 @@ use yii\jui\DatePicker;
 
             <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
                 ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
+            <?= $form->field($model, 'user_create_id')->hiddenInput(['value' => Yii::$app->getUser()->id])->label
+            (false) ?>
     </div>
        <?php }else{ ?>
             <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false) ?>
+            <?= $form->field($model, 'user_create_id')->hiddenInput(['value' => Yii::$app->getUser()->id])->label
+            (false) ?>
        <?php } ?>
 
         <div id="memberssearch-family_name_id"></div>
