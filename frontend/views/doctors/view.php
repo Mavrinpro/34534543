@@ -89,6 +89,7 @@ Modal::end();
 
 </div>
 <!-- External Events -->
+<div id='draggable-el' data-event='{ "title": "my event", "duration": "02:00" }'>drag me</div>
 <ul id="external-events" class="fullcalendar-custom list-unstyled list-unstyled-py-2 w-sm-50 mb-5">
     <li>
         <!-- Event -->
@@ -110,18 +111,31 @@ Modal::end();
 
     <li>
         <!-- Event -->
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event fc-event-success'
-             data-event='{
-					 "title": "Send weekly invoice to John",
-					 "image": "../assets/svg/brands/excel-icon.svg",
-					 "className": "fc-event-success"
-				 }'>
-            <div class='fc-event-title'>
-                <div class='d-flex align-items-center'>
+        <div id="external-events">
+            <p>
+                <strong>Draggable Events</strong>
+            </p>
 
-                    <span>Send weekly invoice to John</span>
-                </div>
+            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                <div class="fc-event-main">My Event 1</div>
             </div>
+            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                <div class="fc-event-main">My Event 2</div>
+            </div>
+            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                <div class="fc-event-main">My Event 3</div>
+            </div>
+            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                <div class="fc-event-main">My Event 4</div>
+            </div>
+            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
+                <div class="fc-event-main">My Event 5</div>
+            </div>
+
+            <p>
+                <input type="checkbox" id="drop-remove">
+                <label for="drop-remove">remove after drop</label>
+            </p>
         </div>
         <!-- End Event -->
     </li>
@@ -151,6 +165,9 @@ Modal::end();
 
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
+        var containerEl = document.getElementById('external-events');
+        var Draggable = FullCalendar.Draggable;
+        let draggableEl = document.getElementById('mydraggable');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar:{
                 left: 'prev,next today',
@@ -246,10 +263,20 @@ Modal::end();
 
             drop: function(arg) {
                 console.log('Drop');
+
             }
 
         });
+        new Draggable(containerEl, {
+            itemSelector: '.fc-event',
+            eventData: function(eventEl) {
+                return {
+                    title: eventEl.innerText
+                };
+            }
+        });
         calendar.render();
+
     });
 
     function displayMessage(message, title) {
