@@ -20,6 +20,7 @@ class AdminLteAsset extends AssetBundle
         '/js/Chart.min.js',
         '/js/custom.js',
         '//www.amcharts.com/lib/4/core.js',
+        '//cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js',
         'https://cdn.amcharts.com/lib/4/charts.js',
         '//www.amcharts.com/lib/4/themes/animated.js',
         '//www.amcharts.com/lib/4/lang/ru_RU.js',

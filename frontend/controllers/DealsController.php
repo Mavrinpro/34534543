@@ -6,21 +6,18 @@ use app\models\Api;
 use app\models\Comments;
 use app\models\Deals;
 use app\models\DealsRepeat;
-use app\models\LayoutsMail;
 use app\models\Mail;
 use app\models\Services;
-use common\models\User;
 use app\models\Tasks;
-use frontend\models\SearchDeals;
 use frontend\models\DeleteDeals;
+use frontend\models\SearchDeals;
+use yii\bootstrap4\ActiveForm;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
-use yii\db\Expression;
-use yii\bootstrap4\ActiveForm;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
@@ -39,12 +36,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task', 'change-former', 'get-fake-data'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task', 'change-former', 'get-fake-data'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -69,14 +66,14 @@ class DealsController extends Controller
     public function actionIndex()
     {
         $offset = 40;
-        if  (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name ==
+        if (\Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['superadmin']->name ==
             'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name ==
-            'admin'){
-            $query = Deals::find()->with('user', 'tasks')->where(['del' =>  0])->orderBy('date_create DESC')->addOrderBy('date_update ASC');
-        }else{
+            'admin') {
+            $query = Deals::find()->with('user', 'tasks')->where(['del' => 0])->orderBy('date_create DESC')->addOrderBy('date_update ASC');
+        } else {
 
-        $query = Deals::find()->with('user', 'tasks')->where(['id_operator' =>  \Yii::$app->user->id])->andWhere(['del' =>  0])
-            ->orderBy('date_create DESC')->addOrderBy('date_update DESC');
+            $query = Deals::find()->with('user', 'tasks')->where(['id_operator' => \Yii::$app->user->id])->andWhere(['del' => 0])
+                ->orderBy('date_create DESC')->addOrderBy('date_update DESC');
         }
         $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
@@ -86,20 +83,20 @@ class DealsController extends Controller
         //$dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
         //$dataProvider->pagination = ['pageSize' => 150];
         $dataProvider = new ActiveDataProvider([
-            'query' => Deals::find()->with('user', 'tasks')->where(['del' =>  0])->orderBy('date_create DESC')->addOrderBy('date_update DESC'),
+            'query' => Deals::find()->with('user', 'tasks')->where(['del' => 0])->orderBy('date_create DESC')->addOrderBy('date_update DESC'),
             'pagination' => [
                 'pageSize' => 10,
             ],
         ]);
 
-        if ($_POST['action'] === 'dragged'){
+        if ($_POST['action'] === 'dragged') {
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
             $post = Deals::findOne($_POST['block_id']);
             $post->status = $_POST['statusID'];
             $post->save();
             $arr = [
                 'status' => $_POST['statusID'],
-                'id'      => $_POST['block_id'],
+                'id' => $_POST['block_id'],
                 'message' => 'Статус сделки изменен!'
             ];
             return json_encode($arr);
@@ -114,6 +111,7 @@ class DealsController extends Controller
         ]);
 
     }
+
     /**
      * Displays a single Deals model.
      * @param int $id ID
@@ -135,7 +133,7 @@ class DealsController extends Controller
                 \Yii::$app->session->setFlash('success', 'Письмо: ' . $layout->name . ' успешно отправлено');
                 file_put_contents('text.txt', json_encode([$this->request->Post('Deals')['id'], $layout->name]));
                 return $this->refresh();
-            }else{
+            } else {
                 \Yii::$app->session->setFlash('error', 'Нужно выбрать шаблон письма');
             }
         }
@@ -167,13 +165,13 @@ class DealsController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
 
-                if (strlen($postDeals) < 1 &&  strlen($postService) > 0){
+                if (strlen($postDeals) < 1 && strlen($postService) > 0) {
                     // Если пустое полеуслуги и не пустое услуги, которой нет в списке (добавляем новую)
                     $service->name = $postService;
                     $service->company_id = $model->company_id;
 
                     $service->save();
-                    if ($service->save() && strlen($postService) > 0){
+                    if ($service->save() && strlen($postService) > 0) {
                         $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
                         $model->services_id = $serID;
                     }
@@ -181,21 +179,21 @@ class DealsController extends Controller
 
 
                 //print_r($model->tag); die;
-                $model->tag = implode(",",$model->tag);
+                $model->tag = implode(",", $model->tag);
                 //$model->id_comment = strip_tags($model->id_comment);
-                $model->phone = '7'.$model->phone;
+                $model->phone = '7' . $model->phone;
                 $comment->text = $commentText;
                 $comment->user_id = $model->id_operator;
                 $comment->deal_id = $serviceId->id + 1;
                 $comment->date = date('U');
 
-                    $model->save();
-                    $comment->save();
-                    \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
-                    if ($model->save()){
-                        $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
-                        return $this->redirect(['update', 'id' => $serID]);
-                    }
+                $model->save();
+                $comment->save();
+                \Yii::$app->session->setFlash('success', 'Новая сделка добавлена!');
+                if ($model->save()) {
+                    $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
+                    return $this->redirect(['update', 'id' => $serID]);
+                }
 
             }
             \Yii::$app->session->setFlash('error', 'Необходимо установить тег!');
@@ -211,25 +209,25 @@ class DealsController extends Controller
         ]);
     }
 
-     // Изменяет видимость сделки del = 1
+    // Изменяет видимость сделки del = 1
     public function actionUpdater($id)
     {
         $model = $this->findModel($id);
 
         $model->del = 1;
-            \Yii::$app->session->setFlash('error', 'Сделка удалена!');
+        \Yii::$app->session->setFlash('error', 'Сделка удалена!');
 
 
-                $model->update();
+        $model->update();
 
-                return $this->redirect(['deals/index']);
+        return $this->redirect(['deals/index']);
 
 
-
-//        return $this->render('update', [
-//            'model' => $model,
-//        ]);
+        //        return $this->render('update', [
+        //            'model' => $model,
+        //        ]);
     }
+
     /**
      * Updates an existing Deals model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -239,12 +237,19 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
-        //\Yii::$app->db->schema->refresh();
+
+
+
+        \Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
         $comment = new Comments();
 
+        // изменение change_former при обычной перезагрузке страницы на значение 0
+
+        $model->change_former = 0;
+        $model->update();
 
         $commentText = strip_tags(\Yii::$app->request->post('Comments')['text']);
 
@@ -257,34 +262,33 @@ class DealsController extends Controller
         $postService = \Yii::$app->request->post('Services')['name'];
 
 
-    if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
-        if (strlen($postDeals) < 1 &&  strlen($postService) > 0){
-        // Если пустое полеу слуги и не пустое услуги, которой нет в списке (добавляем новую)
-            if (\Yii::$app->request->isAjax && $service->load(\Yii::$app->request->post())) {
-                \Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($service);
+        if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
+            if (strlen($postDeals) < 1 && strlen($postService) > 0) {
+                // Если пустое полеу слуги и не пустое услуги, которой нет в списке (добавляем новую)
+                if (\Yii::$app->request->isAjax && $service->load(\Yii::$app->request->post())) {
+                    \Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ActiveForm::validate($service);
 
-                //$service->save();
+                    //$service->save();
+                }
+                if ($service->validate()) {
+                    $service->name = $postService;
+                    $service->company_id = $model->company_id;
+                }
+
+
+                if ($service->save() && strlen($postService) > 0) {
+                    $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
+                    $model->services_id = $serID;
+                }
             }
-            if ($service->validate()){
-                $service->name = $postService;
-                $service->company_id = $model->company_id;
+            if (strlen($commentText) > 0) {
+                $comment->text = $commentText;
+                $comment->user_id = $userID;
+                $comment->deal_id = $model->id;
+                $comment->date = date('U');
+                $comment->save();
             }
-
-
-
-            if ($service->save() && strlen($postService) > 0){
-                $serID = \Yii::$app->db->getLastInsertID(); // Получаем последний ID
-                $model->services_id = $serID;
-            }
-        }
-        if (strlen($commentText) > 0){
-            $comment->text = $commentText;
-            $comment->user_id = $userID;
-            $comment->deal_id = $model->id;
-            $comment->date = date('U');
-            $comment->save();
-        }
 
             $model->tag = implode(",", (array)$model->tag);
             $model->id_comment = strip_tags($model->id_comment);
@@ -294,10 +298,10 @@ class DealsController extends Controller
             \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
             return $this->refresh();
 
-    }
-    /*
-     * ======================================= Обновление задач ================================================
-     */
+        }
+        /*
+         * ======================================= Обновление задач ================================================
+         */
 
         if ($this->request->isPost && $taska->load($this->request->post()) && isset($send_task)) {
             $taska->save();
@@ -395,38 +399,40 @@ class DealsController extends Controller
 
 
     // Ajax search
-     public function actionSearchAjax() {
+    public function actionSearchAjax()
+    {
 
-         if (\Yii::$app->request->isAjax) {
+        if (\Yii::$app->request->isAjax) {
 
-             $input_search = \Yii::$app->request->get('input_search');
-             $model = Deals::find()->where(['OR',['like', 'phone', $input_search], ['like', 'name', $input_search]])->all();
-             \Yii::$app->response->format = Response::FORMAT_JSON;
-             if (sizeof($model) > 0){
-                 return $model;
-             }else{
-                 return false;
-             }
+            $input_search = \Yii::$app->request->get('input_search');
+            $model = Deals::find()->where(['OR', ['like', 'phone', $input_search], ['like', 'name', $input_search]])->all();
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            if (sizeof($model) > 0) {
+                return $model;
+            } else {
+                return false;
+            }
 
         }
-   }
+    }
 
 
-     // Смена статуса Ajax на страанице view deals
+    // Смена статуса Ajax на страанице view deals
 
     public function actionStatusAjax()
     {
         $status = \Yii::$app->request->post();
         $model = Deals::find()->where(['id' => $status["Deals"]["id"]])->one();
         if (\Yii::$app->request->isAjax) {
-        $model->status = $status['Deals']['status'];
-        $model->update();
+            $model->status = $status['Deals']['status'];
+            $model->update();
 
             \Yii::$app->response->format = Response::FORMAT_JSON;
-           return $status['Deals']['id'].'='.$status['Deals']['status'];
+            return $status['Deals']['id'] . '=' . $status['Deals']['status'];
 
         }
     }
+
     // Закрыть задачу из сделки
     public function actionUpdateTask($id)
     {
@@ -436,13 +442,32 @@ class DealsController extends Controller
         $model->status = 0;
 
 
-            \Yii::$app->session->setFlash('success', 'Задача закрыта!');
-            $model->update();
-            return $this->redirect(['deals/update', 'id' => $id_deals]);
+        \Yii::$app->session->setFlash('success', 'Задача закрыта!');
+        $model->update();
+        return $this->redirect(['deals/update', 'id' => $id_deals]);
 
         return $this->redirect('deals/update');
     }
 
+
+    // Проверка поля chanche_former
+
+    public function actionChangeFormer()
+    {
+        $status = \Yii::$app->request->post('id');
+        $deal = Deals::find()->select('change_former')->where(['id' => $status])->one();
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $deal->change_former;
+    }
+
+    // Типа получение данных из интерры
+    public function actionGetFakeData($id)
+    {
+        $model = $this->findModel($id);
+        \Yii::$app->session->setFlash('success', 'Данные из Интерры получены!');
+        return$this->redirect(['deals/update', 'id' => $model->id]);
+    }
 
 
 }

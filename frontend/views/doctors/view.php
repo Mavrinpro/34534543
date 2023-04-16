@@ -1,25 +1,25 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\bootstrap4\Modal;
 use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Modal;
+use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Doctors $model */
 /** @var app\models\Doctors $ev */
-//\yii\helpers\VarDumper::dump($ev, $dept = 10, $highlight = true);
+/** @var app\models\Doctors $event */
+//\yii\helpers\VarDumper::dump($event, $dept = 10, $highlight = true);
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Doctors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
-Modal::begin( [
+Modal::begin([
     'title' => '<h5>Добавление задачи</h5>',
     //'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
     'footer' => 'Footer',
 
-] );
+]);
 
 echo "<div id='modalContent'>";
 $form = ActiveForm::begin(['action' => '/doctors/create-event']);
@@ -32,7 +32,7 @@ echo $form->field($ev, 'date_create')->textInput(['class' => 'form-control date_
 
 echo $form->field($ev, 'date_update')->textInput();
 
-echo $form->field($ev, 'active')->textInput();
+echo $form->field($ev, 'active')->hiddenInput(['value' => 1])->label(false);
 
 
 echo Html::submitButton('Создать', ['class' => 'btn btn-success', 'name' => 'create_event']);
@@ -59,106 +59,313 @@ Modal::end();
             Yii::$app->request->get('id')]) ?>
     </p>
 
-<!--    --><?//= DetailView::widget([
-//        'model' => $model,
-//        'attributes' => [
-//            'id',
-//            'name',
-//            'last_name',
-//            'first_name',
-//            'specialization',
-//            'work_experience',
-//            'treated_patients',
-//            'photo',
-//            'specialization_text:ntext',
-//            'about_doc:ntext',
-//            'sertificates:ntext',
-//            'education:ntext',
-//            'date_create',
-//            [
-//                'attribute'=>'photo',
-//                'label'=>'Фото',
-//                'format'=>'raw',
-//                'value' => Html::img('/uploads/'.$model->photo,['style'=>'width: 50px; height: 50px']),
-//            ],
-//        ],
-//
-//    ]) ?>
-
+    <!--    --><? //= DetailView::widget([
+    //        'model' => $model,
+    //        'attributes' => [
+    //            'id',
+    //            'name',
+    //            'last_name',
+    //            'first_name',
+    //            'specialization',
+    //            'work_experience',
+    //            'treated_patients',
+    //            'photo',
+    //            'specialization_text:ntext',
+    //            'about_doc:ntext',
+    //            'sertificates:ntext',
+    //            'education:ntext',
+    //            'date_create',
+    //            [
+    //                'attribute'=>'photo',
+    //                'label'=>'Фото',
+    //                'format'=>'raw',
+    //                'value' => Html::img('/uploads/'.$model->photo,['style'=>'width: 50px; height: 50px']),
+    //            ],
+    //        ],
+    //
+    //    ]) ?>
 
 
 </div>
 <!-- External Events -->
 <div id='draggable-el' data-event='{ "title": "my event", "duration": "02:00" }'>drag me</div>
-<ul id="external-events" class="fullcalendar-custom list-unstyled list-unstyled-py-2 w-sm-50 mb-5">
-    <li>
-        <!-- Event -->
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event'
-             data-event='{
-					 "title": "Open a new task on Jira",
-					 "image": "../assets/svg/brands/jira-icon.svg",
-					 "className": ""
-				 }'>
-            <div class='fc-event-title'>
-                <div class='d-flex align-items-center'>
 
-                    <span>Open a new task on Jira</span>
-                </div>
-            </div>
+<!-- Event -->
+<!--        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event'-->
+<!--             data-event='{-->
+<!--					 "title": "Open a new task on Jira",-->
+<!--					 "image": "../assets/svg/brands/jira-icon.svg",-->
+<!--					 "className": ""-->
+<!--				 }'>-->
+<!--            <div class='fc-event-title'>-->
+<!--                <div class='d-flex align-items-center'>-->
+<!---->
+<!--                    <span>Open a new task on Jira</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!-- End Event -->
+
+
+<!-- Event -->
+<div id="external-events" class="row">
+
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 08:00</div>
         </div>
-        <!-- End Event -->
-    </li>
-
-    <li>
-        <!-- Event -->
-        <div id="external-events">
-            <p>
-                <strong>Draggable Events</strong>
-            </p>
-
-            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                <div class="fc-event-main">My Event 1</div>
-            </div>
-            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                <div class="fc-event-main">My Event 2</div>
-            </div>
-            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                <div class="fc-event-main">My Event 3</div>
-            </div>
-            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                <div class="fc-event-main">My Event 4</div>
-            </div>
-            <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event">
-                <div class="fc-event-main">My Event 5</div>
-            </div>
-
-            <p>
-                <input type="checkbox" id="drop-remove">
-                <label for="drop-remove">remove after drop</label>
-            </p>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 08:05</div>
         </div>
-        <!-- End Event -->
-    </li>
-
-    <li>
-        <!-- Event -->
-        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event'
-             data-event='{
-					 "title": "Shoot a message to Christina on Slack",
-					 "image": "../assets/svg/brands/slack-icon.svg",
-					 "className": ""
-				 }'
-        >
-            <div class='fc-event-title'>
-                <div class='d-flex align-items-center'>
-
-                    <span>Shoot a message to Christina on Slack</span>
-                </div>
-            </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 08:10</div>
         </div>
-        <!-- End Event -->
-    </li>
-</ul>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 08:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 08:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 08:55</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 09:00</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 09:05</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 09:10</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 09:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 09:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:55</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 09:00</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 09:05</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 09:10</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 09:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 09:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:55</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 09:00</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 09:05</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 09:10</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 09:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 09:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:55</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 09:00</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 09:05</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 09:10</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 09:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 09:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:55</div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 1 09:00</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 2 09:05</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 3 09:10</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 4 09:15</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event mb-1">
+            <div class="fc-event-main">My Event 5 09:20</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:25</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:230</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:35</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:40</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:45</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:50</div>
+        </div>
+        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  mb-1">
+            <div class="fc-event-main">My Event 5 09:55</div>
+        </div>
+    </div>
+
+    <!--            <p>-->
+    <!--                <input type="checkbox" id="drop-remove">-->
+    <!--                <label for="drop-remove">remove after drop</label>-->
+    <!--            </p>-->
+</div>
+
+<!-- End Event -->
+
+
+<!-- Event -->
+<!--        <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event'-->
+<!--             data-event='{-->
+<!--					 "title": "Shoot a message to Christina on Slack",-->
+<!--					 "image": "../assets/svg/brands/slack-icon.svg",-->
+<!--					 "className": ""-->
+<!--				 }'-->
+<!--        >-->
+<!--            <div class='fc-event-title'>-->
+<!--                <div class='d-flex align-items-center'>-->
+<!---->
+<!--                    <span>Shoot a message to Christina on Slack</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!-- End Event -->
+
+
 <!-- End External Events -->
 <div id='calendar'></div>
 <script>
@@ -169,9 +376,9 @@ Modal::end();
         var Draggable = FullCalendar.Draggable;
         let draggableEl = document.getElementById('mydraggable');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar:{
+            headerToolbar: {
                 left: 'prev,next today',
-                center:'title',
+                center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
             },
             initialView: 'dayGridMonth',
@@ -184,6 +391,8 @@ Modal::end();
             selectable: true,
             nowIndicator: true,
             aspectRatio: 1.5,
+            eventClassNames: 'fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event text-white',
+            textColor: 'white',
             buttonText: {
                 // prev: "&nbsp;&#9668;&nbsp;",
                 //next: "&nbsp;&#9658;&nbsp;",
@@ -205,10 +414,9 @@ Modal::end();
                 //$('#modalContent').html(date.toLocaleString());
 
 
-                    $('#w0').modal('show');
-                    //$('#w0').find('#tasks-deals_id').val(id);
-                    //$('#w0').find('#tasks-user_id').val(id_operator);
-
+                $('#w0').modal('show');
+                //$('#w0').find('#tasks-deals_id').val(id);
+                //$('#w0').find('#tasks-user_id').val(id_operator);
 
 
             },
@@ -219,22 +427,22 @@ Modal::end();
                 var event = event.event;
                 //$('.modalButton').modal('show');
                 //if (eventDelete) {
-                    $.ajax({
-                        type: "POST",
-                        url: '/doctors/ajax-doc',
-                        data: {
-                            id: event.id,
-                            title: event.title,
-                            color: event.color,
-                            end: event.end
-                        },
-                        success: function (response) {
-                            //calendar.fullCalendar('removeEvents', event.id);
-                            console.log(response);
-                            displayMessage("Event click "+event.title);
-                        }
-                    });
-               // }
+                $.ajax({
+                    type: "POST",
+                    url: '/doctors/ajax-doc',
+                    data: {
+                        id: event.id,
+                        title: event.title,
+                        color: event.color,
+                        end: event.end
+                    },
+                    success: function (response) {
+                        //calendar.fullCalendar('removeEvents', event.id);
+                        console.log(response);
+                        displayMessage("Event click " + event.title);
+                    }
+                });
+                // }
             },
 
             eventDrop: function (event) {
@@ -261,7 +469,7 @@ Modal::end();
 
             },
 
-            drop: function(arg) {
+            drop: function (arg) {
                 console.log('Drop');
 
             }
@@ -269,11 +477,13 @@ Modal::end();
         });
         new Draggable(containerEl, {
             itemSelector: '.fc-event',
-            eventData: function(eventEl) {
+            eventData: function (eventEl) {
+
                 return {
                     title: eventEl.innerText
                 };
             }
+
         });
         calendar.render();
 
@@ -297,7 +507,6 @@ Modal::end();
     //     //$('#tasks-deals_id').val($(this).data('id'));
     //     return false;
     // });
-
 
 
 </script>

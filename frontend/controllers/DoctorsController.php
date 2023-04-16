@@ -3,13 +3,14 @@
 namespace frontend\controllers;
 
 use app\models\Doctors;
+use app\models\Event;
 use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
-use app\models\UploadForm;
+
 /**
  * DoctorsController implements the CRUD actions for Doctors model.
  */
@@ -72,7 +73,23 @@ class DoctorsController extends Controller
      */
     public function actionView($id)
     {
+        $ev = new Event();
+        $events = Event::find()->where(['user_id' => $id])->all();
+        foreach ($events as $event){
+            $response[] = [
+                'id' => $event->id,
+                'title' => $event->name,
+                'start' => date('Y-m-d H:i:s',$event->date_create),
+                'end' => date('Y-m-d H:i:s',$event->date_update),
+                'color' => 'green',
+                'textColor' => 'red'
+
+            ];
+        }
+
         return $this->render('view', [
+            'ev' => $ev,
+            'event' => $response,
             'model' => $this->findModel($id),
         ]);
     }
@@ -87,11 +104,11 @@ class DoctorsController extends Controller
         $model = new Doctors();
 
         if ($this->request->isPost) {
-           $model->load($this->request->post());
-           $model->photo = UploadedFile::getInstance($model, 'photo');
-           $model->photo->saveAs('uploads/'.$model->photo->baseName.'.'.$model->photo->extension);
-           $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->load($this->request->post());
+            $model->photo = UploadedFile::getInstance($model, 'photo');
+            $model->photo->saveAs('uploads/' . $model->photo->baseName . '.' . $model->photo->extension);
+            $model->save(false);
+            return $this->redirect(['view', 'id' => $model->id]);
 
         } else {
             $model->loadDefaultValues();
@@ -116,7 +133,7 @@ class DoctorsController extends Controller
         if ($this->request->isPost) {
             $model->load($this->request->post());
             $model->photo = UploadedFile::getInstance($model, 'photo');
-            $model->photo->saveAs('uploads/'.$model->photo->baseName.'.'.$model->photo->extension);
+            $model->photo->saveAs('uploads/' . $model->photo->baseName . '.' . $model->photo->extension);
             $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -154,6 +171,36 @@ class DoctorsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    // Создание Event
+    public function actionCreateEvent()
+    {
+        $event = new Event();
+        $id = \Yii::$app->request->post('Event')['user_id'];
+        $post = \Yii::$app->request->post();
+        if ($this->request->isPost && $event->load($this->request->post()) && $event->save()){
+            $event->user_id = $id;
+            $event->date_create = strtotime(\Yii::$app->request->post('Event')['date_create']);
+            $event->date_update = strtotime(\Yii::$app->request->post('Event')['date_update']);
+            $event->save();
+            return $this->redirect(['doctors/view', 'id' => $id]);
+        }
+
+    }
+
+    // EventDrop
+    public function actionAjaxDrop()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        $request = \Yii::$app->request->post();
+        $event = Event::find()->where(['id' => $request['id']])->one();
+        $dispatchDate = substr($request['start'], 0, strpos($request['start'], '('));
+        $event->date_create = date('U', strtotime($dispatchDate));
+        $event->date_update = date('U', strtotime($dispatchDate) + 1800);
+        $event->update();
+        return date('d-m-Y H:i:s', $event->date_create).' - '.date('d-m-Y H:i:s', $event->date_update);
     }
 
 }
