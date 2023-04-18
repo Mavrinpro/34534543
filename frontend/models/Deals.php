@@ -188,4 +188,6 @@ class Deals extends \yii\db\ActiveRecord
     {
         return Comments::find()->where(['deal_id' => $deal_id])->all();
     }
+
+
 }

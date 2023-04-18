@@ -13,6 +13,7 @@ use app\models\History;
 /** @var app\models\Deals $model */
 /** @var app\models\Deals $service */
 /** @var app\models\Deals $taska */
+/** @var app\models\Deals $comment*/
 /** @var yii\widgets\ActiveForm $form */
 
 
@@ -29,8 +30,28 @@ Modal::begin([
 echo "<div id='modalContent'></div>";
 
 Modal::end();
-$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id, 'status' => 1])->count();
+
+// Модальное окно обновления данных
+
+Modal::begin([
+
+    'titleOptions' => ['class' => 'bg-success','title' => '<h5 class="text-center">Обновить данные</h5>'],
+    'clientOptions' => ['backdrop' => 'static', 'keyboard' => false, 'class' => 'efwefwef'],
+    //'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
+    'closeButton' => false,
+    'size' => 'modal-lg',
+    'bodyOptions' => [
+        'class' => 'text-center',
+    ],
+    'footer' => Html::a('Получить данные', ['deals/get-fake-data', 'id'=> $model->id], ['class' => 'btn-block btn-lg btn btn-success']),
+]);
+
+echo "Появились новые данные. Необходимо загрузить их в форму.";
+
+Modal::end();
+$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id])->count();
 $taskIdDeal = Tasks::find()->where(['deals_id' => $model->id])->andWhere(['!=', 'status', 0])->one();
+echo $taskCount .' '. $model->id;
 if ($taskCount == 0){ ?>
 
 <?= Html::a('Создать задачу', ['tasks/forma'], ['class' => 'modalButton  btn btn-success', 'data-id' => Yii::$app->request->get('id')]) ?>
@@ -42,7 +63,7 @@ if ($taskCount == 0){ ?>
 
 <?php } ?>
 <div class="deals-form">
-    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15']]); ?>
+    <?php $form = ActiveForm::begin(['id' => 'login-form', 'options' => ['class' => 'g-py-15','data-id' => $model->id,]]); ?>
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
         <div class="col-md-4">
@@ -163,7 +184,7 @@ if ($taskCount == 0){ ?>
     </div>
     <div class="row">
         <div class="col-md-12 d-flex">
-            <?= Html::submitButton('Сохранить', ['name' => 'send_deals', 'class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Сохранить', ['id' => 'update_former','name' => 'send_deals', 'class' => 'btn btn-success', 'data-id' =>$model->id]) ?>
             <?= Html::a('<i class="fa fa-trash"></i>', ['deals/updater', 'id' => $model->id], ['class' => ' ml-auto btn btn-danger', 'data' => ['confirm' => 'Хотите удалить эту сделку?', 'method' => 'post',],]) ?>
         </div>
         <div class="col-md-12">
@@ -327,5 +348,39 @@ $this->registerJs(<<<JS
     });
     
 }); 
+
+
+// Модалка при обновлении формы
+
+$('#update_former').on('click',function (e){
+    e.preventDefault();
+    var v1 =$('#w1');
+    //v1.modal('show').find('#modalData').html(data);
+    var id = $(this).data('id');
+    var url = '/deals/update/?id='+id
+    $.ajax({
+            url: '/deals/change-former',
+            type: 'POST',
+            data: {
+                id: id
+            },
+            success: function(res){
+                console.log(res);
+                if (res === 1){
+                    v1.modal('show');
+                    
+                }else{
+                    $('#login-form').yiiActiveForm('submitForm');
+                    //window.location = url;
+                }
+                
+            },
+            error: function(){
+                alert('Error!');
+            }
+        });
+    //return false; // Cancel form submitting.
+})
+
 JS
 );

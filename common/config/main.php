@@ -38,19 +38,19 @@ return [
         ]
     ],
     // Доступ только авторизованным пользователям
-    'as beforeRequest' => [
-        'class' => 'yii\filters\AccessControl',
-        'except' => ['api/get-calls', 'api/get-orders',  'api/status-task', 'api/cron-task', 'api/get-envybox', 'sup/get-abc'], // Разрешить доступ неавторизованным для экшена (API)
-        'rules' => [
-            [
-                'actions' => ['login'],
-                'allow' => true,
-            ],
-            [
-
-                'allow' => true,
-                'roles' => ['@'],
-            ],
-        ],
-    ],
+//    'as beforeRequest' => [
+//        'class' => 'yii\filters\AccessControl',
+//        'except' => ['api/get-calls', 'api/get-orders',  'api/status-task', 'api/cron-task', 'api/get-envybox', 'sup/get-abc'], // Разрешить доступ неавторизованным для экшена (API)
+//        'rules' => [
+//            [
+//                'actions' => ['login'],
+//                'allow' => true,
+//            ],
+//            [
+//
+//                'allow' => true,
+//                'roles' => ['@'],
+//            ],
+//        ],
+//    ],
 ];
