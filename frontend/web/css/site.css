@@ -158,6 +158,9 @@ audio
 form#search_form_header {
     width: 50% !important;
 }
+form#search_form_header {
+    width: 50% !important;
+}
 .result_search {
     display: none;
     width: 90%;
@@ -166,14 +169,72 @@ form#search_form_header {
     background: #f7f7f7;
     z-index: 999;
     box-shadow: 0 6px 13px -9px #333;
-    bottom: -32px;
+    top: 45px;
 
+}
+
+
+/*
+searching
+ */
+.searching::before {
+    content: '';
+    display: block;
+    position: relative;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    width: 20px;
+    background: #6c3;
+    animation: search 2s infinite;
+}
+.search input {
+    background: transparent;
+}
+
+@keyframes search {
+    0% {
+        width: 20px;
+        left: 0;
+        background: #0481c9;
+    }
+    25% {
+        width: 60px;
+        left: calc(50% - 30px);
+        background: #66cc33;
+    }
+    50% {
+        width: 20px;
+        left: calc(100% - 20px);
+        background: #d6f460;
+    }
+    75% {
+        width: 60px;
+        left: calc(50% - 30px);
+        background: #66cc33;
+    }
+    100% {
+        width: 20px;
+        left: 0;
+        background: #0481c9;
+    }
 }
 .rotate180{
     -webkit-transform: rotate(-180deg);
     -moz-transform: rotate(-180deg);
     -ms-transform: rotate(-180deg);
     -o-transform: rotate(-180deg);
+}
+
+.dropzone{
+    border: 2px dashed rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+.dropzone:hover{
+    opacity: .6;
+}
+.file_upload{
+    cursor: pointer;
 }
 
 

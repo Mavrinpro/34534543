@@ -8,6 +8,8 @@ use yii\bootstrap4\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Doctors $model */
 /** @var app\models\Doctors $ev */
+/** @var app\models\Doctors $files */
+/** @var app\models\Doctors $f */
 //\yii\helpers\VarDumper::dump($ev, $dept = 10, $highlight = true);
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Doctors', 'url' => ['index']];
@@ -21,6 +23,8 @@ Modal::begin( [
 
 ] );
 
+
+
 echo "<div id='modalContent'>";
 $form = ActiveForm::begin(['action' => '/doctors/create-event']);
 
@@ -30,9 +34,9 @@ echo $form->field($ev, 'user_id')->hiddenInput(['value' => $model->id])->label(f
 
 echo $form->field($ev, 'date_create')->textInput(['class' => 'form-control date_create']);
 
-echo $form->field($ev, 'date_update')->textInput();
+echo $form->field($ev, 'date_update')->hiddenInput()->label(false);
 
-echo $form->field($ev, 'active')->textInput();
+echo $form->field($ev, 'active')->hiddenInput(['value' => 1])->label(false);
 
 
 echo Html::submitButton('Создать', ['class' => 'btn btn-success', 'name' => 'create_event']);
@@ -41,6 +45,26 @@ echo Html::submitButton('Создать', ['class' => 'btn btn-success', 'name' 
 ActiveForm::end();
 echo "</div>";
 
+Modal::end();
+
+Modal::begin( [
+    'title' => '<h5>Добавить название файлу</h5>',
+    //'toggleButton' => ['label' => 'Добавить задачу', 'class' => 'btn btn-warning'],
+    'footer' => 'Footer',
+
+] );
+echo "<div id='modalContent2'>";
+$formFile = ActiveForm::begin(['id' => 'formFile', 'action' => '/doctors/set-title']);
+
+echo $formFile->field($f, 'title')->textInput();
+echo $formFile->field($f, 'id')->hiddenInput()->label(false);
+echo $formFile->field($model, 'id')->hiddenInput(['value' => $model->id])->label(false);
+
+echo Html::submitButton('Создать', ['class' => 'btn btn-success', 'name' => 'create_file_title']);
+
+
+ActiveForm::end();
+echo "</div>";
 Modal::end();
 ?>
 <div class="doctors-view">
@@ -58,7 +82,134 @@ Modal::end();
         <?= Html::a('Создать расписание', ['event/create'], ['class' => 'modalButton  btn btn-success', 'data-id' =>
             Yii::$app->request->get('id')]) ?>
     </p>
+    <?php
+    echo \kato\DropZone::widget([
+        'options' => [
+            'maxFilesize' => '10',
+            'dictDefaultMessage' => 'Перетащите файлы в эту область'
+        ],
+        'clientEvents' => [
+            'complete' => "function(file){console.log(file)}",
+            'removedfile' => "function(file){alert(file.name + ' is removed')}"
+        ],
+    ]);
+?>
+    <div class="row">
+    <?php
+    foreach ($files as $file) {
+        //var_dump($files); die();
 
+        $url = 'files/';
+        $ras = explode('.', $file->name);
+        $kb = filesize($url.$file->name);
+        //echo $_FILES[$url.$file->name]['tmp_name'];
+        switch ($ras[1]){
+            case 'xlsx':
+                $ind = '/img/icon_xlsx.png';
+                break;
+            case 'xls':
+                $ind = '/img/icon_xls.png';
+                break;
+            case 'txt':
+                $ind = '/img/icon_txt.png';
+                break;
+            case 'zip':
+                $ind = '/img/icon_zip.png';
+                break;
+            case 'json':
+                $ind = '/img/icon_js.png';
+                break;
+            case 'csv':
+                $ind = '/img/icon_csv.png';
+                break;
+            case 'docx':
+                $ind = '/img/icon_doc.png';
+                break;
+            case 'pdf':
+                $ind = '/img/icon_pdf.png';
+                break;
+            case 'png':
+                $ind = '/img/icon_png.png';
+                break;
+            case 'jpeg':
+                $ind = '/img/icon_jpg.png';
+                break;
+            case 'jpg':
+                $ind = '/img/icon_jpg.png';
+                break;
+            case 'MP4':
+                $ind = '/img/icon_mp4.png';
+                break;
+            case 'JPG':
+                $ind = '/img/icon_jpg.png';
+                break;
+            default: $ind = '/img/icon_file.png';
+        }
+        if (!empty($file->name)) {
+
+
+            echo '<div class="col-md-2 text-center mt-3">';
+
+            echo '<img src="' . $ind . '" width="40" data-id="'.$file->id.'" data-title="'.$file->title.'" class="file_upload"></br>';
+             echo '<span class="badge badge-pill">'.round($kb / 1024, 1).'kb</span></br>';
+            if ($file->title != null){
+                echo Html::a($file->title, \yii\helpers\Url::base() .'/'.$url. $file->name, ['class' => 'small']) . "<br/>";
+            }else{
+                echo Html::a($file->name, \yii\helpers\Url::base() .'/'.$url. $file->name, ['class' => 'small']) . "<br/>"; //
+            }
+
+            //echo '<a href="/doctors/remove-document/'.$file->id.'" >&times</a>';
+            echo Html::a('&times', ['doctors/remove-document', 'id' => $file->id, 'modelid' => $model->id], ['class' =>
+                'badge badge-pill badge-danger', 'data-confirm' => Yii::t('yii', 'Удалить запись № '.$file->name.'?')]);
+            echo '</div>';
+
+        }
+    }
+//    $files = \yii\helpers\FileHelper::findFiles('files/');
+//    if (isset($files[0])) {
+//        foreach ($files as $index => $file) {
+//            //$nameFicheiro = substr($file, strrpos($file, '/') + 1);
+//            $ras = explode('.', $file);
+//            $kb = filesize($file);
+//            switch ($ras[1]){
+//                case 'xlsx':
+//                    $ind = '/img/icon_xlsx.png';
+//                    break;
+//                case 'xls':
+//                    $ind = '/img/icon_xls.png';
+//                    break;
+//                case 'csv':
+//                    $ind = '/img/icon_csv.png';
+//                    break;
+//                case 'docx':
+//                    $ind = '/img/icon_doc.png';
+//                    break;
+//                case 'pdf':
+//                    $ind = '/img/icon_pdf.png';
+//                    break;
+//                case 'png':
+//                    $ind = '/img/icon_png.png';
+//                    break;
+//                case 'jpeg':
+//                    $ind = '/img/icon_jpg.png';
+//                    break;
+//                default: $ind = '/img/icon_png.png';
+//            }
+//            echo '<div class="col-md-2 text-center">';
+//            echo '<img src="'. $ind.'" width="40"></br>';
+//            echo '<span class="badge badge-pill">'.round($kb / 1024, 1).'kb</span></br>';
+//
+//            echo Html::a($file, \yii\helpers\Url::base() . '/' . $file) . "<br/>"; //
+//            echo '</div>';
+//            // render do
+//            // ficheiro no browser
+//        }
+//    } else {
+//        echo "There are no files available for download.";
+//    }
+
+    ?>
+    </div>
 <!--    --><?//= DetailView::widget([
 //        'model' => $model,
 //        'attributes' => [
@@ -163,6 +314,7 @@ Modal::end();
 <div id='calendar'></div>
 <script>
 
+
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
         var containerEl = document.getElementById('external-events');
@@ -226,7 +378,8 @@ Modal::end();
                             id: event.id,
                             title: event.title,
                             color: event.color,
-                            end: event.end
+                            start: event.start,
+                            end: event.end,
                         },
                         success: function (response) {
                             //calendar.fullCalendar('removeEvents', event.id);
@@ -249,7 +402,8 @@ Modal::end();
                         id: event.id,
                         title: event.title,
                         start: event.start,
-                        end: event.end
+                        end: event.end,
+                        user_id: <?= $model->id ?>
                     },
                     success: function (response) {
                         //calendar.fullCalendar('removeEvents', event.id);
@@ -281,6 +435,10 @@ Modal::end();
 
     function displayMessage(message, title) {
         toastr.success(message, title);
+        toastr.options.positionClass =  "toast-bottom-right";
+        toastr.options.progressBar =  true;
+        toastr.options.closeButton =  true;
+
     }
 
     // $('.modalButton').on('click', function (){
@@ -301,3 +459,18 @@ Modal::end();
 
 
 </script>
+<?php
+
+$this->registerJs(<<<JS
+$('.file_upload').click(function (){
+    var id = $(this).data('id');
+    var title = $(this).data('title');
+    $('#files-id').val(id);
+    $('#files-title').val(title);
+    $('#w2').modal('show');
+    console.log(1)
+})
+JS
+); ?>
+
+?>
