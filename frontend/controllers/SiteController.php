@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Branch;
 use app\models\Deals;
+use app\models\Files;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -268,5 +269,29 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionUpload()
+    {
+        $fileName = 'file';
+        $uploadPath = './files';
+        $files = new Files();
+        if (isset($_FILES[$fileName])) {
+            $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+
+            //Print file data
+            //print_r($file);
+
+            if ($file->saveAs($uploadPath . '/' . $file->name)) {
+                //Now save file data to database
+                $files->name = $file->name;
+                $files->date_at = time();
+                $files->user_id = Yii::$app->user->getId();
+                $files->save();
+                echo \yii\helpers\Json::encode($file->name);
+            }
+        }
+
+        return false;
     }
 }
