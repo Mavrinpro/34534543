@@ -6,18 +6,21 @@ use app\models\Api;
 use app\models\Comments;
 use app\models\Deals;
 use app\models\DealsRepeat;
+use app\models\LayoutsMail;
 use app\models\Mail;
 use app\models\Services;
+use common\models\User;
 use app\models\Tasks;
-use frontend\models\DeleteDeals;
 use frontend\models\SearchDeals;
-use yii\bootstrap4\ActiveForm;
-use yii\data\ActiveDataProvider;
+use frontend\models\DeleteDeals;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 use yii\web\Response;
+use yii\db\Expression;
+use yii\bootstrap4\ActiveForm;
 
 /**
  * DealsController implements the CRUD actions for Deals model.
@@ -36,12 +39,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task', 'change-former', 'get-fake-data'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task', 'change-former', 'get-fake-data'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task', 'delete-comment'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -70,24 +73,34 @@ class DealsController extends Controller
             'superadmin' || \Yii::$app->authManager->getRolesByUser(\Yii::$app->getUser()->identity->getId())['admin']->name ==
             'admin') {
             $query = Deals::find()->with('user', 'tasks')->where(['del' => 0])->orderBy('date_create DESC')->addOrderBy('date_update ASC');
+            $query2 = Deals::find()->with('user', 'tasks')->where(['id_operator' => \Yii::$app->user->id])->andWhere
+            (['del' => 0])->andWhere(['status' => 6])->orderBy('date_create DESC')->addOrderBy('date_update DESC');
         } else {
 
             $query = Deals::find()->with('user', 'tasks')->where(['id_operator' => \Yii::$app->user->id])->andWhere(['del' => 0])
                 ->orderBy('date_create DESC')->addOrderBy('date_update DESC');
+            // status == 6
+            $query2 = Deals::find()->with('user', 'tasks')->where(['id_operator' => \Yii::$app->user->id])->andWhere
+            (['del' => 0])->andWhere(['status' => 6])->orderBy('date_create DESC')->addOrderBy('date_update DESC');
         }
         $pages = new \yii\data\Pagination(['totalCount' => $query->count(), 'pageSize' => $offset, 'pageSizeParam' =>
             false, 'forcePageParam' => false]);
+
+        $pages2 = new \yii\data\Pagination(['totalCount' => $query2->count(), 'pageSize' => 2, 'pageSizeParam' =>
+            false, 'forcePageParam' => false]);
+
         $model = $query->offset($pages->offset)->limit($pages->limit)->all();
+        $model2 = $query2->offset($pages2->offset)->limit($pages2->limit)->all();
         //$searchModel = new SearchDeals();
         //$dataProvider = $searchModel->search($this->request->queryParams);
         //$dataProvider->sort = ['defaultOrder' => ['date_create'=>SORT_DESC, 'id'=>SORT_DESC]];
         //$dataProvider->pagination = ['pageSize' => 150];
-        $dataProvider = new ActiveDataProvider([
-            'query' => Deals::find()->with('user', 'tasks')->where(['del' => 0])->orderBy('date_create DESC')->addOrderBy('date_update DESC'),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Deals::find()->with('user', 'tasks')->where(['del' => 0])->orderBy('date_create DESC')->addOrderBy('date_update DESC'),
+//            'pagination' => [
+//                'pageSize' => 10,
+//            ],
+//        ]);
 
         if ($_POST['action'] === 'dragged') {
             //\Yii::$app->session->setFlash('success', "Статья сохранена");
@@ -103,8 +116,9 @@ class DealsController extends Controller
         }
         return $this->render('index', [
             'model' => $model,
+            'model2' => $model2,
             'pages' => $pages,
-            'dataProvider' => $dataProvider
+            //'dataProvider' => $dataProvider
             //'searchModel' => $searchModel,
             //'dataProvider' => $dataProvider,
             //$dataProvider->pagination->pageSize=1
@@ -237,19 +251,12 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
-
-
-
-        \Yii::$app->db->schema->refresh();
+        //\Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
         $comment = new Comments();
 
-        // изменение change_former при обычной перезагрузке страницы на значение 0
-
-        $model->change_former = 0;
-        $model->update();
 
         $commentText = strip_tags(\Yii::$app->request->post('Comments')['text']);
 
@@ -263,6 +270,7 @@ class DealsController extends Controller
 
 
         if ($this->request->isPost && $model->load($this->request->post()) && isset($send_deals)) {
+
             if (strlen($postDeals) < 1 && strlen($postService) > 0) {
                 // Если пустое полеу слуги и не пустое услуги, которой нет в списке (добавляем новую)
                 if (\Yii::$app->request->isAjax && $service->load(\Yii::$app->request->post())) {
@@ -293,10 +301,15 @@ class DealsController extends Controller
             $model->tag = implode(",", (array)$model->tag);
             $model->id_comment = strip_tags($model->id_comment);
             $model->changeUserTask($id, $model->id_operator); // смена ответственного в задаче
-            $model->update();
+            if (empty($postDeals)) {
 
-            \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
-            return $this->refresh();
+                return false;
+            } else {
+                $model->update();
+                \Yii::$app->session->setFlash('success', 'Cделка обновлена!');
+                return $this->refresh();
+            }
+
 
         }
         /*
@@ -449,25 +462,12 @@ class DealsController extends Controller
         return $this->redirect('deals/update');
     }
 
-
-    // Проверка поля chanche_former
-
-    public function actionChangeFormer()
+    public function actionDeleteComment($id)
     {
-        $status = \Yii::$app->request->post('id');
-        $deal = Deals::find()->select('change_former')->where(['id' => $status])->one();
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-
-        return $deal->change_former;
-    }
-
-    // Типа получение данных из интерры
-    public function actionGetFakeData($id)
-    {
-        $model = $this->findModel($id);
-        \Yii::$app->session->setFlash('success', 'Данные из Интерры получены!');
-        return$this->redirect(['deals/update', 'id' => $model->id]);
-    }
-
-
+        $idi = \Yii::$app->request->get('deal_id');
+        $comment = Comments::find()->where(['id' =>$id])->one();
+        $comment->delete();
+        //print_r($idi);
+        return $this->redirect(['/deals/update', 'id' => $idi]);
+	}
 }

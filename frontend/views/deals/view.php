@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class="col-md-6 mb-5 mt-3">
+
         <div class="shadow p-3 rounded-lg">
             <?= DetailView::widget([
                 'model' => $model,
@@ -120,6 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
         </div>
+
         <?php $h = History::find()->where(['deal_id' => $model->id])->all(); ?>
         <?php if (sizeof($h) > 0){ ?>
 
@@ -145,12 +147,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt'=>'Выбрать шаблон письма...'])->label(false); ?>
              <?= $form->field($model, 'deal_email')->hiddenInput([value($model->deal_email)])->label(false) ?>
             <div class="form-group">
-                <?= Html::submitButton('Отправить', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Отправить', ['class' => 'btn btn-warning']) ?>
                 <!--                --><?//= Html::a('Отправить', ['deals/view', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
             </div>
             <?php ActiveForm::end(); ?>
 <!--            --><?php //Pjax::end(); ?>
 
+        </div>
+
+        <div class="shadow p-3 rounded-lg mt-3">
+            <form action="#" class="form" method="POST">
+                <input type="hidden" value="<?php echo $model->phone ?>" id="model_phone" data-phone="<?php echo $model->phone ?>">
+                <button type="submit" class="btn btn-success" disabled="disable"><i class="fab fa-whatsapp"></i>
+                    Отправить
+                    в Whatsapp</button>
+            </form>
+        </div>
+        <div class="main-card mb-3 card">
+            <div class="card-header"><i class="header-icon lnr-license icon-gradient bg-plum-plate"> </i>Header with Tabs
+                <div class="btn-actions-pane-right">
+                    <div role="group" class="btn-group-sm nav btn-group">
+                        <a data-toggle="tab" href="#tab-eg1-0" class="btn-shadow btn btn-primary active">Ульяновск</a>
+                        <a data-toggle="tab" href="#tab-eg1-1" class="btn-shadow btn btn-primary">Питер</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-eg1-0" role="tabpanel"><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                            software like Aldus PageMaker
+                            including versions of Lorem Ipsum.</p></div>
+                    <div class="tab-pane" id="tab-eg1-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                            essentially unchanged. </p></div>
+
+            </div>
+            <div class="d-block text-right card-footer">
+                <a href="javascript:void(0);" class="btn-wide btn btn-success">Save</a>
+            </div>
         </div>
 
         <div class="shadow p-3 rounded-lg mt-3">
@@ -217,6 +251,37 @@ $(document).on("change", "#status_id", function () {
         });
     return false; // Cancel form submitting.
 });
+
+
+var number = document.getElementById('model_phone').value;
+const form = document.querySelector('.form');
+    //const number = 79113523926;
+    
+    function sendToWhatsapp(text, phone) {
+
+        //text = encodeURIComponent(text);
+
+        let url = 'https://web.whatsapp.com/send?phone='+phone+'&text='+text+'&data=';
+
+        window.open(url);
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+    console.log(number);
+        const text = 'Сделайте репост этой записи и получите скидку на услугу: https://vk.com/glazcentre?w=wall-138759033_79823';
+        
+//         const text = 'Ожидаем скриншот репоста акции, чтоб оператор смог закрепить стоимость Lasik за 16500 или'+
+//         'FemtoLasik за 41000 руб. на оба глаза.%0a%0a'+
+//
+// 'Ссылка на Акцию "Lasik за 16500 и FemtoLasik за 41000!" в Инстаграмм: https://www.instagram'+
+// '.com/p/CoFij_MySlL/?igshid=YmMyMTA2M2Y=%0a%0a'+
+//
+// 'Ссылка на Акцию "Lasik за 16 500 и FemtoLasik за 41 000!" Вконтакте:'+ 
+// 'https://vk.com/wall-20654497_135300';
+
+        sendToWhatsapp(text, number);
+    });
 JS;
 
 $this->registerJs($js);
