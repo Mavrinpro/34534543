@@ -164,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </form>
         </div>
         <div class="main-card mb-3 card">
-            <div class="card-header"><i class="header-icon lnr-license icon-gradient bg-plum-plate"> </i>Header with Tabs
+            <div class="card-header"><i class="header-icon lnr-license icon-gradient bg-plum-plate"> </i>
                 <div class="btn-actions-pane-right">
                     <div role="group" class="btn-group-sm nav btn-group">
                         <a data-toggle="tab" href="#tab-eg1-0" class="btn-shadow btn btn-primary active">Ульяновск</a>
@@ -175,11 +175,31 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-body">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab-eg1-0" role="tabpanel"><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-                            software like Aldus PageMaker
-                            including versions of Lorem Ipsum.</p></div>
-                    <div class="tab-pane" id="tab-eg1-1" role="tabpanel"><p>Like Aldus PageMaker including versions of Lorem. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                            essentially unchanged. </p></div>
+                    <div class="tab-pane active" id="tab-eg1-0" role="tabpanel"><textarea name="" id="textarea_clip" class="form-control mt-3" rows="12">
+Доброго дня.
+Стоимость Лазерной коррекции зрения методом ФЕМТО в клинике «ГлазЦентр» в филиале г. Ульяновск,
+по АКЦИИ составляет всего 28500 руб. за оба глаза. Чтобы принять участие в акции и сделать
+операцию по уникальной цене необходимо выполнить всего 2 простых условия:
+
+1.	Подписаться на группу клиники в соц. сети Вконтакте: https://vk.com/glazcentre
+2.	Сделать репост сохранённой записи себе на страницу: https://vk.com/glazcentre?w=wall-138759033_80268
+
+Ожидаем скриншот репоста акции, чтоб администратор смог закрепить стоимость Femto Lasik 28500 за оба глаза. Данный скриншот пожалуйста сохраните до дня операции, т.к. администратор попросит вас показать его при оформлении.
+Удачи Вам на диагностике!
+                </textarea>
+                    </div>
+                    <div class="tab-pane" id="tab-eg1-1" role="tabpanel"><textarea name="" id="textarea_clip" class="form-control mt-3" rows="12">
+Доброго дня.
+Стоимость Лазерной коррекции зрения методом LASIK в клинике «ГлазЦентр» в филиале г. Санкт-Петербург,
+по АКЦИИ составляет всего 15500 руб. за оба глаза. Чтобы принять участие в акции и сделать
+операцию по уникальной цене необходимо выполнить всего 2 простых условия:
+
+1.	Подписаться на группу клиники в соц. сети Вконтакте: https://vk.com/glazcentre
+2.	Сделать репост записи себе на страницу: https://vk.com/glazcentre?w=wall-138759033_80288
+
+Ожидаем скриншот репоста акции, чтоб администратор смог закрепить стоимость Lasik 15500 за оба глаза. Данный скриншот пожалуйста сохраните до дня операции, т.к. администратор попросит вас показать его при оформлении.
+Удачи Вам на диагностике!
+                </textarea></div>
 
             </div>
             <div class="d-block text-right card-footer">

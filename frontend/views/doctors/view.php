@@ -82,6 +82,7 @@ Modal::end();
         <?= Html::a('Создать расписание', ['event/create'], ['class' => 'modalButton  btn btn-success', 'data-id' =>
             Yii::$app->request->get('id')]) ?>
     </p>
+    <div class="col-md-12">
     <?php
     echo \kato\DropZone::widget([
         'options' => [
@@ -93,17 +94,28 @@ Modal::end();
             'removedfile' => "function(file){alert(file.name + ' is removed')}"
         ],
     ]);
-?>
+?></div>
     <div class="row">
     <?php
     foreach ($files as $file) {
         //var_dump($files); die();
 
         $url = 'files/';
+        $path_parts = pathinfo('/'.$url.$file->name);
+
+        $files = scandir('files/');
+       // $files2 = scandir($dir, 1);
+
+        //print_r($files1);
+        //print_r($files2);
+        //var_dump($files);
         $ras = explode('.', $file->name);
-        $kb = filesize($url.$file->name);
-        //echo $_FILES[$url.$file->name]['tmp_name'];
-        switch ($ras[1]){
+
+        //$kb = filesize("files/".$file->name);
+        //echo $url.$file->name;
+
+        //echo $url.$file->name;
+        switch ($path_parts['extension']) {
             case 'xlsx':
                 $ind = '/img/icon_xlsx.png';
                 break;
@@ -134,6 +146,12 @@ Modal::end();
             case 'jpeg':
                 $ind = '/img/icon_jpg.png';
                 break;
+            case 'html':
+                $ind = '/img/icon_html.png';
+                break;
+            case 'psd':
+                $ind = '/img/icon_psd.png';
+                break;
             case 'jpg':
                 $ind = '/img/icon_jpg.png';
                 break;
@@ -143,15 +161,19 @@ Modal::end();
             case 'JPG':
                 $ind = '/img/icon_jpg.png';
                 break;
-            default: $ind = '/img/icon_file.png';
+            default:
+                $ind = '/img/icon_file.png';
         }
         if (!empty($file->name)) {
+            $kb = filesize("files/".$file->name);
 
-
-            echo '<div class="col-md-2 text-center mt-3">';
+            echo '<div class="col-md-2 text-center mt-3"><div class="div_img">';
 
             echo '<img src="' . $ind . '" width="40" data-id="'.$file->id.'" data-title="'.$file->title.'" class="file_upload"></br>';
+            //clearstatcache();
              echo '<span class="badge badge-pill">'.round($kb / 1024, 1).'kb</span></br>';
+
+
             if ($file->title != null){
                 echo Html::a($file->title, \yii\helpers\Url::base() .'/'.$url. $file->name, ['class' => 'small']) . "<br/>";
             }else{
@@ -160,8 +182,8 @@ Modal::end();
 
             //echo '<a href="/doctors/remove-document/'.$file->id.'" >&times</a>';
             echo Html::a('&times', ['doctors/remove-document', 'id' => $file->id, 'modelid' => $model->id], ['class' =>
-                'badge badge-pill badge-danger', 'data-confirm' => Yii::t('yii', 'Удалить запись № '.$file->name.'?')]);
-            echo '</div>';
+                'badge badge-pill badge-danger', 'data-confirm' => Yii::t('yii', 'Удалить файл: '.$file->name.'?')]);
+            echo '</div></div>';
 
         }
     }
@@ -417,6 +439,7 @@ Modal::end();
 
             drop: function(arg) {
                 console.log('Drop');
+                displayMessage("Расписание добавлено");
 
             }
 
@@ -435,7 +458,7 @@ Modal::end();
 
     function displayMessage(message, title) {
         toastr.success(message, title);
-        toastr.options.positionClass =  "toast-bottom-right";
+        toastr.options.positionClass =  "toast-top-right";
         toastr.options.progressBar =  true;
         toastr.options.closeButton =  true;
 
@@ -472,5 +495,29 @@ $('.file_upload').click(function (){
 })
 JS
 ); ?>
+<?php
 
-?>
+
+$method = 'friends.get';
+$token = 'vk1.a.8cJJznn9fgaJnCSWdaGMVWQu8hw2tGoLd8OQo6nZQaWftS_zXx4Y4NIXWPXLJtw2RD_UIHTY8kcX-QmY5kcFhIXT-OLTkSaafgPr0m6PEgEuZuPSUi3mQ9DTBh0Lwsza2-7G6zRfes06keb-KADFlxwmMLs4fjdrNdi6Gru1CQSZxLFc1tOvYmw4Ett5eX18XIyh57U5BfBCwQs-R4ACPg';
+$version = 5.78;
+
+$params = http_build_query([
+    'owner_id' => 51619314,
+    'access_token' => $token,
+    'v' => $version
+    //...
+]);
+
+//$url = "https://api.vk.com/method/{$method}?{$params}&access_token={$token}&v={$version}";
+
+$url = "https://api.vk.com/method/{$method}?account_id=15308999&access_token={$token}&v=5.131";
+
+
+        $res = file_get_contents($url);
+        var_dump(json_decode($res));
+//https://oauth.vk.com/authorize?client_id=51619314&display=page&redirect_uri=https://oauth.vk.com/blank
+//.html&scope=friends,notify,photos,wall,email,mail,groups,stats,offline, ads&response_type=token&v=5.74
+
+
+//https://oauth.vk.com/blank.html#access_token=vk1.a.rFgNGeMm5cxtcIAEuD2dIvPDAcecGtj11mynwiVHomWmvXj9qhuvR3eQL-JZt6v5jb9uNjUW7obyidrcI3cPjvBaVeg_2g39XBb20jdTyDw17SmSqCz6MaamOLGbe4X8wc8-182n3wXPhq76dCHmMrqOrJktmWo2Th2E7xvFGWmGZI0AySI6Gc0uIADR58dP6Tox1ukbwVivfq0Lzh1Kcw&expires_in=0&user_id=236004628&email=keeper888@hotmail.com
