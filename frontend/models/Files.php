@@ -13,6 +13,7 @@ use Yii;
  * @property int|null $date_at
  * @property int|null $date_end
  * @property int|null $user_id
+ * @property int|null $user_id_update
  */
 class Files extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class Files extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_at', 'date_end', 'user_id'], 'integer'],
+            [['date_at', 'date_end', 'user_id', 'user_id_update'], 'integer'],
             [['name', 'title'], 'string', 'max' => 255],
 
         ];

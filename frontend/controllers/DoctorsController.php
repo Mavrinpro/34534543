@@ -249,7 +249,8 @@ class DoctorsController extends Controller
     {
         $request = \Yii::$app->request->get();
         $files = Files::find()->where(['id' => $request['id']])->one();
-
+        //unlink('/files/'.$files->name);
+        unlink('files/' . $files->name);
         $files->delete();
         \Yii::$app->session->setFlash('success', 'Файл успешно удален');
         return $this->redirect(['doctors/view', 'id' => $request['modelid']]);
@@ -270,6 +271,7 @@ class DoctorsController extends Controller
         //var_dump($pageId); die();
         $files->title = $request['title'];
         $files->date_end = time();
+        $files->user_id_update = \Yii::$app->user->getId();
         $files->update();
         \Yii::$app->session->setFlash('success', 'Название задано',['progressBar' => true]);
         return $this->redirect(['/doctors/view', 'id' => $pageId['id']]);

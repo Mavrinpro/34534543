@@ -48,9 +48,9 @@ class Deals extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['phone', 'tag', 'status', 'id_operator', 'id_filial'], 'required'],
+            [['phone', 'tag', 'status', 'id_operator', 'id_filial', 'services_id'], 'required'],
             [['date_create', 'talon_id'], 'safe'],
-            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender', 'talon_id', 'services_id'], 'safe'],
+            [['name','call_recording', 'deal_email', 'company_id', 'region_id', 'age', 'gender', 'talon_id'], 'safe'],
             [['date_update'], 'safe'],
             [['id_operator', 'id_filial'], 'integer'],
             [['name'], 'string', 'max' => 100],

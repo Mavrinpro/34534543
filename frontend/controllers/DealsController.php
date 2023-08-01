@@ -39,12 +39,12 @@ class DealsController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task'],
+                            'actions' => ['delete', 'updater', 'dashboard', 'delete-deals', 'search-ajax', 'status-ajax', 'update-task', 'special-pacient'],
                             'allow' => true,
                             'roles' => ['admin', 'superadmin'],
                         ],
                         [
-                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task', 'delete-comment'],
+                            'actions' => ['logout', 'index', 'create', 'update', 'search-deals', 'view', 'updater', 'dashboard', 'search-ajax', 'status-ajax', 'update-task', 'delete-comment', 'special-pacient'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -251,7 +251,7 @@ class DealsController extends Controller
      */
     public function actionUpdate($id)
     {
-        //\Yii::$app->db->schema->refresh();
+        \Yii::$app->db->schema->refresh();
         $model = $this->findModel($id);
         $taska = new Tasks();
         $service = new Services();
@@ -470,4 +470,19 @@ class DealsController extends Controller
         //print_r($idi);
         return $this->redirect(['/deals/update', 'id' => $idi]);
 	}
+
+    // Особенный пациент
+    public function actionSpecialPacient()
+    {
+        $post = \Yii::$app->request->post();
+        $d = Deals::find()->where(['id' => $post['modelId']])->one();
+        if (\Yii::$app->request->isAjax) {
+            $d->special = null;
+            $d->update();
+        }
+
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $post;
+    }
 }

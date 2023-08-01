@@ -81,7 +81,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model =  Deals::find()->all();
-        $branches = Branch::find()->all();
+        //$branches = Branch::find()->all();
         return $this->render('analitics', ['model' => $model]);
     }
 
