@@ -41,7 +41,7 @@ class TasksController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Tasks::find(),
+            'query' => Tasks::find()->where(['status' => 1]),
 
             'pagination' => [
                 'pageSize' => 20,
@@ -84,6 +84,7 @@ class TasksController extends Controller
      */
     public function actionCreate($id = null, $deals_id = null)
     {
+       // \Yii::$app->db->schema->refresh();
         $model = new Tasks();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {

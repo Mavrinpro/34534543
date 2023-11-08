@@ -21,7 +21,8 @@ use yii\jui\DatePicker;
     <?php $date = date('Y-m-d H:i:s'); ?>
     <div class="row">
         <div class="col-md-12">
-
+            <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'),
+                ['prompt'=>'Оператор...', 'value' => Yii::$app->user->getId()]) ?>
             <?= $form->field($model, 'date_end')->widget(\kartik\date\DatePicker::className(),[
 
                 'options' => [
@@ -40,7 +41,9 @@ use yii\jui\DatePicker;
                 ]
             ]) ?>
         </div>
-            <?= $form->field($model, 'user_id')->hiddenInput()->label(false) ?>
+<!--            --><?//= $form->field($model, 'user_id')->hiddenInput()->label(false) ?>
+            <?= $form->field($model, 'user_create_id')->hiddenInput(['value' => Yii::$app->getUser()->id])->label
+            (false) ?>
 
         <div id="memberssearch-family_name_id"></div>
 

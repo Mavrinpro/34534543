@@ -52,6 +52,7 @@ use yii\jui\DatePicker;
     </div>
        <?php }else{ ?>
             <?= $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false) ?>
+
             <?= $form->field($model, 'user_create_id')->hiddenInput(['value' => Yii::$app->getUser()->id])->label
             (false) ?>
        <?php } ?>

@@ -51,8 +51,8 @@ Modal::begin([
 echo "Появились новые данные. Необходимо загрузить их в форму.";
 
 Modal::end();
-$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id])->count();
-$taskIdDeal = Tasks::find()->where(['deals_id' => $model->id])->andWhere(['!=', 'status', 0])->one();
+$taskCount = \app\models\Tasks::find()->where(['deals_id' => $model->id])->andWhere(['status' => 1])->count();
+$taskIdDeal = Tasks::find()->where(['deals_id' => $model->id])->andWhere(['status' => 1])->one();
 echo $taskCount . ' ' . $model->id;
 if ($taskCount == 0) { ?>
 
@@ -290,7 +290,10 @@ if ($taskCount == 0) { ?>
             <?= $form2->field($taska, 'date_create')->hiddenInput(['value' => $date])->label(false) ?>
             <?= $form2->field($taska, 'status')->hiddenInput(['value' => true])->label(false) ?>
             <?= $form2->field($taska, 'deals_id')->hiddenInput(['value' => $model->id])->label(false) ?>
-            <?= $form2->field($taska, 'user_id')->hiddenInput(['value' => $model->id_operator])->label(false) ?>
+            <?= $form2->field($taska, 'user_id')->dropDownList(ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username'), ['prompt' => 'Ответственный...']); ?>
+            <?= $form->field($model, 'date_update')->hiddenInput(['value' => $date])->label(false); ?>
+
+            <?= $form->field($model, 'date_update')->hiddenInput(['value' => $date])->label(false); ?>
             <?= $form2->field($taska, 'user_create_id')->hiddenInput(['value' => $userID])->label(false) ?>
             <?= $form2->field($taska, 'date_end')->widget(\kartik\date\DatePicker::class, [
 
